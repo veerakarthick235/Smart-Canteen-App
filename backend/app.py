@@ -104,6 +104,7 @@ def create_app(config_class=Config) -> Flask:
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
+app = create_app(Config)
+
 if __name__ == "__main__":
-    application = create_app(Config)
-    application.run(host="0.0.0.0", port=5000, debug=Config.DEBUG)
+    app.run(host="0.0.0.0", port=5000, debug=Config.DEBUG)
