@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { FiX } from 'react-icons/fi'
 
-export default function Modal({ isOpen, onClose, title, children, size = 'md' }) {
+export default function Modal({ isOpen, onClose, title, children, footer, size = 'md' }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -47,6 +47,13 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' })
         <div className="p-6 overflow-y-auto flex-1">
           {children}
         </div>
+
+        {/* Footer */}
+        {footer && (
+          <div className="p-6 border-t border-border shrink-0 bg-slate-50/50 rounded-b-2xl">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   )
