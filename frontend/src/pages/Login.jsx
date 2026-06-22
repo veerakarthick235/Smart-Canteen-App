@@ -5,8 +5,6 @@ import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import api from '../api/axios.js'
 import { useAuth } from '../context/AuthContext.jsx'
-import { GoogleLogin } from '@react-oauth/google'
-
 export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -140,36 +138,6 @@ export default function Login() {
                 </span>
               ) : 'Sign In'}
             </button>
-            
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-textSecondary">Or continue with</span>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <GoogleLogin
-                onSuccess={async (credentialResponse) => {
-                  try {
-                    const res = await api.post('/api/auth/google', { credential: credentialResponse.credential });
-                    if (res.data.success) {
-                      login(res.data.data);
-                      toast.success('Google Login successful!');
-                      const role = res.data.data.user.role;
-                      navigate(role === 'admin' ? '/admin/dashboard' : '/student/home');
-                    }
-                  } catch (err) {
-                    toast.error(err.response?.data?.message || 'Google Login failed');
-                  }
-                }}
-                onError={() => {
-                  toast.error('Google Login Failed');
-                }}
-              />
-            </div>
           </form>
 
           <p className="text-center text-sm text-textSecondary mt-6">

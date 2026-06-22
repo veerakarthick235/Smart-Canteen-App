@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { getInitials } from '../../utils/helpers'
 import { HiPencil, HiCheck, HiX, HiUser, HiMail, HiIdentification, HiAcademicCap, HiBookOpen } from 'react-icons/hi'
 
-const DEPARTMENTS = ['CSE', 'ECE', 'EEE', 'ME', 'CE', 'IT', 'MBA', 'MCA']
+const DEPARTMENTS = ['CSE', 'ECE', 'EEE', 'ME', 'CE', 'IT', 'AI&DS', 'MBA', 'MCA', 'Civil', 'Architecture', 'Pharmacy', 'BCA', 'BSc']
 const YEARS = [
   { value: '1', label: '1st Year' },
   { value: '2', label: '2nd Year' },
