@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode'
+import { Html5Qrcode } from 'html5-qrcode'
 import { FiCamera, FiSearch, FiCheckCircle, FiXCircle, FiAlertTriangle, FiClock, FiUser, FiPackage, FiRefreshCw } from 'react-icons/fi'
 import AdminLayout from '../../components/AdminLayout.jsx'
 import api from '../../api/axios.js'
@@ -215,33 +215,35 @@ export default function AdminScanner() {
     setTimeout(() => {
       if (!document.getElementById('qr-reader')) return
 
-      const scanner = new Html5QrcodeScanner(
-        'qr-reader',
+      const html5QrCode = new Html5Qrcode("qr-reader")
+      scannerInstanceRef.current = html5QrCode
+
+      html5QrCode.start(
+        { facingMode: "environment" },
         {
           fps: 10,
           qrbox: { width: 250, height: 250 },
-          supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-          rememberLastUsedCamera: true,
-          videoConstraints: { facingMode: "environment" }
         },
-        false
-      )
-
-      scanner.render(
         async (decodedText) => {
-          scanner.pause(true)
+          if (scannerInstanceRef.current) {
+            scannerInstanceRef.current.stop().catch(() => {})
+            scannerInstanceRef.current = null
+          }
           await processToken(decodedText)
           setScanning(false)
         },
-        () => {} // ignore errors (no QR found in frame)
-      )
-      scannerInstanceRef.current = scanner
+        () => {} // ignore errors
+      ).catch((err) => {
+        console.error("Camera start failed", err)
+        toast.error("Could not start camera. Please check permissions.")
+        setScanning(false)
+      })
     }, 100)
   }, [processToken])
 
   const stopScanner = useCallback(() => {
     if (scannerInstanceRef.current) {
-      scannerInstanceRef.current.clear().catch(() => {})
+      scannerInstanceRef.current.stop().catch(() => {})
       scannerInstanceRef.current = null
     }
     setScanning(false)
