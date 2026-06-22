@@ -143,6 +143,26 @@ const AdminProducts = () => {
     }
   }
 
+  const handleDeleteAll = async () => {
+    if (!window.confirm('Are you SURE you want to delete ALL products? This cannot be undone.')) return
+    setDeleting(true)
+    try {
+      // We fetch all products without pagination just to be sure we delete them all
+      const res = await api.get('/api/products?limit=1000')
+      const allProducts = Array.isArray(res.data.data) ? res.data.data : res.data.data.products || []
+      
+      const promises = allProducts.map(p => api.delete(`/api/products/${p._id}`).catch(() => {}))
+      await Promise.all(promises)
+      
+      toast.success('All products deleted successfully')
+      fetchProducts()
+    } catch {
+      toast.error('Failed to delete some products')
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   const handleToggleAvailability = async (product) => {
     try {
       await api.put(`/api/products/${product._id}`, {
@@ -164,10 +184,20 @@ const AdminProducts = () => {
             <h1 className="text-2xl font-bold text-gray-900">Products</h1>
             <p className="text-gray-500 text-sm mt-1">Manage canteen & stationery items</p>
           </div>
-          <button onClick={openAddModal} className="btn-primary flex items-center gap-2">
-            <HiPlus className="h-4 w-4" />
-            Add Product
-          </button>
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={handleDeleteAll} 
+              disabled={deleting || products.length === 0}
+              className="px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+            >
+              <HiTrash className="h-4 w-4" />
+              Delete All
+            </button>
+            <button onClick={openAddModal} className="btn-primary flex items-center gap-2">
+              <HiPlus className="h-4 w-4" />
+              Add Product
+            </button>
+          </div>
         </div>
 
         {/* Filters */}
