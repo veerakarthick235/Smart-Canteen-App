@@ -88,8 +88,13 @@ const AdminProducts = () => {
   const handleImageChange = async (e) => {
     const file = e.target.files[0]
     if (!file) return
-    if (file.size > 2 * 1024 * 1024) {
-      toast.error('Image must be less than 2MB')
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp']
+    if (!validTypes.includes(file.type)) {
+      toast.error('Only JPG, PNG, and WEBP images are allowed')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB')
       return
     }
     const base64 = await fileToBase64(file)
@@ -363,7 +368,7 @@ const AdminProducts = () => {
                     Remove
                   </button>
                 )}
-                <p className="text-xs text-gray-400 mt-1">Max 2MB · JPG, PNG</p>
+                <p className="text-xs text-gray-400 mt-1">Max 5MB · JPG, PNG, WEBP</p>
               </div>
             </div>
             <input

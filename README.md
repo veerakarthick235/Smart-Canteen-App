@@ -374,3 +374,10 @@ For issues or feature requests, raise a GitHub issue.
 ## 📄 License
 
 MIT License — Free for educational and commercial use.
+
+### Cloudinary Integration
+To enable Cloudinary image uploads, create an account on [Cloudinary](https://cloudinary.com/) and add the following keys to your ackend/.env file:
+- CLOUDINARY_CLOUD_NAME
+- CLOUDINARY_API_KEY
+- CLOUDINARY_API_SECRET
+

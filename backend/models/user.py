@@ -17,7 +17,7 @@ def _serialize(user: dict) -> dict:
 import uuid
 
 def create_user(full_name: str, email: str, student_id: str = "",
-                department: str = "N/A", year: str = "N/A", password_hash: str = "", role: str = "student") -> dict:
+                department: str = "N/A", year: str = "N/A", password_hash: str = "", role: str = "student", profile_image: str = "") -> dict:
     db = get_db()
     
     if not student_id:
@@ -31,6 +31,7 @@ def create_user(full_name: str, email: str, student_id: str = "",
         "year": year,
         "passwordHash": password_hash,
         "role": role,
+        "profileImage": profile_image,
         "createdAt": datetime.now(timezone.utc),
     }
     result = db.users.insert_one(doc)
@@ -59,7 +60,7 @@ def find_by_student_id(student_id: str) -> dict | None:
 
 def update_user(user_id: str, updates: dict) -> dict | None:
     db = get_db()
-    allowed = {k: v for k, v in updates.items() if k in ("fullName", "department", "year")}
+    allowed = {k: v for k, v in updates.items() if k in ("fullName", "department", "year", "profileImage")}
     if not allowed:
         return find_by_id(user_id)
     db.users.update_one({"_id": ObjectId(user_id)}, {"$set": allowed})

@@ -78,13 +78,19 @@ def create_product():
         except (ValueError, TypeError) as e:
             return jsonify({"success": False, "message": str(e)}), 400
 
+        image_url = data.get("image", "")
+        if image_url and image_url.startswith("data:image/"):
+            from utils.cloudinary_helpers import upload_image
+            upload_res = upload_image(image_url, folder="smart_canteen/products")
+            image_url = upload_res["url"]
+
         product = product_model.create_product(
             name=data["name"],
             category=data["category"],
             description=data["description"],
             price=price,
             stock=stock,
-            image=data.get("image", ""),
+            image=image_url,
         )
 
         return jsonify({"success": True, "message": "Product created", "data": product}), 201
@@ -118,6 +124,19 @@ def update_product(product_id: str):
             except (ValueError, TypeError):
                 return jsonify({"success": False, "message": "Invalid stock"}), 400
 
+        if "image" in data and data["image"].startswith("data:image/"):
+            from utils.cloudinary_helpers import upload_image, delete_image, extract_public_id
+            
+            # Fetch existing product to delete old image
+            old_product = product_model.find_by_id(product_id)
+            if old_product and old_product.get("image"):
+                old_pub_id = extract_public_id(old_product["image"])
+                if old_pub_id:
+                    delete_image(old_pub_id)
+
+            upload_res = upload_image(data["image"], folder="smart_canteen/products")
+            data["image"] = upload_res["url"]
+
         updated = product_model.update_product(product_id, data)
         if not updated:
             return jsonify({"success": False, "message": "Product not found"}), 404
@@ -132,9 +151,17 @@ def update_product(product_id: str):
 @admin_required
 def delete_product(product_id: str):
     try:
-        success = product_model.delete_product(product_id)
-        if not success:
+        product = product_model.find_by_id(product_id)
+        if not product:
             return jsonify({"success": False, "message": "Product not found"}), 404
+
+        success = product_model.delete_product(product_id)
+        if success and product.get("image"):
+            from utils.cloudinary_helpers import delete_image, extract_public_id
+            pub_id = extract_public_id(product["image"])
+            if pub_id:
+                delete_image(pub_id)
+                
         return jsonify({"success": True, "message": "Product deleted"}), 200
     except Exception as e:
         return jsonify({"success": False, "message": "Failed to delete product", "error": str(e)}), 500

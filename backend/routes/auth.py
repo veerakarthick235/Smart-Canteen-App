@@ -166,6 +166,34 @@ def update_me():
     except Exception as e:
         return jsonify({"success": False, "message": "Update failed", "error": str(e)}), 500
 
+@auth_bp.route("/me/avatar", methods=["PUT"])
+@jwt_required_custom
+def upload_avatar():
+    try:
+        user_id = get_current_user_id()
+        data = request.get_json() or {}
+        image_data = data.get("image")
+        
+        if not image_data or not image_data.startswith("data:image/"):
+            return jsonify({"success": False, "message": "Valid Base64 image is required"}), 400
+
+        from utils.cloudinary_helpers import upload_image, delete_image, extract_public_id
+        
+        # Delete old avatar if it's stored in Cloudinary
+        old_user = user_model.find_by_id(user_id)
+        if old_user and old_user.get("profileImage") and "res.cloudinary.com" in old_user["profileImage"]:
+            old_pub_id = extract_public_id(old_user["profileImage"])
+            if old_pub_id:
+                delete_image(old_pub_id)
+
+        # Upload new avatar
+        upload_res = upload_image(image_data, folder="smart_canteen/avatars")
+        
+        updated = user_model.update_user(user_id, {"profileImage": upload_res["url"]})
+        return jsonify({"success": True, "message": "Avatar updated", "data": updated}), 200
+    except Exception as e:
+        return jsonify({"success": False, "message": "Avatar upload failed", "error": str(e)}), 500
+
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from flask import current_app
@@ -183,14 +211,20 @@ def google_login():
 
         email = idinfo.get("email").lower().strip()
         full_name = idinfo.get("name", "Google User")
+        picture = idinfo.get("picture", "")
 
         user_raw = user_model.find_by_email(email)
         if not user_raw:
             user_raw = user_model.create_user(
                 full_name=full_name,
                 email=email,
-                role="student"
+                role="student",
+                profile_image=picture
             )
+        elif picture and not user_raw.get("profileImage"):
+            # Update profile image if they don't have one
+            user_model.update_user(str(user_raw["_id"]), {"profileImage": picture})
+            user_raw["profileImage"] = picture
 
         user_id = str(user_raw["_id"])
         role = user_raw.get("role", "student")

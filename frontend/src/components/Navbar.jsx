@@ -70,8 +70,12 @@ export default function Navbar() {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-2 p-1.5 pr-3 rounded-xl hover:bg-bgLight transition-colors"
               >
-                <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0">
-                  {getInitials(user?.fullName)}
+                <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 flex items-center justify-center bg-primary-600 text-white text-sm font-bold">
+                  {user?.profileImage ? (
+                    <img src={user.profileImage} alt={user.fullName} className="w-full h-full object-cover" />
+                  ) : (
+                    getInitials(user?.fullName)
+                  )}
                 </div>
                 <span className="hidden sm:block text-sm font-medium text-textPrimary max-w-[120px] truncate">
                   {user?.fullName?.split(' ')[0]}

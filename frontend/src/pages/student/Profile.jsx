@@ -22,6 +22,8 @@ const Profile = () => {
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [orderCount, setOrderCount] = useState(0)
+  const [uploadingAvatar, setUploadingAvatar] = useState(false)
+  const fileRef = useRef(null)
 
   const {
     register,
@@ -71,6 +73,37 @@ const Profile = () => {
     setEditing(false)
   }
 
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp']
+    if (!validTypes.includes(file.type)) {
+      toast.error('Only JPG, PNG, and WEBP images are allowed')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB')
+      return
+    }
+
+    setUploadingAvatar(true)
+    try {
+      const { fileToBase64 } = await import('../../utils/helpers')
+      const base64 = await fileToBase64(file)
+      
+      const res = await api.put('/api/auth/me/avatar', { image: base64 })
+      const updatedUser = res.data.data
+      updateUser({ ...user, ...updatedUser })
+      toast.success('Profile picture updated!')
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to update profile picture')
+    } finally {
+      setUploadingAvatar(false)
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
   const yearLabel = YEARS.find((y) => y.value === user?.year)?.label || user?.year
 
   return (
@@ -85,11 +118,30 @@ const Profile = () => {
         {/* Avatar & Quick Stats */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-6 mb-5">
           <div className="flex items-center gap-5">
-            {/* Avatar */}
-            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center flex-shrink-0 shadow-lg">
-              <span className="text-2xl font-bold text-white">
-                {getInitials(user?.fullName)}
-              </span>
+            <div className="relative group">
+              <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center flex-shrink-0 shadow-lg overflow-hidden">
+                {user?.profileImage ? (
+                  <img src={user.profileImage} alt={user.fullName} className="h-full w-full object-cover" />
+                ) : (
+                  <span className="text-2xl font-bold text-white">
+                    {getInitials(user?.fullName)}
+                  </span>
+                )}
+              </div>
+              <button
+                onClick={() => fileRef.current?.click()}
+                disabled={uploadingAvatar}
+                className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl cursor-pointer"
+              >
+                {uploadingAvatar ? <LoadingSpinner size="sm" className="text-white" /> : <HiPencil className="h-6 w-6 text-white" />}
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-bold text-gray-900 truncate">{user?.fullName}</h2>

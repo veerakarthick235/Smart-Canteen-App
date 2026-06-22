@@ -24,6 +24,11 @@ class Config:
     # Google Auth
     GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 
+    # Cloudinary
+    CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME", "")
+    CLOUDINARY_API_KEY = os.environ.get("CLOUDINARY_API_KEY", "")
+    CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET", "")
+
     # CORS — supports comma-separated list of origins
     # e.g. CORS_ORIGIN=http://localhost:5173,http://localhost:5174
     _cors_raw = os.environ.get("CORS_ORIGIN", "http://localhost:5173")
