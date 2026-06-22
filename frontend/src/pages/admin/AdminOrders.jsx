@@ -37,7 +37,7 @@ const AdminOrders = () => {
       if (statusFilter) params.status = statusFilter
       if (search) params.search = search
 
-      const res = await api.get('/api/orders', { params })
+      const res = await api.get('/api/admin/orders', { params })
       const data = res.data.data || res.data
       if (Array.isArray(data)) {
         setOrders(data)
@@ -68,7 +68,7 @@ const AdminOrders = () => {
   const handleStatusUpdate = async (orderId, newStatus) => {
     setUpdatingStatus(orderId)
     try {
-      await api.put(`/api/orders/${orderId}/status`, { status: newStatus })
+      await api.put(`/api/admin/orders/${orderId}/status`, { status: newStatus })
       toast.success(`Order marked as ${newStatus}`)
       fetchOrders(currentPage)
       if (selectedOrder?._id === orderId) {

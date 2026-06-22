@@ -20,8 +20,8 @@ const AdminDashboard = () => {
     setLoading(true)
     try {
       const [statsRes, ordersRes] = await Promise.all([
-        api.get('/api/orders/stats'),
-        api.get('/api/orders', { params: { limit: 10, sort: '-createdAt' } }),
+        api.get('/api/admin/dashboard'),
+        api.get('/api/admin/orders', { params: { limit: 10, sort: '-createdAt' } }),
       ])
       setStats(statsRes.data.data || statsRes.data)
       const ordersData = ordersRes.data.data || ordersRes.data

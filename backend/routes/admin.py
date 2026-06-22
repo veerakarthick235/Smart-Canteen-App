@@ -61,21 +61,31 @@ def get_order(order_id: str):
         return jsonify({"success": False, "message": "Failed to fetch order", "error": str(e)}), 500
 
 
-@admin_bp.route("/orders/<order_id>/cancel", methods=["PUT"])
+@admin_bp.route("/orders/<order_id>/status", methods=["PUT"])
 @admin_required
-def cancel_order(order_id: str):
-    """Cancel a pending order."""
+def update_order_status(order_id: str):
+    """Manually update order status (e.g. cancel or complete)."""
     try:
+        data = request.get_json()
+        new_status = data.get("status")
+        
+        if new_status not in ("cancelled", "completed"):
+            return jsonify({"success": False, "message": "Invalid status"}), 400
+
         order = order_model.find_by_id(order_id)
         if not order:
             return jsonify({"success": False, "message": "Order not found"}), 404
-        if order["status"] not in ("pending",):
-            return jsonify({"success": False, "message": "Only pending orders can be cancelled"}), 400
+            
+        if new_status == "cancelled" and order["status"] not in ("pending", "paid"):
+            return jsonify({"success": False, "message": "Cannot cancel this order"}), 400
+            
+        if new_status == "completed" and order["status"] != "paid":
+            return jsonify({"success": False, "message": "Only paid orders can be completed"}), 400
 
-        updated = order_model.update_status(order_id, "cancelled")
-        return jsonify({"success": True, "message": "Order cancelled", "data": updated}), 200
+        updated = order_model.update_status(order_id, new_status)
+        return jsonify({"success": True, "message": f"Order {new_status}", "data": updated}), 200
     except Exception as e:
-        return jsonify({"success": False, "message": "Failed to cancel order", "error": str(e)}), 500
+        return jsonify({"success": False, "message": "Failed to update order", "error": str(e)}), 500
 
 
 @admin_bp.route("/analytics/revenue", methods=["GET"])
