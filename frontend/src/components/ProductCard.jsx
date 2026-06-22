@@ -41,7 +41,7 @@ export default function ProductCard({ product }) {
       <div className={`relative h-44 flex items-center justify-center bg-gradient-to-br ${PLACEHOLDER_COLORS[product.category] || 'from-gray-50 to-gray-100'} overflow-hidden`}>
         {product.image ? (
           <img
-            src={`data:image/jpeg;base64,${product.image}`}
+            src={product.image.startsWith('http') || product.image.startsWith('data:') ? product.image : `data:image/jpeg;base64,${product.image}`}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             onError={(e) => { e.target.style.display = 'none' }}

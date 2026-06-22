@@ -148,7 +148,7 @@ export default function Cart() {
                 {/* Item image / icon */}
                 <div className="w-16 h-16 bg-bgLight rounded-xl flex items-center justify-center shrink-0 text-3xl overflow-hidden">
                   {item.image
-                    ? <img src={`data:image/jpeg;base64,${item.image}`} alt={item.name} className="w-full h-full object-cover rounded-xl" />
+                    ? <img src={item.image.startsWith('http') || item.image.startsWith('data:') ? item.image : `data:image/jpeg;base64,${item.image}`} alt={item.name} className="w-full h-full object-cover rounded-xl" />
                     : (item.category === 'Food' ? '🍱' : item.category === 'Beverages' ? '☕' : '✏️')
                   }
                 </div>
