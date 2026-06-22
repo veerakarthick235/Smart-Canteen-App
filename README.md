@@ -135,62 +135,6 @@ Frontend runs on: http://localhost:5173
 
 ---
 
-## ⚙️ Environment Variables
-
-### Backend (`backend/.env`)
-
-```env
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/smart_canteen
-JWT_SECRET_KEY=your-super-secret-jwt-key-minimum-32-chars
-RAZORPAY_KEY_ID=rzp_test_XXXXXXXXXX
-RAZORPAY_KEY_SECRET=your_razorpay_secret_key
-FLASK_ENV=development
-FLASK_DEBUG=True
-CORS_ORIGIN=http://localhost:5173
-```
-
-### Frontend (`frontend/.env`)
-
-```env
-VITE_API_URL=http://localhost:5000
-VITE_RAZORPAY_KEY_ID=rzp_test_XXXXXXXXXX
-```
-
----
-
-## 🗄️ MongoDB Setup
-
-### 1. Create Atlas Cluster
-1. Go to [cloud.mongodb.com](https://cloud.mongodb.com)
-2. Create a free M0 cluster
-3. Create a database user
-4. Whitelist your IP (or 0.0.0.0/0 for development)
-5. Copy the connection string to `MONGO_URI`
-
-### 2. Database Indexes (Auto-created on first run)
-```javascript
-// users collection
-db.users.createIndex({ email: 1 }, { unique: true })
-db.users.createIndex({ studentId: 1 }, { unique: true })
-
-// orders collection
-db.orders.createIndex({ qrToken: 1 }, { unique: true, sparse: true })
-db.orders.createIndex({ userId: 1 })
-
-// products collection
-db.products.createIndex({ category: 1 })
-db.products.createIndex({ name: "text", description: "text" })
-```
-
-### 3. Seed Admin User
-```bash
-cd backend
-python seed_admin.py
-# Creates admin: admin@canteen.com / Admin@123
-```
-
----
-
 ## 💳 Razorpay Setup
 
 1. Create account at [razorpay.com](https://razorpay.com)
@@ -200,53 +144,6 @@ python seed_admin.py
 5. Add `Key Secret` to backend `.env` only
 
 **Test card:** 4111 1111 1111 1111 | Any future expiry | Any CVV
-
----
-
-## 🔐 Default Admin Account
-
-After seeding:
-- **Email:** admin@canteen.com
-- **Password:** Admin@123
-
----
-
-## 📡 API Overview
-
-### Authentication
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/auth/register | Student registration |
-| POST | /api/auth/login | Login (student + admin) |
-| GET | /api/auth/me | Get current user |
-| PUT | /api/auth/me | Update profile |
-
-### Products
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/products | List products (public) |
-| GET | /api/products/:id | Get product |
-| POST | /api/products | Create product (admin) |
-| PUT | /api/products/:id | Update product (admin) |
-| DELETE | /api/products/:id | Delete product (admin) |
-
-### Payments & Orders
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/payments/create-order | Create Razorpay order |
-| POST | /api/payments/verify | Verify payment + generate QR |
-| GET | /api/orders/my-orders | Student's orders |
-| GET | /api/orders/:id | Order detail with QR |
-
-### QR & Admin
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/qr/scan | Scan QR (admin) |
-| GET | /api/admin/dashboard | Dashboard stats |
-| GET | /api/admin/orders | All orders |
-| GET | /api/admin/analytics/revenue | Revenue data |
-| GET | /api/admin/analytics/products | Top products |
-| GET | /api/admin/analytics/categories | Category sales |
 
 ---
 
@@ -274,75 +171,6 @@ If already collected → ALREADY_COLLECTED error
 
 ---
 
-## 🚢 Production Deployment
-
-### Backend (Gunicorn + Nginx)
-
-```bash
-# Install gunicorn (already in requirements.txt)
-pip install gunicorn
-
-# Run with gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-
-# Or with systemd service (recommended)
-```
-
-**systemd service file** (`/etc/systemd/system/smart-canteen-api.service`):
-```ini
-[Unit]
-Description=Smart Canteen Flask API
-After=network.target
-
-[Service]
-User=ubuntu
-WorkingDirectory=/var/www/smart-canteen/backend
-Environment="PATH=/var/www/smart-canteen/backend/venv/bin"
-ExecStart=/var/www/smart-canteen/backend/venv/bin/gunicorn -w 4 -b 127.0.0.1:5000 app:app
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-### Frontend (Build + Nginx)
-
-```bash
-# Build production bundle
-npm run build
-
-# Output in dist/ folder
-# Serve with Nginx
-```
-
-**Nginx config** (`/etc/nginx/sites-available/smart-canteen`):
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com;
-
-    # Frontend
-    location / {
-        root /var/www/smart-canteen/frontend/dist;
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Backend API proxy
-    location /api {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
-
-### SSL (Let's Encrypt)
-```bash
-sudo certbot --nginx -d yourdomain.com
-```
-
----
-
 ## 📱 Mobile Deployment
 
 The frontend is fully responsive. For a mobile-first experience:
@@ -352,32 +180,6 @@ The frontend is fully responsive. For a mobile-first experience:
 
 ---
 
-## 🧪 Testing
-
-```bash
-# Backend API testing with curl
-curl -X POST http://localhost:5000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "admin@canteen.com", "password": "Admin@123"}'
-
-# Run with Postman collection (see docs/postman_collection.json)
-```
-
----
-
-## 📞 Support
-
-For issues or feature requests, raise a GitHub issue.
-
----
-
 ## 📄 License
 
 MIT License — Free for educational and commercial use.
-
-### Cloudinary Integration
-To enable Cloudinary image uploads, create an account on [Cloudinary](https://cloudinary.com/) and add the following keys to your ackend/.env file:
-- CLOUDINARY_CLOUD_NAME
-- CLOUDINARY_API_KEY
-- CLOUDINARY_API_SECRET
-
