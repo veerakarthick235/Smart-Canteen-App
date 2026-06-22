@@ -179,12 +179,7 @@ export default function Login() {
             </Link>
           </p>
 
-          {/* Demo credentials hint */}
-          <div className="mt-6 p-4 bg-bgLight rounded-xl border border-border">
-            <p className="text-xs font-semibold text-textSecondary uppercase tracking-wide mb-2">Demo Admin</p>
-            <p className="text-xs text-textSecondary">Email: <span className="text-textPrimary font-medium">admin@canteen.com</span></p>
-            <p className="text-xs text-textSecondary">Password: <span className="text-textPrimary font-medium">Admin@123</span></p>
-          </div>
+
         </div>
       </div>
     </div>
