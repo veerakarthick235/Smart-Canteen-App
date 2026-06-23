@@ -164,12 +164,11 @@ export default function StudentHome() {
                     : 'text-gray-500 hover:text-gray-700 hover:shadow-md'
                 }`}
                 style={isActive ? {
-                  background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
-                  boxShadow: '0 4px 20px rgba(37,99,235,0.35), 0 0 40px rgba(6,182,212,0.1)',
+                  background: '#2563EB',
                 } : {
                   background: 'rgba(255,255,255,0.7)',
                   backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(0,0,0,0.05)',
+                  border: '1px solid rgba(0,0,0,0.06)',
                 }}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.97 }}

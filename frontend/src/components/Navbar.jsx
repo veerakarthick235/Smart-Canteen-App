@@ -33,8 +33,7 @@ export default function Navbar() {
     <nav
       className="sticky top-0 z-40 glass-strong"
       style={{
-        boxShadow: '0 4px 30px rgba(37,99,235,0.04), 0 1px 3px rgba(0,0,0,0.03)',
-        borderBottom: '1px solid rgba(37,99,235,0.06)',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,7 +44,6 @@ export default function Navbar() {
               className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg transition-transform duration-200 group-hover:scale-105"
               style={{
                 background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
-                boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
               }}
             >
               <span className="text-gray-900 font-bold text-lg">🍽</span>
@@ -84,7 +82,6 @@ export default function Navbar() {
                   className="absolute -top-1 -right-1 min-w-[22px] h-[22px] text-[11px] font-bold rounded-full flex items-center justify-center text-white px-1 animate-badge-pop"
                   style={{
                     background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
-                    boxShadow: '0 2px 10px rgba(37,99,235,0.4), 0 0 20px rgba(6,182,212,0.2)',
                   }}
                 >
                   {cartCount > 9 ? '9+' : cartCount}

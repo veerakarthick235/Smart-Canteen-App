@@ -28,12 +28,11 @@ export default function StatCard({ icon: Icon, label, value, subValue, prefix, i
         background: 'rgba(255,255,255,0.75)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        border: '1.5px solid rgba(255,255,255,0.9)',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.03), 0 4px 16px rgba(37,99,235,0.04), 0 12px 40px rgba(0,0,0,0.02)',
+        border: '1px solid rgba(0,0,0,0.06)',
       }}
       whileHover={{
-        y: -6,
-        boxShadow: `0 16px 48px ${gradient.shadow.replace('0.3', '0.12')}, 0 4px 16px rgba(0,0,0,0.04), 0 0 0 1px ${gradient.shadow.replace('0.3', '0.1')}`,
+        y: -4,
+        borderColor: 'rgba(37,99,235,0.15)',
       }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
@@ -79,7 +78,6 @@ export default function StatCard({ icon: Icon, label, value, subValue, prefix, i
           className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ml-3"
           style={{
             background: `linear-gradient(135deg, ${gradient.from}, ${gradient.to})`,
-            boxShadow: `0 6px 20px ${gradient.shadow}, 0 0 40px ${gradient.light}`,
           }}
           whileHover={{ scale: 1.1, rotate: 5 }}
           transition={{ duration: 0.3 }}

@@ -98,7 +98,7 @@ export default function Login() {
             <span className="font-extrabold font-display text-gray-900 text-xl tracking-tight">Smart Canteen</span>
           </div>
 
-          <div className="glass-strong rounded-3xl p-8 sm:p-10 relative overflow-hidden" style={{ boxShadow: '0 8px 40px rgba(37,99,235,0.06), 0 20px 60px rgba(0,0,0,0.04)' }}>
+          <div className="glass-strong rounded-3xl p-8 sm:p-10 relative overflow-hidden">
             {/* Gradient border overlay */}
             <div className="gradient-border" />
 
