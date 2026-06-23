@@ -90,24 +90,25 @@ export default function StudentHome() {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        {/* Dark gradient bg with decorative orbs */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(6,182,212,0.08) 50%, rgba(139,92,246,0.06) 100%)' }} />
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%)' }} />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)' }} />
+        {/* Vibrant gradient bg with decorative orbs */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(6,182,212,0.06) 30%, rgba(139,92,246,0.05) 60%, rgba(236,72,153,0.04) 100%)' }} />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+        <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)', filter: 'blur(30px)' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(139,92,246,0.06) 0%, transparent 70%)', filter: 'blur(60px)' }} />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-gray-500 text-sm text-sm font-medium mb-1">
+            <p className="text-gray-500 text-sm font-semibold mb-1.5 tracking-wide">
               {getGreeting()}, {user?.fullName?.split(' ')[0] || 'there'} 👋
             </p>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 font-display tracking-tight">
+            <h1 className="text-4xl sm:text-5xl font-extrabold font-display tracking-tight text-gradient">
               Order Now
             </h1>
-            <p className="text-gray-500 mt mt-1.5 text-base">
+            <p className="text-gray-500 mt-2 text-base max-w-lg">
               {CATEGORY_CONFIG[category].desc}
             </p>
           </motion.div>
@@ -154,22 +155,28 @@ export default function StudentHome() {
             const config = CATEGORY_CONFIG[cat]
             const isActive = category === cat
             return (
-              <button
+              <motion.button
                 key={cat}
                 onClick={() => handleCategoryChange(cat)}
-                className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold whitespace-nowrap transition-all duration-200 ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold whitespace-nowrap transition-all duration-300 ${
                   isActive
-                    ? 'text-white scale-[1.02]'
-                    : 'text-gray-500 border border-gray-200 hover:border-white/[0.15] hover:text-gray-700'
+                    ? 'text-white shadow-lg'
+                    : 'text-gray-500 hover:text-gray-700 hover:shadow-md'
                 }`}
                 style={isActive ? {
                   background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
-                  boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
-                } : { background: '#F8FAFC' }}
+                  boxShadow: '0 4px 20px rgba(37,99,235,0.35), 0 0 40px rgba(6,182,212,0.1)',
+                } : {
+                  background: 'rgba(255,255,255,0.7)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(0,0,0,0.05)',
+                }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.97 }}
               >
                 <span className="text-base">{config.emoji}</span>
                 {cat}
-              </button>
+              </motion.button>
             )
           })}
         </motion.div>

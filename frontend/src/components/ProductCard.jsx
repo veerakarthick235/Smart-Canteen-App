@@ -48,9 +48,7 @@ export default function ProductCard({ product }) {
     <motion.div
       className="group relative card-hover flex flex-col overflow-hidden"
       whileHover={{
-        y: -6,
-        borderColor: 'rgba(37,99,235,0.2)',
-        boxShadow: '0 12px 40px rgba(0,0,0,0.3), 0 0 30px rgba(37,99,235,0.08)',
+        y: -8,
       }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
@@ -99,7 +97,7 @@ export default function ProductCard({ product }) {
         {/* Out of stock overlay */}
         {isOutOfStock && (
           <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center">
-            <span className="px-4 py-2 rounded-xl bg-slate-800/90 text-gray-900 text-sm font-bold border border-gray-200">
+            <span className="px-4 py-2 rounded-2xl bg-white/90 text-gray-700 text-sm font-bold border border-gray-200 shadow-lg backdrop-blur-sm">
               Out of Stock
             </span>
           </div>
@@ -132,8 +130,8 @@ export default function ProductCard({ product }) {
             <div
               className="flex items-center rounded-xl overflow-hidden"
               style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(0,0,0,0.02)',
+                border: '1.5px solid #E2E8F0',
               }}
             >
               <button

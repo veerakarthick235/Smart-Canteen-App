@@ -108,8 +108,8 @@ const AdminDashboard = () => {
           transition={{ duration: 0.4 }}
         >
           <div>
-            <h1 className="text-2xl font-extrabold font-display text-gray-900 tracking-tight">Dashboard</h1>
-            <p className="text-gray-500 text-sm text-sm mt-1">Overview of canteen operations</p>
+            <h1 className="text-3xl font-extrabold font-display tracking-tight text-gradient">Dashboard</h1>
+            <p className="text-gray-500 text-sm mt-1.5">Overview of canteen operations</p>
           </div>
           <button
             onClick={fetchDashboard}

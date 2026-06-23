@@ -31,9 +31,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className="sticky top-0 z-40 glass-strong border-b border-gray-100"
+      className="sticky top-0 z-40 glass-strong"
       style={{
-        boxShadow: '0 4px 30px rgba(0,0,0,0.06)',
+        boxShadow: '0 4px 30px rgba(37,99,235,0.04), 0 1px 3px rgba(0,0,0,0.03)',
+        borderBottom: '1px solid rgba(37,99,235,0.06)',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,16 +56,16 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1 bg-gray-50 rounded-2xl p-1">
+          <div className="hidden md:flex items-center gap-1 rounded-2xl p-1" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.04), rgba(6,182,212,0.03))' }}>
             <Link
               to="/student/home"
-              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
+              className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-500 hover:text-blue-600 hover:bg-white/70 transition-all duration-200 flex items-center gap-2"
             >
               <FiHome size={15} /> Home
             </Link>
             <Link
               to="/student/orders"
-              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
+              className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-500 hover:text-blue-600 hover:bg-white/70 transition-all duration-200 flex items-center gap-2"
             >
               <FiList size={15} /> My Orders
             </Link>

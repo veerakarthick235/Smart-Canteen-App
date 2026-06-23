@@ -98,14 +98,14 @@ export default function Login() {
             <span className="font-extrabold font-display text-gray-900 text-xl tracking-tight">Smart Canteen</span>
           </div>
 
-          <div className="glass-strong rounded-3xl p-8 sm:p-10 relative overflow-hidden">
+          <div className="glass-strong rounded-3xl p-8 sm:p-10 relative overflow-hidden" style={{ boxShadow: '0 8px 40px rgba(37,99,235,0.06), 0 20px 60px rgba(0,0,0,0.04)' }}>
             {/* Gradient border overlay */}
             <div className="gradient-border" />
 
             <div className="relative z-10">
               <div className="mb-8">
-                <h2 className="text-3xl font-extrabold font-display text-gray-900 tracking-tight">Welcome back</h2>
-                <p className="text-gray-500 mt mt-2">Sign in to your account to continue</p>
+                <h2 className="text-3xl font-extrabold font-display tracking-tight text-gradient">Welcome back</h2>
+                <p className="text-gray-500 mt-2.5 text-base">Sign in to your account to continue</p>
               </div>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
