@@ -134,8 +134,12 @@ const OrderDetail = () => {
               {(order.items || []).map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
                   <div className="h-10 w-10 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
-                    {item.product?.image ? (
-                      <img src={item.product.image} alt={item.product?.name} className="h-full w-full object-cover" />
+                    {item.product?.image || item.image ? (
+                      <img 
+                        src={(item.product?.image || item.image).startsWith('http') || (item.product?.image || item.image).startsWith('data:') ? (item.product?.image || item.image) : `data:image/jpeg;base64,${item.product?.image || item.image}`} 
+                        alt={item.product?.name || item.name} 
+                        className="h-full w-full object-cover" 
+                      />
                     ) : (
                       <div className="h-full w-full flex items-center justify-center text-gray-300 text-lg">🍽</div>
                     )}

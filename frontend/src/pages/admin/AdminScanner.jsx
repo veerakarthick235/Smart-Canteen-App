@@ -80,7 +80,22 @@ function ResultCard({ result, onReset }) {
                 <tbody>
                   {(items || []).map((item, i) => (
                     <tr key={i} className="border-b border-border last:border-0">
-                      <td className="px-4 py-2.5 font-medium text-textPrimary">{item.name}</td>
+                      <td className="px-4 py-2.5">
+                        <div className="flex items-center gap-3">
+                          <div className="h-10 w-10 rounded-lg bg-bgLight overflow-hidden flex-shrink-0 flex items-center justify-center border border-border">
+                            {item.image ? (
+                              <img 
+                                src={item.image.startsWith('http') || item.image.startsWith('data:') ? item.image : `data:image/jpeg;base64,${item.image}`} 
+                                alt={item.name} 
+                                className="h-full w-full object-cover" 
+                              />
+                            ) : (
+                              <span className="text-gray-400">🍽</span>
+                            )}
+                          </div>
+                          <span className="font-medium text-textPrimary">{item.name}</span>
+                        </div>
+                      </td>
                       <td className="px-4 py-2.5 text-textSecondary">{item.category}</td>
                       <td className="px-4 py-2.5 text-right text-textPrimary">×{item.quantity}</td>
                       <td className="px-4 py-2.5 text-right text-textSecondary">{formatCurrency(item.price)}</td>

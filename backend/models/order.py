@@ -15,6 +15,22 @@ def _serialize(doc: dict) -> dict:
     for field in ("createdAt", "collectedAt"):
         if field in d and isinstance(d[field], datetime):
             d[field] = d[field].isoformat()
+            
+    # Dynamically attach product image to items if not present
+    if "items" in d and d["items"]:
+        try:
+            from db import get_db
+            db = get_db()
+            product_ids = [ObjectId(item["productId"]) for item in d["items"] if "productId" in item and "image" not in item]
+            if product_ids:
+                products = list(db.products.find({"_id": {"$in": product_ids}}, {"image": 1}))
+                img_map = {str(p["_id"]): p.get("image", "") for p in products}
+                for item in d["items"]:
+                    if "image" not in item and "productId" in item:
+                        item["image"] = img_map.get(str(item["productId"]), "")
+        except Exception:
+            pass
+            
     return d
 
 

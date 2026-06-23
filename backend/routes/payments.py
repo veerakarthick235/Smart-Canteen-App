@@ -64,6 +64,7 @@ def create_order():
                 "price": product["price"],
                 "quantity": quantity,
                 "subtotal": round(subtotal, 2),
+                "image": product.get("image", "")
             })
 
         # Get user details
