@@ -72,7 +72,7 @@ const OrderHistory = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
+    <div className="min-h-screen bg-[#F8FAFF]">
       <Navbar />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
@@ -82,8 +82,8 @@ const OrderHistory = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl font-bold text-white font-display tracking-tight">Order History</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-gray-900 font-display tracking-tight">Order History</h1>
+          <p className="text-gray-500 text-sm text-sm mt-1">
             {totalOrders > 0 ? `${totalOrders} total order${totalOrders !== 1 ? 's' : ''}` : 'No orders yet'}
           </p>
         </motion.div>
@@ -102,11 +102,11 @@ const OrderHistory = () => {
             <div className="glass-strong rounded-3xl p-12 relative overflow-hidden">
               <div className="gradient-border" />
               <div className="relative z-10">
-                <div className="h-20 w-20 rounded-full flex items-center justify-center mb-4 mx-auto border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                  <HiClipboardList className="h-10 w-10 text-slate-500" />
+                <div className="h-20 w-20 rounded-full flex items-center justify-center mb-4 mx-auto border border-gray-200" style={{ background: '#F8FAFC' }}>
+                  <HiClipboardList className="h-10 w-10 text-gray-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-white font-display">No orders yet</h3>
-                <p className="text-slate-400 text-sm mt-1 max-w-xs">
+                <h3 className="text-lg font-semibold text-gray-900 font-display">No orders yet</h3>
+                <p className="text-gray-500 text-sm text-sm mt-1 max-w-xs">
                   Place your first order from the canteen!
                 </p>
                 <Link to="/student/home" className="btn-primary mt-5 inline-flex">
@@ -127,22 +127,22 @@ const OrderHistory = () => {
               <table className="data-table w-full">
                 <thead>
                   <tr>
-                    <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3.5">
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3.5">
                       Order ID
                     </th>
-                    <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3.5">
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3.5">
                       Date
                     </th>
-                    <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3.5">
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3.5">
                       Items
                     </th>
-                    <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3.5">
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3.5">
                       Total
                     </th>
-                    <th className="text-left text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3.5">
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3.5">
                       Status
                     </th>
-                    <th className="text-right text-xs font-semibold text-slate-400 uppercase tracking-wider px-6 py-3.5">
+                    <th className="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3.5">
                       Action
                     </th>
                   </tr>
@@ -152,27 +152,27 @@ const OrderHistory = () => {
                     const itemCount = order.items?.length || 0
 
                     return (
-                      <tr key={order._id} className="border-t border-white/[0.06] hover:bg-white/[0.03] transition-colors">
+                      <tr key={order._id} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4">
-                          <span className="text-sm font-semibold text-white">
+                          <span className="text-sm font-semibold text-gray-800">
                             {formatOrderId(order._id)}
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <p className="text-sm text-slate-300">
+                          <p className="text-sm text-gray-600">
                             {formatDate(order.createdAt, 'short')}
                           </p>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-gray-400">
                             {formatDate(order.createdAt, 'time')}
                           </p>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-slate-300">
+                          <span className="text-sm text-gray-600">
                             {itemCount} item{itemCount !== 1 ? 's' : ''}
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm font-bold text-white">
+                          <span className="text-sm font-bold text-gray-900">
                             {formatCurrency(order.totalAmount)}
                           </span>
                         </td>
@@ -184,7 +184,7 @@ const OrderHistory = () => {
                         <td className="px-6 py-4 text-right">
                           <Link
                             to={`/student/orders/${order._id}`}
-                            className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                            className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
                           >
                             <HiEye className="h-4 w-4" />
                             View
@@ -215,8 +215,8 @@ const OrderHistory = () => {
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div>
-                        <p className="text-sm font-bold text-white">{formatOrderId(order._id)}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">{formatDate(order.createdAt, 'datetime')}</p>
+                        <p className="text-sm font-bold text-gray-900">{formatOrderId(order._id)}</p>
+                        <p className="text-xs text-gray-400 mt mt-0.5">{formatDate(order.createdAt, 'datetime')}</p>
                       </div>
                       <span className={`badge ${getBadgeClass(order.status)}`}>
                         {getStatusLabel(order.status)}
@@ -224,8 +224,8 @@ const OrderHistory = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs text-slate-500">{itemCount} item{itemCount !== 1 ? 's' : ''}</p>
-                        <p className="text-sm font-bold text-blue-400">{formatCurrency(order.totalAmount)}</p>
+                        <p className="text-xs text-gray-400">{itemCount} item{itemCount !== 1 ? 's' : ''}</p>
+                        <p className="text-sm font-bold text-blue-600">{formatCurrency(order.totalAmount)}</p>
                       </div>
                       <Link
                         to={`/student/orders/${order._id}`}
@@ -243,15 +243,15 @@ const OrderHistory = () => {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex items-center justify-between mt-6">
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-gray-400">
                   Page {currentPage} of {totalPages}
                 </p>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="p-2 rounded-lg border border-white/[0.08] text-slate-400 hover:bg-white/[0.06] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    style={{ background: 'rgba(255,255,255,0.03)' }}
+                    className="p-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    style={{ background: '#F8FAFC' }}
                   >
                     <HiChevronLeft className="h-4 w-4" />
                   </button>
@@ -261,13 +261,13 @@ const OrderHistory = () => {
                       onClick={() => handlePageChange(page)}
                       className={`h-8 w-8 rounded-lg text-sm font-medium transition-all ${
                         page === currentPage
-                          ? 'text-white'
-                          : 'border border-white/[0.08] text-slate-400 hover:text-white hover:bg-white/[0.06]'
+                          ? 'text-gray-900'
+                          : 'border border-gray-200 text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                       }`}
                       style={page === currentPage ? {
                         background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
-                        boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
-                      } : { background: 'rgba(255,255,255,0.03)' }}
+                        boxShadow: '0 2px 10px rgba(37,99,235,0.2)',
+                      } : { background: '#F8FAFC' }}
                     >
                       {page}
                     </button>
@@ -275,8 +275,8 @@ const OrderHistory = () => {
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="p-2 rounded-lg border border-white/[0.08] text-slate-400 hover:bg-white/[0.06] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    style={{ background: 'rgba(255,255,255,0.03)' }}
+                    className="p-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    style={{ background: '#F8FAFC' }}
                   >
                     <HiChevronRight className="h-4 w-4" />
                   </button>

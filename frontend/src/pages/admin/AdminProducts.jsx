@@ -195,8 +195,8 @@ const AdminProducts = () => {
           transition={{ duration: 0.4 }}
         >
           <div>
-            <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">Products</h1>
-            <p className="text-slate-400 text-sm mt-1">Manage canteen & stationery items</p>
+            <h1 className="text-2xl font-extrabold font-display text-gray-900 tracking-tight">Products</h1>
+            <p className="text-gray-500 text-sm text-sm mt-1">Manage canteen & stationery items</p>
           </div>
           <div className="flex items-center gap-3">
             <button 
@@ -223,7 +223,7 @@ const AdminProducts = () => {
         >
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+              <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search products..."
@@ -240,9 +240,9 @@ const AdminProducts = () => {
                   className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                     categoryFilter === cat
                       ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg'
-                      : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-200'
+                      : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
                   }`}
-                  style={categoryFilter === cat ? { boxShadow: '0 2px 10px rgba(37,99,235,0.3)' } : {}}
+                  style={categoryFilter === cat ? { boxShadow: '0 2px 10px rgba(37,99,235,0.2)' } : {}}
                 >
                   {cat || 'All'}
                 </button>
@@ -250,7 +250,7 @@ const AdminProducts = () => {
             </div>
             <button
               onClick={fetchProducts}
-              className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+              className="p-2.5 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
               style={{ border: '1px solid rgba(255,255,255,0.08)' }}
             >
               <HiRefresh className="h-4 w-4" />
@@ -269,8 +269,8 @@ const AdminProducts = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <HiPhotograph className="h-12 w-12 text-slate-600 mb-3" />
-            <p className="text-slate-400 font-medium">No products found</p>
+            <HiPhotograph className="h-12 w-12 text-gray-500 mb-3" />
+            <p className="text-gray-500 font-medium">No products found</p>
             <button onClick={openAddModal} className="mt-4 btn-primary text-sm">
               Add First Product
             </button>
@@ -299,19 +299,19 @@ const AdminProducts = () => {
                     <tr key={product._id}>
                       <td>
                         <div className="flex items-center gap-3">
-                          <div className="h-11 w-11 rounded-xl overflow-hidden flex-shrink-0" style={{ background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                          <div className="h-11 w-11 rounded-xl overflow-hidden flex-shrink-0" style={{ background: 'rgba(248,250,255,0.9)', border: '1px solid rgba(255,255,255,0.06)' }}>
                             {product.image ? (
                               <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
                             ) : (
-                              <div className="h-full w-full flex items-center justify-center text-slate-600">
+                              <div className="h-full w-full flex items-center justify-center text-gray-500">
                                 <HiPhotograph className="h-5 w-5" />
                               </div>
                             )}
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-white">{truncateText(product.name, 30)}</p>
+                            <p className="text-sm font-semibold text-gray-800">{truncateText(product.name, 30)}</p>
                             {product.description && (
-                              <p className="text-xs text-slate-500 mt-0.5">{truncateText(product.description, 40)}</p>
+                              <p className="text-xs text-gray-400 mt mt-0.5">{truncateText(product.description, 40)}</p>
                             )}
                           </div>
                         </div>
@@ -322,11 +322,11 @@ const AdminProducts = () => {
                         </span>
                       </td>
                       <td>
-                        <span className="text-sm font-bold text-white">{formatCurrency(product.price)}</span>
+                        <span className="text-sm font-bold text-gray-900">{formatCurrency(product.price)}</span>
                       </td>
                       <td>
                         <div className="flex items-center gap-2">
-                          <span className={`text-sm font-medium ${product.stock <= 0 ? 'text-red-400' : product.stock <= 5 ? 'text-yellow-400' : 'text-green-400'}`}>
+                          <span className={`text-sm font-medium ${product.stock <= 0 ? 'text-red-500' : product.stock <= 5 ? 'text-yellow-400' : 'text-green-600'}`}>
                             {product.stock}
                           </span>
                           <div className={`h-2 w-2 rounded-full ${product.stock <= 0 ? 'bg-red-500' : product.stock <= 5 ? 'bg-yellow-500' : 'bg-green-500'}`}
@@ -353,14 +353,14 @@ const AdminProducts = () => {
                         <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => openEditModal(product)}
-                            className="p-2 rounded-xl text-blue-400 hover:bg-white/5 transition-colors"
+                            className="p-2 rounded-xl text-blue-600 hover:bg-gray-50 transition-colors"
                             title="Edit"
                           >
                             <HiPencil className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => setDeleteModal(product)}
-                            className="p-2 rounded-xl text-red-400 hover:bg-white/5 transition-colors"
+                            className="p-2 rounded-xl text-red-500 hover:bg-gray-50 transition-colors"
                             title="Delete"
                           >
                             <HiTrash className="h-4 w-4" />
@@ -408,7 +408,7 @@ const AdminProducts = () => {
                 className="h-20 w-20 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-300 overflow-hidden flex-shrink-0"
                 style={{
                   border: '2px dashed rgba(255,255,255,0.1)',
-                  background: 'rgba(255,255,255,0.03)',
+                  background: '#F8FAFC',
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(37,99,235,0.3)'}
                 onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
@@ -417,8 +417,8 @@ const AdminProducts = () => {
                   <img src={imagePreview} alt="Preview" className="h-full w-full object-cover" />
                 ) : (
                   <div className="text-center">
-                    <HiPhotograph className="h-6 w-6 text-slate-500 mx-auto" />
-                    <p className="text-xs text-slate-500 mt-1">Upload</p>
+                    <HiPhotograph className="h-6 w-6 text-gray-400 mx-auto" />
+                    <p className="text-xs text-gray-400 mt mt-1">Upload</p>
                   </div>
                 )}
               </div>
@@ -434,12 +434,12 @@ const AdminProducts = () => {
                   <button
                     type="button"
                     onClick={() => { setImagePreview(null); setValue('image', '') }}
-                    className="ml-2 text-sm text-red-400 hover:text-red-300 transition-colors"
+                    className="ml-2 text-sm text-red-500 hover:text-red-600 transition-colors"
                   >
                     Remove
                   </button>
                 )}
-                <p className="text-xs text-slate-500 mt-1">Max 5MB · JPG, PNG, WEBP</p>
+                <p className="text-xs text-gray-400 mt mt-1">Max 5MB · JPG, PNG, WEBP</p>
               </div>
             </div>
             <input
@@ -454,7 +454,7 @@ const AdminProducts = () => {
           {/* Name */}
           <div>
             <label className="form-label">
-              Product Name <span className="text-red-400">*</span>
+              Product Name <span className="text-red-500">*</span>
             </label>
             <input
               {...register('name', { required: 'Name is required', minLength: { value: 2, message: 'Too short' } })}
@@ -479,7 +479,7 @@ const AdminProducts = () => {
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="form-label">
-                Price (₹) <span className="text-red-400">*</span>
+                Price (₹) <span className="text-red-500">*</span>
               </label>
               <input
                 {...register('price', {
@@ -497,7 +497,7 @@ const AdminProducts = () => {
 
             <div>
               <label className="form-label">
-                Category <span className="text-red-400">*</span>
+                Category <span className="text-red-500">*</span>
               </label>
               <select
                 {...register('category', { required: 'Required' })}
@@ -513,7 +513,7 @@ const AdminProducts = () => {
 
             <div>
               <label className="form-label">
-                Stock <span className="text-red-400">*</span>
+                Stock <span className="text-red-500">*</span>
               </label>
               <input
                 {...register('stock', {
@@ -537,7 +537,7 @@ const AdminProducts = () => {
               id="isAvailable"
               className="h-4 w-4 rounded border-slate-600 bg-slate-800 text-blue-500 focus:ring-blue-500/30 focus:ring-offset-0"
             />
-            <label htmlFor="isAvailable" className="text-sm font-medium text-slate-300">
+            <label htmlFor="isAvailable" className="text-sm font-medium text-gray-600">
               Available for ordering
             </label>
           </div>
@@ -566,13 +566,13 @@ const AdminProducts = () => {
       >
         <div className="text-center py-2">
           <div className="h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-3" style={{ background: 'rgba(239,68,68,0.15)' }}>
-            <HiTrash className="h-6 w-6 text-red-400" />
+            <HiTrash className="h-6 w-6 text-red-500" />
           </div>
-          <p className="text-slate-300 text-sm">
+          <p className="text-gray-600 text-sm">
             Are you sure you want to delete{' '}
             <strong className="text-white">"{deleteModal?.name}"</strong>?
           </p>
-          <p className="text-slate-500 text-xs mt-1">This action cannot be undone.</p>
+          <p className="text-gray-400 text-xs text-xs mt-1">This action cannot be undone.</p>
         </div>
       </Modal>
     </AdminLayout>

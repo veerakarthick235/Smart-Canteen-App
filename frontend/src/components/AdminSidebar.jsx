@@ -31,8 +31,8 @@ export default function AdminSidebar() {
     <div
       className="flex flex-col h-full"
       style={{
-        background: 'rgba(17,24,39,0.95)',
-        borderRight: '1px solid rgba(255,255,255,0.05)',
+        background: 'rgba(255,255,255,0.95)',
+        borderRight: '1px solid #E2E8F0',
       }}
     >
       {/* Logo */}
@@ -44,18 +44,18 @@ export default function AdminSidebar() {
             boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
           }}
         >
-          <span className="text-white font-bold text-lg">🍽</span>
+          <span className="text-gray-900 font-bold text-lg">🍽</span>
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="font-bold text-white text-base leading-tight font-display tracking-tight">Smart Canteen</p>
-            <p className="text-[11px] text-slate-500 font-medium">Admin Panel</p>
+            <p className="font-bold text-gray-900 text-base leading-tight font-display tracking-tight">Smart Canteen</p>
+            <p className="text-[11px] text-gray-400 font-medium">Admin Panel</p>
           </div>
         )}
       </div>
 
       {/* Divider */}
-      <div className="mx-4 h-px bg-white/[0.06]" />
+      <div className="mx-4 h-px bg-gray-50" />
 
       {/* Nav Links */}
       <nav className="flex-1 p-3 space-y-1 mt-2">
@@ -68,7 +68,7 @@ export default function AdminSidebar() {
               `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                ${isActive
                  ? 'text-white font-bold'
-                 : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                 : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                }
                ${collapsed ? 'justify-center px-3' : ''}`
             }
@@ -84,34 +84,34 @@ export default function AdminSidebar() {
       </nav>
 
       {/* User + Logout */}
-      <div className="p-3 border-t border-white/[0.06]">
+      <div className="p-3 border-t border-gray-200">
         {!collapsed && (
           <div
             className="flex items-center gap-3 px-3 py-3 mb-2 rounded-xl"
             style={{
-              background: 'rgba(30,41,59,0.5)',
+              background: 'rgba(255,255,255,0.7)',
               backdropFilter: 'blur(16px)',
               border: '1px solid rgba(255,255,255,0.06)',
             }}
           >
             <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0"
+              className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-900 text-xs font-bold shrink-0"
               style={{
                 background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
-                boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
+                boxShadow: '0 2px 10px rgba(37,99,235,0.2)',
               }}
             >
               {getInitials(user?.fullName)}
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-white truncate">{user?.fullName}</p>
-              <p className="text-[11px] text-slate-500 truncate">Administrator</p>
+              <p className="text-xs font-bold text-gray-900 truncate">{user?.fullName}</p>
+              <p className="text-[11px] text-gray-400 truncate truncate">Administrator</p>
             </div>
           </div>
         )}
         <button
           onClick={handleLogout}
-          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all w-full ${collapsed ? 'justify-center px-3' : ''}`}
+          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 hover:text-red-600 transition-all w-full ${collapsed ? 'justify-center px-3' : ''}`}
         >
           <FiLogOut size={18} className="shrink-0" />
           {!collapsed && <span>Sign Out</span>}
@@ -132,10 +132,10 @@ export default function AdminSidebar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
             <motion.div
               className="absolute left-0 top-0 h-full w-72"
-              style={{ boxShadow: '4px 0 30px rgba(0,0,0,0.5)' }}
+              style={{ boxShadow: '4px 0 30px rgba(0,0,0,0.08)' }}
               onClick={e => e.stopPropagation()}
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
@@ -152,18 +152,18 @@ export default function AdminSidebar() {
       <button
         className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl glass-strong"
         style={{
-          boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+          boxShadow: '0 4px 14px rgba(0,0,0,0.08)',
           border: '1px solid rgba(255,255,255,0.06)',
         }}
         onClick={() => setMobileOpen(!mobileOpen)}
       >
-        {mobileOpen ? <FiX size={20} className="text-white" /> : <FiMenu size={20} className="text-slate-300" />}
+        {mobileOpen ? <FiX size={20} className="text-white" /> : <FiMenu size={20} className="text-gray-600" />}
       </button>
 
       {/* Desktop sidebar */}
       <div
         className={`hidden lg:flex flex-col transition-all duration-300 ${collapsed ? 'w-[72px]' : 'w-[260px]'}`}
-        style={{ borderRight: '1px solid rgba(255,255,255,0.05)' }}
+        style={{ borderRight: '1px solid #E2E8F0' }}
       >
         <SidebarContent />
         {/* Collapse toggle */}
@@ -171,12 +171,12 @@ export default function AdminSidebar() {
           onClick={() => setCollapsed(!collapsed)}
           className="absolute bottom-20 -right-3 w-6 h-6 rounded-full flex items-center justify-center transition-colors"
           style={{
-            background: 'rgba(30,41,59,0.9)',
+            background: 'rgba(255,255,255,0.9)',
             border: '1px solid rgba(255,255,255,0.1)',
             boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
           }}
         >
-          <span className={`text-slate-400 text-xs transition-transform ${collapsed ? '' : 'rotate-180'}`}>›</span>
+          <span className={`text-gray-500 text-xs transition-transform ${collapsed ? '' : 'rotate-180'}`}>›</span>
         </button>
       </div>
     </>

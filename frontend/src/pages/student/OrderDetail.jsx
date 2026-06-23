@@ -50,7 +50,7 @@ const OrderDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0F172A]">
+      <div className="min-h-screen bg-[#F8FAFF]">
         <Navbar />
         <div className="flex items-center justify-center min-h-[400px]">
           <LoadingSpinner size="lg" />
@@ -62,7 +62,7 @@ const OrderDetail = () => {
   if (!order) return null
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
+    <div className="min-h-screen bg-[#F8FAFF]">
       <Navbar />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
@@ -72,12 +72,12 @@ const OrderDetail = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <Link to="/student/orders" className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors border border-white/[0.08]">
+          <Link to="/student/orders" className="p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors border border-gray-200">
             <HiArrowLeft className="h-5 w-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-white font-display tracking-tight">Order Details</h1>
-            <p className="text-slate-400 text-sm">{formatOrderId(order._id)}</p>
+            <h1 className="text-2xl font-bold text-gray-900 font-display tracking-tight">Order Details</h1>
+            <p className="text-gray-500 text-sm text-sm">{formatOrderId(order._id)}</p>
           </div>
         </motion.div>
 
@@ -91,7 +91,7 @@ const OrderDetail = () => {
           >
             <div className="flex items-center justify-between flex-wrap gap-3">
               <div>
-                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Order Status</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Order Status</p>
                 <div className="flex items-center gap-2 mt-1">
                   <span className={`badge ${getBadgeClass(order.status)}`}>
                     {getStatusLabel(order.status)}
@@ -99,8 +99,8 @@ const OrderDetail = () => {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Order Date</p>
-                <p className="text-sm font-medium text-white mt-1">
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Order Date</p>
+                <p className="text-sm font-medium text-gray-700 mt-1">
                   {formatDate(order.createdAt, 'datetime')}
                 </p>
               </div>
@@ -124,7 +124,7 @@ const OrderDetail = () => {
                             ? 'border-blue-500'
                             : 'border-white/[0.12]'
                         }`}
-                        style={isCompleted ? { background: 'linear-gradient(135deg, #2563EB, #06B6D4)' } : { background: 'rgba(255,255,255,0.04)' }}
+                        style={isCompleted ? { background: 'linear-gradient(135deg, #2563EB, #06B6D4)' } : { background: '#F8FAFC' }}
                       >
                         {isCompleted ? (
                           <HiCheckCircle className="h-5 w-5 text-white" />
@@ -132,12 +132,12 @@ const OrderDetail = () => {
                           <div className={`h-3 w-3 rounded-full ${isActive ? 'bg-blue-400' : 'bg-white/10'}`} />
                         )}
                       </div>
-                      <p className={`text-xs mt-1 font-medium capitalize ${isCompleted ? 'text-blue-400' : 'text-slate-500'}`}>
+                      <p className={`text-xs mt-1 font-medium capitalize ${isCompleted ? 'text-blue-600' : 'text-gray-400'}`}>
                         {step}
                       </p>
                     </div>
                     {idx < 2 && (
-                      <div className={`flex-1 h-0.5 mx-1 rounded-full ${currentIdx > stepIdx && order.status !== 'cancelled' ? 'bg-gradient-to-r from-blue-500 to-cyan-500' : 'bg-white/[0.08]'}`} />
+                      <div className={`flex-1 h-0.5 mx-1 rounded-full ${currentIdx > stepIdx && order.status !== 'cancelled' ? 'bg-gradient-to-r from-blue-500 to-cyan-500' : 'bg-gray-100'}`} />
                     )}
                   </div>
                 )
@@ -152,11 +152,11 @@ const OrderDetail = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <h2 className="text-base font-semibold text-white mb-4 font-display">Order Items</h2>
+            <h2 className="text-base font-semibold text-gray-800 mb-4 font-display">Order Items</h2>
             <div className="space-y-3">
               {(order.items || []).map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 py-2 border-b border-white/[0.06] last:border-0">
-                  <div className="h-10 w-10 rounded-lg overflow-hidden flex-shrink-0 border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                <div key={idx} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                  <div className="h-10 w-10 rounded-lg overflow-hidden flex-shrink-0 border border-gray-200" style={{ background: '#F8FAFC' }}>
                     {item.product?.image || item.image ? (
                       <img
                         src={(item.product?.image || item.image).startsWith('http') || (item.product?.image || item.image).startsWith('data:') ? (item.product?.image || item.image) : `data:image/jpeg;base64,${item.product?.image || item.image}`}
@@ -164,18 +164,18 @@ const OrderDetail = () => {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <div className="h-full w-full flex items-center justify-center text-slate-500 text-lg">🍽</div>
+                      <div className="h-full w-full flex items-center justify-center text-gray-400 text-lg">🍽</div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white">{item.product?.name || item.name || 'Item'}</p>
-                    <p className="text-xs text-slate-500">{item.product?.category}</p>
+                    <p className="text-sm font-medium text-gray-700">{item.product?.name || item.name || 'Item'}</p>
+                    <p className="text-xs text-gray-400">{item.product?.category}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-sm font-medium text-slate-300">
+                    <p className="text-sm font-medium text-gray-600">
                       {formatCurrency(item.price)} × {item.quantity}
                     </p>
-                    <p className="text-sm font-bold text-blue-400">
+                    <p className="text-sm font-bold text-blue-600">
                       {formatCurrency(item.price * item.quantity)}
                     </p>
                   </div>
@@ -184,8 +184,8 @@ const OrderDetail = () => {
             </div>
 
             {/* Total */}
-            <div className="flex items-center justify-between pt-4 border-t border-white/[0.08] mt-2">
-              <span className="text-base font-bold text-white font-display">Total Amount</span>
+            <div className="flex items-center justify-between pt-4 border-t border-gray-200 mt-2">
+              <span className="text-base font-bold text-gray-900 font-display">Total Amount</span>
               <span className="text-2xl font-bold text-gradient-blue">
                 {formatCurrency(order.totalAmount)}
               </span>
@@ -199,24 +199,24 @@ const OrderDetail = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.15 }}
           >
-            <h2 className="text-base font-semibold text-white mb-4 font-display">Payment Details</h2>
+            <h2 className="text-base font-semibold text-gray-800 mb-4 font-display">Payment Details</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Payment ID</p>
-                <p className="text-sm font-medium text-slate-200 mt-0.5 break-all">
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Payment ID</p>
+                <p className="text-sm font-medium text-gray-700 mt-0.5 break-all">
                   {order.paymentId || '—'}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Payment Method</p>
-                <p className="text-sm font-medium text-slate-200 mt-0.5">Razorpay</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Payment Method</p>
+                <p className="text-sm font-medium text-gray-700 mt-0.5">Razorpay</p>
               </div>
               <div>
-                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Order Number</p>
-                <p className="text-sm font-medium text-slate-200 mt-0.5">{formatOrderId(order._id)}</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Order Number</p>
+                <p className="text-sm font-medium text-gray-700 mt-0.5">{formatOrderId(order._id)}</p>
               </div>
               <div>
-                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Amount Paid</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Amount Paid</p>
                 <p className="text-sm font-bold text-emerald-400 mt-0.5">
                   {formatCurrency(order.totalAmount)}
                 </p>
@@ -235,8 +235,8 @@ const OrderDetail = () => {
               <div className="gradient-border" />
 
               <div className="relative z-10">
-                <h2 className="text-base font-semibold text-white mb-2 font-display">Collection QR Code</h2>
-                <p className="text-sm text-slate-400 mb-5">
+                <h2 className="text-base font-semibold text-gray-800 mb-2 font-display">Collection QR Code</h2>
+                <p className="text-sm text-gray-500 mb-5">
                   Show this QR code at the canteen counter to collect your order
                 </p>
 
@@ -252,7 +252,7 @@ const OrderDetail = () => {
                     </div>
                     <button
                       onClick={handleDownloadQR}
-                      className="mt-3 flex items-center gap-1.5 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                      className="mt-3 flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
                     >
                       <HiDownload className="h-4 w-4" />
                       Download QR

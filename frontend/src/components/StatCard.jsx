@@ -27,7 +27,7 @@ export default function StatCard({ icon: Icon, label, value, subValue, prefix, i
     <motion.div
       className="relative rounded-2xl p-6 overflow-hidden group"
       style={{
-        background: 'rgba(30,41,59,0.5)',
+        background: 'rgba(255,255,255,0.7)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         border: '1px solid rgba(255,255,255,0.06)',
@@ -50,19 +50,19 @@ export default function StatCard({ icon: Icon, label, value, subValue, prefix, i
 
       <div className="flex items-start justify-between relative">
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-slate-400 tracking-wide">{label}</p>
-          <p className="text-3xl font-extrabold text-white mt-2 tabular-nums font-display tracking-tight">
+          <p className="text-sm font-medium text-gray-500 tracking-wide">{label}</p>
+          <p className="text-3xl font-extrabold text-gray-900 mt-2 tabular-nums font-display tracking-tight">
             {displayValue}
           </p>
           {subValue && (
-            <p className="text-xs text-slate-500 mt-1.5">{subValue}</p>
+            <p className="text-xs text-gray-400 mt mt-1.5">{subValue}</p>
           )}
           {trend !== undefined && (
             <div
               className={`inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-lg text-xs font-bold ${
                 trend >= 0
-                  ? 'text-green-400'
-                  : 'text-red-400'
+                  ? 'text-green-600'
+                  : 'text-red-500'
               }`}
               style={{
                 background: trend >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',

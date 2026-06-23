@@ -109,7 +109,7 @@ export default function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-[#0F172A]">
+      <div className="min-h-screen bg-[#F8FAFF]">
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 py-20 text-center">
           <motion.div
@@ -121,11 +121,11 @@ export default function Cart() {
             <div className="gradient-border" />
             <div className="relative z-10">
               <span className="text-8xl block">🛒</span>
-              <h2 className="text-2xl font-bold text-white mt-6 font-display">Your cart is empty</h2>
-              <p className="text-slate-400 mt-2">Browse products and add them to your cart</p>
+              <h2 className="text-2xl font-bold text-gray-900 mt-6 font-display">Your cart is empty</h2>
+              <p className="text-gray-500 mt mt-2">Browse products and add them to your cart</p>
               <motion.button
                 onClick={() => navigate('/student/home')}
-                className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white"
+                className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-gray-900"
                 style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)', boxShadow: '0 4px 16px rgba(37,99,235,0.3)' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -140,7 +140,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
+    <div className="min-h-screen bg-[#F8FAFF]">
       <Navbar />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -151,12 +151,12 @@ export default function Cart() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <button onClick={() => navigate(-1)} className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors border border-white/[0.08]">
+          <button onClick={() => navigate(-1)} className="p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors border border-gray-200">
             <FiArrowLeft size={20} />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white font-display">Your Cart</h1>
-            <p className="text-slate-400 text-sm">{cartItems.length} item{cartItems.length !== 1 ? 's' : ''}</p>
+            <h1 className="text-2xl font-bold text-gray-900 font-display">Your Cart</h1>
+            <p className="text-gray-500 text-sm text-sm">{cartItems.length} item{cartItems.length !== 1 ? 's' : ''}</p>
           </div>
         </motion.div>
 
@@ -172,7 +172,7 @@ export default function Cart() {
                 transition={{ duration: 0.35, delay: idx * 0.05 }}
               >
                 {/* Item image / icon */}
-                <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 text-3xl overflow-hidden border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 text-3xl overflow-hidden border border-gray-200" style={{ background: '#F8FAFC' }}>
                   {item.image
                     ? <img src={item.image.startsWith('http') || item.image.startsWith('data:') ? item.image : `data:image/jpeg;base64,${item.image}`} alt={item.name} className="w-full h-full object-cover rounded-xl" />
                     : (item.category === 'Food' ? '🍱' : item.category === 'Beverages' ? '☕' : '✏️')
@@ -181,24 +181,24 @@ export default function Cart() {
 
                 {/* Item info */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-white text-sm truncate">{item.name}</h3>
+                  <h3 className="font-semibold text-gray-900 text-sm truncate">{item.name}</h3>
                   <span className={`badge text-xs mt-1 ${getCategoryBadge(item.category)}`}>{item.category}</span>
-                  <p className="text-blue-400 font-bold mt-1">{formatCurrency(item.price)}</p>
+                  <p className="text-blue-600 font-bold mt-1">{formatCurrency(item.price)}</p>
                 </div>
 
                 {/* Quantity controls */}
-                <div className="flex items-center border border-white/[0.08] rounded-xl overflow-hidden shrink-0" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden shrink-0" style={{ background: '#F8FAFC' }}>
                   <button
                     onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                    className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-white/[0.08] transition-colors"
+                    className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
                   >
                     <FiMinus size={14} />
                   </button>
-                  <span className="w-8 text-center text-sm font-bold text-white">{item.quantity}</span>
+                  <span className="w-8 text-center text-sm font-bold text-gray-900">{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item._id, item.quantity + 1)}
                     disabled={item.quantity >= item.stock}
-                    className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-white/[0.08] transition-colors disabled:opacity-40"
+                    className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-40"
                   >
                     <FiPlus size={14} />
                   </button>
@@ -206,20 +206,20 @@ export default function Cart() {
 
                 {/* Subtotal */}
                 <div className="text-right min-w-[72px]">
-                  <p className="font-bold text-white">{formatCurrency(item.price * item.quantity)}</p>
+                  <p className="font-bold text-gray-900">{formatCurrency(item.price * item.quantity)}</p>
                 </div>
 
                 {/* Remove */}
                 <button
                   onClick={() => removeFromCart(item._id)}
-                  className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-colors"
+                  className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors"
                 >
                   <FiTrash2 size={16} />
                 </button>
               </motion.div>
             ))}
 
-            <button onClick={clearCart} className="text-sm text-red-400 hover:text-red-300 hover:underline transition-colors">
+            <button onClick={clearCart} className="text-sm text-red-500 hover:text-red-600 hover:underline transition-colors">
               Clear all items
             </button>
           </div>
@@ -235,33 +235,33 @@ export default function Cart() {
               <div className="gradient-border" />
 
               <div className="relative z-10">
-                <h2 className="font-bold text-white text-lg mb-4 font-display">Order Summary</h2>
+                <h2 className="font-bold text-gray-900 text-lg mb-4 font-display">Order Summary</h2>
 
                 <div className="space-y-2.5 mb-4">
                   {cartItems.map(item => (
                     <div key={item._id} className="flex justify-between text-sm">
-                      <span className="text-slate-400 truncate pr-2">
+                      <span className="text-gray-500 truncate pr-2">
                         {item.name} × {item.quantity}
                       </span>
-                      <span className="font-medium text-slate-200 shrink-0">
+                      <span className="font-medium text-gray-700 shrink-0">
                         {formatCurrency(item.price * item.quantity)}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <div className="border-t border-white/[0.08] pt-4 mb-6">
+                <div className="border-t border-gray-200 pt-4 mb-6">
                   <div className="flex justify-between items-center">
-                    <span className="font-bold text-white text-lg">Total</span>
+                    <span className="font-bold text-gray-900 text-lg">Total</span>
                     <span className="font-bold text-2xl text-gradient-blue">{formatCurrency(cartTotal)}</span>
                   </div>
-                  <p className="text-xs text-slate-500 mt-1">Includes all taxes</p>
+                  <p className="text-xs text-gray-400 mt mt-1">Includes all taxes</p>
                 </div>
 
                 <motion.button
                   onClick={handleCheckout}
                   disabled={loading}
-                  className="w-full py-3 text-base font-bold text-white rounded-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
+                  className="w-full py-3 text-base font-bold text-gray-900 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
                   style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)', boxShadow: '0 4px 20px rgba(37,99,235,0.35)' }}
                   whileHover={{ scale: 1.02, boxShadow: '0 6px 28px rgba(37,99,235,0.5)' }}
                   whileTap={{ scale: 0.98 }}
@@ -284,7 +284,7 @@ export default function Cart() {
                   </span>
                 </motion.button>
 
-                <div className="flex items-center justify-center gap-2 mt-4 text-xs text-slate-500">
+                <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
                   <span>🔒</span>
                   <span>Secured by Razorpay</span>
                 </div>

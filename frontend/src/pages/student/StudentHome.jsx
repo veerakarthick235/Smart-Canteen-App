@@ -85,7 +85,7 @@ export default function StudentHome() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
+    <div className="min-h-screen bg-[#F8FAFF]">
       <Navbar />
 
       {/* Hero Section */}
@@ -101,13 +101,13 @@ export default function StudentHome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-slate-400 text-sm font-medium mb-1">
+            <p className="text-gray-500 text-sm text-sm font-medium mb-1">
               {getGreeting()}, {user?.fullName?.split(' ')[0] || 'there'} 👋
             </p>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 font-display tracking-tight">
               Order Now
             </h1>
-            <p className="text-slate-400 mt-1.5 text-base">
+            <p className="text-gray-500 mt mt-1.5 text-base">
               {CATEGORY_CONFIG[category].desc}
             </p>
           </motion.div>
@@ -121,19 +121,19 @@ export default function StudentHome() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <div className="relative">
-              <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+              <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search for food, beverages, stationery…"
                 value={searchInput}
                 onChange={e => setSearchInput(e.target.value)}
-                className="w-full pl-14 pr-28 py-4 text-base rounded-2xl border border-white/[0.08] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/40 transition-all"
-                style={{ background: 'rgba(30,41,59,0.6)', backdropFilter: 'blur(16px)' }}
+                className="w-full pl-14 pr-28 py-4 text-base rounded-2xl border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/40 transition-all"
+                style={{ background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(16px)' }}
               />
               <button
                 type="submit"
                 className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 hover:opacity-90"
-                style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)', boxShadow: '0 2px 10px rgba(37,99,235,0.3)' }}
+                style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)', boxShadow: '0 2px 10px rgba(37,99,235,0.2)' }}
               >
                 Search
               </button>
@@ -160,12 +160,12 @@ export default function StudentHome() {
                 className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold whitespace-nowrap transition-all duration-200 ${
                   isActive
                     ? 'text-white scale-[1.02]'
-                    : 'text-slate-400 border border-white/[0.08] hover:border-white/[0.15] hover:text-slate-200'
+                    : 'text-gray-500 border border-gray-200 hover:border-white/[0.15] hover:text-gray-700'
                 }`}
                 style={isActive ? {
                   background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
                   boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
-                } : { background: 'rgba(255,255,255,0.04)' }}
+                } : { background: '#F8FAFC' }}
               >
                 <span className="text-base">{config.emoji}</span>
                 {cat}
@@ -177,12 +177,12 @@ export default function StudentHome() {
         {/* Search results label */}
         {search && (
           <div className="flex items-center gap-2 mb-4 px-1">
-            <p className="text-sm text-slate-400">
-              Showing results for "<strong className="text-white">{search}</strong>"
+            <p className="text-sm text-gray-500">
+              Showing results for "<strong className="text-gray-900">{search}</strong>"
             </p>
             <button
               onClick={() => { setSearch(''); setSearchInput('') }}
-              className="text-xs text-red-400 hover:underline font-medium"
+              className="text-xs text-red-500 hover:underline font-medium"
             >
               Clear
             </button>
@@ -199,8 +199,8 @@ export default function StudentHome() {
             animate={{ opacity: 1, scale: 1 }}
           >
             <span className="text-7xl block mb-4">🔍</span>
-            <h3 className="text-xl font-bold text-white font-display">No products found</h3>
-            <p className="text-slate-400 mt-2">Try a different search or category</p>
+            <h3 className="text-xl font-bold text-gray-900 font-display">No products found</h3>
+            <p className="text-gray-500 mt mt-2">Try a different search or category</p>
             <button onClick={() => handleCategoryChange('All')} className="btn-secondary mt-5">
               Show All Products
             </button>
@@ -230,13 +230,13 @@ export default function StudentHome() {
                     onClick={() => setPage(p)}
                     className={`w-11 h-11 rounded-xl text-sm font-bold transition-all duration-200 ${
                       page === p
-                        ? 'text-white'
-                        : 'border border-white/[0.08] text-slate-400 hover:border-blue-500/30 hover:text-blue-400'
+                        ? 'text-gray-900'
+                        : 'border border-gray-200 text-gray-500 hover:border-blue-500/30 hover:text-blue-600'
                     }`}
                     style={page === p ? {
                       background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
                       boxShadow: '0 4px 12px rgba(37,99,235,0.3)',
-                    } : { background: 'rgba(255,255,255,0.04)' }}
+                    } : { background: '#F8FAFC' }}
                   >
                     {p}
                   </button>

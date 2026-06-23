@@ -98,8 +98,8 @@ export default function ProductCard({ product }) {
 
         {/* Out of stock overlay */}
         {isOutOfStock && (
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-            <span className="px-4 py-2 rounded-xl bg-slate-800/90 text-white text-sm font-bold border border-white/10">
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center">
+            <span className="px-4 py-2 rounded-xl bg-slate-800/90 text-gray-900 text-sm font-bold border border-gray-200">
               Out of Stock
             </span>
           </div>
@@ -108,8 +108,8 @@ export default function ProductCard({ product }) {
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-white text-base leading-snug font-display tracking-tight">{product.name}</h3>
-        <p className="text-xs text-slate-400 mt-1.5 leading-relaxed flex-1">
+        <h3 className="font-bold text-gray-900 text-base leading-snug font-display tracking-tight">{product.name}</h3>
+        <p className="text-xs text-gray-500 mt mt-1.5 leading-relaxed flex-1">
           {truncateText(product.description, 70)}
         </p>
 
@@ -120,7 +120,7 @@ export default function ProductCard({ product }) {
               {formatCurrency(product.price)}
             </span>
           </div>
-          <span className="text-xs text-slate-500 font-medium">
+          <span className="text-xs text-gray-400 font-medium">
             {product.stock > 0 ? `${product.stock} in stock` : ''}
           </span>
         </div>
@@ -138,14 +138,14 @@ export default function ProductCard({ product }) {
             >
               <button
                 onClick={() => setQty(q => Math.max(1, q - 1))}
-                className="w-9 h-9 flex items-center justify-center text-slate-400 hover:bg-white/5 hover:text-white transition-colors"
+                className="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
                 <FiMinus size={14} />
               </button>
-              <span className="w-8 text-center text-sm font-bold text-white">{qty}</span>
+              <span className="w-8 text-center text-sm font-bold text-gray-900">{qty}</span>
               <button
                 onClick={() => setQty(q => Math.min(remainingStock, q + 1))}
-                className="w-9 h-9 flex items-center justify-center text-slate-400 hover:bg-white/5 hover:text-white transition-colors"
+                className="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
                 <FiPlus size={14} />
               </button>
@@ -174,7 +174,7 @@ export default function ProductCard({ product }) {
               border: '1px solid rgba(34,197,94,0.2)',
             }}
           >
-            <span className="text-xs text-green-400 font-bold">✓ {cartQty} in cart</span>
+            <span className="text-xs text-green-600 font-bold">✓ {cartQty} in cart</span>
           </div>
         )}
       </div>

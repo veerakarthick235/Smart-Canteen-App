@@ -108,7 +108,7 @@ const Profile = () => {
   const yearLabel = YEARS.find((y) => y.value === user?.year)?.label || user?.year
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
+    <div className="min-h-screen bg-[#F8FAFF]">
       <Navbar />
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
@@ -117,8 +117,8 @@ const Profile = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl font-bold text-white font-display tracking-tight">My Profile</h1>
-          <p className="text-slate-400 text-sm mt-1">View and update your account information</p>
+          <h1 className="text-2xl font-bold text-gray-900 font-display tracking-tight">My Profile</h1>
+          <p className="text-gray-500 text-sm text-sm mt-1">View and update your account information</p>
         </motion.div>
 
         {/* Avatar & Quick Stats */}
@@ -137,7 +137,7 @@ const Profile = () => {
                   {user?.profileImage ? (
                     <img src={user.profileImage} alt={user.fullName} className="h-full w-full object-cover" />
                   ) : (
-                    <span className="text-2xl font-bold text-white">
+                    <span className="text-2xl font-bold text-gray-900">
                       {getInitials(user?.fullName)}
                     </span>
                   )}
@@ -158,13 +158,13 @@ const Profile = () => {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-xl font-bold text-white truncate font-display">{user?.fullName}</h2>
-                <p className="text-slate-400 text-sm truncate">{user?.email}</p>
+                <h2 className="text-xl font-bold text-gray-900 truncate font-display">{user?.fullName}</h2>
+                <p className="text-gray-500 text-sm text-sm truncate">{user?.email}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border border-blue-500/20" style={{ background: 'rgba(37,99,235,0.15)', color: '#93C5FD' }}>
                     Student
                   </span>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.06)', color: '#94A3B8' }}>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border border-gray-200" style={{ background: 'rgba(0,0,0,0.06)', color: '#94A3B8' }}>
                     {user?.department}
                   </span>
                 </div>
@@ -172,18 +172,18 @@ const Profile = () => {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-white/[0.08]">
+            <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-gray-200">
               <div className="text-center">
-                <p className="text-xl font-bold text-white">{orderCount}</p>
-                <p className="text-xs text-slate-500 mt-0.5">Total Orders</p>
+                <p className="text-xl font-bold text-gray-900">{orderCount}</p>
+                <p className="text-xs text-gray-400 mt mt-0.5">Total Orders</p>
               </div>
-              <div className="text-center border-x border-white/[0.08]">
-                <p className="text-xl font-bold text-white">{user?.department || '—'}</p>
-                <p className="text-xs text-slate-500 mt-0.5">Department</p>
+              <div className="text-center border-x border-gray-200">
+                <p className="text-xl font-bold text-gray-900">{user?.department || '—'}</p>
+                <p className="text-xs text-gray-400 mt mt-0.5">Department</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-bold text-white">{yearLabel || '—'}</p>
-                <p className="text-xs text-slate-500 mt-0.5">Year</p>
+                <p className="text-xl font-bold text-gray-900">{yearLabel || '—'}</p>
+                <p className="text-xs text-gray-400 mt mt-0.5">Year</p>
               </div>
             </div>
           </div>
@@ -197,11 +197,11 @@ const Profile = () => {
           transition={{ duration: 0.45, delay: 0.1 }}
         >
           <div className="flex items-center justify-between mb-5">
-            <h3 className="text-base font-semibold text-white font-display">Personal Information</h3>
+            <h3 className="text-base font-semibold text-gray-900 font-display">Personal Information</h3>
             {!editing ? (
               <motion.button
                 onClick={() => setEditing(true)}
-                className="flex items-center gap-1.5 text-sm text-blue-400 hover:text-blue-300 font-medium px-3 py-1.5 rounded-lg transition-colors border border-blue-500/20"
+                className="flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-1.5 rounded-lg transition-colors border border-blue-500/20"
                 style={{ background: 'rgba(37,99,235,0.1)' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -213,7 +213,7 @@ const Profile = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCancel}
-                  className="flex items-center gap-1 text-sm text-slate-400 hover:text-slate-200 font-medium px-3 py-1.5 rounded-lg border border-white/[0.08] hover:bg-white/[0.06] transition-colors"
+                  className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 font-medium px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
                 >
                   <HiX className="h-3.5 w-3.5" />
                   Cancel
@@ -222,7 +222,7 @@ const Profile = () => {
                   onClick={handleSubmit(onSubmit)}
                   disabled={saving}
                   className="flex items-center gap-1 text-sm text-white font-medium px-3 py-1.5 rounded-lg disabled:opacity-50"
-                  style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)', boxShadow: '0 2px 10px rgba(37,99,235,0.3)' }}
+                  style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)', boxShadow: '0 2px 10px rgba(37,99,235,0.2)' }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -292,13 +292,13 @@ const Profile = () => {
                 { icon: HiAcademicCap, label: 'Department', value: user?.department },
                 { icon: HiBookOpen, label: 'Year', value: yearLabel },
               ].map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex items-center gap-4 py-3 border-b border-white/[0.06] last:border-0">
-                  <div className="h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                    <Icon className="h-4 w-4 text-slate-400" />
+                <div key={label} className="flex items-center gap-4 py-3 border-b border-gray-200 last:border-0">
+                  <div className="h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 border border-gray-200" style={{ background: '#F8FAFC' }}>
+                    <Icon className="h-4 w-4 text-gray-500" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{label}</p>
-                    <p className="text-sm font-medium text-white mt-0.5 truncate">{value || '—'}</p>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</p>
+                    <p className="text-sm font-medium text-gray-700 mt-0.5 truncate">{value || '—'}</p>
                   </div>
                 </div>
               ))}

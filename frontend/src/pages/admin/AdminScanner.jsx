@@ -38,19 +38,19 @@ function ResultCard({ result, onReset }) {
             <FiCheckCircle size={22} className="text-white" />
           </div>
           <div>
-            <p className="font-bold text-green-400 text-lg font-display">✅ Collection Successful</p>
-            <p className="text-green-400/70 text-sm">Order marked as collected</p>
+            <p className="font-bold text-green-600 text-lg font-display">✅ Collection Successful</p>
+            <p className="text-green-600/70 text-sm">Order marked as collected</p>
           </div>
           <div className="ml-auto text-right">
-            <p className="text-xs text-green-400/60">Order</p>
-            <p className="font-bold text-green-400 text-sm font-mono">{shortenOrderId(order?._id)}</p>
+            <p className="text-xs text-green-600/60">Order</p>
+            <p className="font-bold text-green-600 text-sm font-mono">{shortenOrderId(order?._id)}</p>
           </div>
         </div>
 
         <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Student Info */}
           <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
               <FiUser size={13} /> Student Details
             </p>
             <div className="space-y-2">
@@ -63,7 +63,7 @@ function ResultCard({ result, onReset }) {
 
           {/* Payment Info */}
           <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Payment Details</p>
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Payment Details</p>
             <div className="space-y-2">
               <InfoRow label="Total Amount" value={formatCurrency(totalAmount)} highlight />
               <InfoRow label="Payment ID" value={paymentId ? `${paymentId.slice(0, 20)}…` : '—'} mono />
@@ -73,10 +73,10 @@ function ResultCard({ result, onReset }) {
 
           {/* Items */}
           <div className="sm:col-span-2">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
               <FiPackage size={13} /> Ordered Items
             </p>
-            <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
+            <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(248,250,255,0.8)', border: '1px solid rgba(255,255,255,0.04)' }}>
               <table className="data-table">
                 <thead>
                   <tr>
@@ -93,7 +93,7 @@ function ResultCard({ result, onReset }) {
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="h-10 w-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center"
-                            style={{ background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}
+                            style={{ background: 'rgba(248,250,255,0.9)', border: '1px solid rgba(255,255,255,0.06)' }}
                           >
                             {item.image ? (
                               <img 
@@ -102,23 +102,23 @@ function ResultCard({ result, onReset }) {
                                 className="h-full w-full object-cover" 
                               />
                             ) : (
-                              <span className="text-slate-500">🍽</span>
+                              <span className="text-gray-400">🍽</span>
                             )}
                           </div>
-                          <span className="font-medium text-white">{item.name}</span>
+                          <span className="font-medium text-gray-700">{item.name}</span>
                         </div>
                       </td>
-                      <td className="text-slate-400">{item.category}</td>
+                      <td className="text-gray-500">{item.category}</td>
                       <td className="text-right text-white">×{item.quantity}</td>
-                      <td className="text-right text-slate-400">{formatCurrency(item.price)}</td>
-                      <td className="text-right font-semibold text-white">{formatCurrency(item.subtotal)}</td>
+                      <td className="text-right text-gray-500">{formatCurrency(item.price)}</td>
+                      <td className="text-right font-semibold text-gray-800">{formatCurrency(item.subtotal)}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={4} className="font-bold text-white" style={{ background: 'rgba(34,197,94,0.08)' }}>Total</td>
-                    <td className="text-right font-bold text-green-400 text-base" style={{ background: 'rgba(34,197,94,0.08)' }}>{formatCurrency(totalAmount)}</td>
+                    <td colSpan={4} className="font-bold text-gray-900" style={{ background: 'rgba(34,197,94,0.08)' }}>Total</td>
+                    <td className="text-right font-bold text-green-600 text-base" style={{ background: 'rgba(34,197,94,0.08)' }}>{formatCurrency(totalAmount)}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -214,8 +214,8 @@ function ResultCard({ result, onReset }) {
 function InfoRow({ label, value, highlight, mono }) {
   return (
     <div className="flex justify-between gap-2 text-sm">
-      <span className="text-slate-500 shrink-0">{label}</span>
-      <span className={`font-medium text-right ${highlight ? 'text-green-400 font-bold' : 'text-white'} ${mono ? 'font-mono text-xs' : ''}`}>
+      <span className="text-gray-400 shrink-0">{label}</span>
+      <span className={`font-medium text-right ${highlight ? 'text-green-600 font-bold' : 'text-gray-900'} ${mono ? 'font-mono text-xs' : ''}`}>
         {value}
       </span>
     </div>
@@ -323,8 +323,8 @@ export default function AdminScanner() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">QR Scanner</h1>
-          <p className="text-slate-400 mt-1">Scan student QR codes to confirm item collection</p>
+          <h1 className="text-2xl font-extrabold font-display text-gray-900 tracking-tight">QR Scanner</h1>
+          <p className="text-gray-500 mt mt-1">Scan student QR codes to confirm item collection</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -342,8 +342,8 @@ export default function AdminScanner() {
                 >
                   <div className="p-5 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                     <div className="flex items-center gap-2">
-                      <FiCamera size={18} className="text-blue-400" />
-                      <span className="font-semibold text-white font-display">Camera Scanner</span>
+                      <FiCamera size={18} className="text-blue-600" />
+                      <span className="font-semibold text-gray-900 font-display">Camera Scanner</span>
                     </div>
                     {scanning
                       ? <motion.button onClick={stopScanner} className="btn-danger text-sm py-1.5 px-4" whileTap={{ scale: 0.95 }}>Stop</motion.button>
@@ -383,7 +383,7 @@ export default function AdminScanner() {
                         <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-cyan-400 rounded-br-lg pointer-events-none" />
                       </div>
 
-                      <p className="text-center text-sm text-slate-400 mt-3">
+                      <p className="text-center text-sm text-gray-500 mt mt-3">
                         <motion.span
                           animate={{ opacity: [0.5, 1, 0.5] }}
                           transition={{ duration: 2, repeat: Infinity }}
@@ -400,10 +400,10 @@ export default function AdminScanner() {
                           background: 'rgba(255,255,255,0.02)',
                         }}
                       >
-                        <FiCamera size={32} className="text-slate-500" />
+                        <FiCamera size={32} className="text-gray-400" />
                       </div>
-                      <p className="text-slate-400 font-medium">Camera is stopped</p>
-                      <p className="text-slate-500 text-sm mt-1">Click "Start Camera" to begin scanning</p>
+                      <p className="text-gray-500 font-medium">Camera is stopped</p>
+                      <p className="text-gray-400 text-sm mt-1">Click "Start Camera" to begin scanning</p>
                       <motion.button
                         onClick={startScanner}
                         className="btn-primary mt-4 gap-2"
@@ -423,10 +423,10 @@ export default function AdminScanner() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  <p className="font-semibold text-white mb-1 flex items-center gap-2 font-display">
-                    <FiSearch size={16} className="text-blue-400" /> Manual Token Entry
+                  <p className="font-semibold text-gray-800 mb-1 flex items-center gap-2 font-display">
+                    <FiSearch size={16} className="text-blue-600" /> Manual Token Entry
                   </p>
-                  <p className="text-xs text-slate-500 mb-3">Enter the QR token manually if camera is unavailable</p>
+                  <p className="text-xs text-gray-400 mb-3">Enter the QR token manually if camera is unavailable</p>
                   <form onSubmit={handleManualSubmit} className="flex gap-2">
                     <input
                       type="text"
@@ -464,7 +464,7 @@ export default function AdminScanner() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <p className="font-semibold text-white mb-3 text-sm font-display">How to collect orders</p>
+              <p className="font-semibold text-gray-800 mb-3 text-sm font-display">How to collect orders</p>
               <ol className="space-y-3">
                 {[
                   'Ask the student to open their order QR code',
@@ -479,7 +479,7 @@ export default function AdminScanner() {
                     >
                       {i + 1}
                     </span>
-                    <span className="text-sm text-slate-400">{step}</span>
+                    <span className="text-sm text-gray-500">{step}</span>
                   </li>
                 ))}
               </ol>
@@ -492,11 +492,11 @@ export default function AdminScanner() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <p className="font-semibold text-white mb-3 text-sm flex items-center gap-2 font-display">
-                <FiClock size={15} className="text-slate-400" /> Recent Scans
+              <p className="font-semibold text-gray-800 mb-3 text-sm flex items-center gap-2 font-display">
+                <FiClock size={15} className="text-gray-500" /> Recent Scans
               </p>
               {scanHistory.length === 0 ? (
-                <p className="text-slate-500 text-xs text-center py-4">No scans yet this session</p>
+                <p className="text-gray-400 text-xs text-xs text-center py-4">No scans yet this session</p>
               ) : (
                 <div className="space-y-2">
                   {scanHistory.map((scan, i) => (
@@ -513,10 +513,10 @@ export default function AdminScanner() {
                         }}
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-white truncate">{scan.label}</p>
-                        <p className="text-xs text-slate-500">{scan.time}</p>
+                        <p className="font-medium text-gray-700 truncate">{scan.label}</p>
+                        <p className="text-xs text-gray-400">{scan.time}</p>
                       </div>
-                      <span className={`text-xs font-semibold ${scan.success ? 'text-green-400' : 'text-red-400'}`}>
+                      <span className={`text-xs font-semibold ${scan.success ? 'text-green-600' : 'text-red-500'}`}>
                         {scan.success ? 'OK' : 'FAIL'}
                       </span>
                     </div>
@@ -532,7 +532,7 @@ export default function AdminScanner() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <p className="font-semibold text-white mb-3 text-sm font-display">Status Guide</p>
+              <p className="font-semibold text-gray-800 mb-3 text-sm font-display">Status Guide</p>
               <div className="space-y-2.5">
                 {[
                   { color: '#4ADE80', glow: 'rgba(74,222,128,0.5)', label: 'SUCCESS', desc: 'Give items to student' },
@@ -543,8 +543,8 @@ export default function AdminScanner() {
                   <div key={label} className="flex items-start gap-2.5">
                     <div className="w-3 h-3 rounded-full shrink-0 mt-0.5" style={{ background: color, boxShadow: `0 0 6px ${glow}` }} />
                     <div>
-                      <p className="text-xs font-bold text-white">{label}</p>
-                      <p className="text-xs text-slate-500">{desc}</p>
+                      <p className="text-xs font-bold text-gray-900">{label}</p>
+                      <p className="text-xs text-gray-400">{desc}</p>
                     </div>
                   </div>
                 ))}

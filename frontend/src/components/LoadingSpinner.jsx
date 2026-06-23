@@ -8,12 +8,12 @@ export default function LoadingSpinner({ fullScreen = false, size = 'md', classN
   const content = (
     <div className="flex flex-col items-center justify-center gap-4">
       <div
-        className={`${sizeClasses[size] || sizeClasses.md} border-slate-700 border-t-blue-500 rounded-full animate-spin ${className}`}
+        className={`${sizeClasses[size] || sizeClasses.md} border-blue-200 border-t-blue-600 rounded-full animate-spin ${className}`}
         style={{
           boxShadow: '0 0 20px rgba(37,99,235,0.3), 0 0 40px rgba(37,99,235,0.1)',
         }}
       />
-      <p className="text-sm text-slate-400 font-medium tracking-wide">Loading…</p>
+      <p className="text-sm text-gray-500 font-medium tracking-wide">Loading…</p>
     </div>
   )
 
@@ -22,9 +22,9 @@ export default function LoadingSpinner({ fullScreen = false, size = 'md', classN
       <div
         className="fixed inset-0 flex items-center justify-center z-50"
         style={{
-          background: 'rgba(17,24,39,0.80)',
+          background: 'rgba(255,255,255,0.80)',
           backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(16px)',
         }}
       >
         {content}

@@ -43,7 +43,7 @@ export default function Register() {
     `form-input ${error ? 'border-red-500 ring-1 ring-red-500' : ''}`
 
   return (
-    <div className="min-h-screen bg-[#0F172A] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F8FAFF] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
       <AnimatedBackground particleCount={12} />
 
       {/* Decorative orbs */}
@@ -62,10 +62,10 @@ export default function Register() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)' }}>
               <span className="text-2xl">🍽️</span>
             </div>
-            <span className="font-bold font-display text-white text-xl">Smart Canteen</span>
+            <span className="font-bold font-display text-gray-900 text-xl">Smart Canteen</span>
           </Link>
-          <h1 className="text-3xl font-bold font-display text-white tracking-tight">Create your account</h1>
-          <p className="text-slate-400 mt-1.5">Join Smart Canteen and skip the queue</p>
+          <h1 className="text-3xl font-bold font-display text-gray-900 tracking-tight">Create your account</h1>
+          <p className="text-gray-500 mt mt-1.5">Join Smart Canteen and skip the queue</p>
         </div>
 
         {/* Form Card */}
@@ -77,7 +77,7 @@ export default function Register() {
             <div>
               <label htmlFor="fullName" className="form-label">Full Name</label>
               <div className="relative">
-                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   id="fullName"
                   type="text"
@@ -96,7 +96,7 @@ export default function Register() {
             <div>
               <label htmlFor="email" className="form-label">College Email</label>
               <div className="relative">
-                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   id="email"
                   type="email"
@@ -115,7 +115,7 @@ export default function Register() {
             <div>
               <label htmlFor="studentId" className="form-label">Student ID / Roll Number</label>
               <div className="relative">
-                <FiHash className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                <FiHash className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   id="studentId"
                   type="text"
@@ -135,7 +135,7 @@ export default function Register() {
               <div>
                 <label htmlFor="department" className="form-label">Department</label>
                 <div className="relative">
-                  <FiBook className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={16} />
+                  <FiBook className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={16} />
                   <select
                     id="department"
                     className={`${inputClass(errors.department)} pl-10 appearance-none`}
@@ -166,7 +166,7 @@ export default function Register() {
             <div>
               <label htmlFor="password" className="form-label">Password</label>
               <div className="relative">
-                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -178,7 +178,7 @@ export default function Register() {
                   })}
                 />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
                   {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </button>
               </div>
@@ -189,7 +189,7 @@ export default function Register() {
             <div>
               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
               <div className="relative">
-                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   id="confirmPassword"
                   type={showConfirm ? 'text' : 'password'}
@@ -201,7 +201,7 @@ export default function Register() {
                   })}
                 />
                 <button type="button" onClick={() => setShowConfirm(!showConfirm)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
                   {showConfirm ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </button>
               </div>
@@ -211,7 +211,7 @@ export default function Register() {
             <motion.button
               type="submit"
               disabled={loading}
-              className="w-full py-3 text-base font-bold text-white rounded-xl mt-2 flex items-center justify-center gap-2 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 text-base font-bold text-gray-900 rounded-xl mt-2 flex items-center justify-center gap-2 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
                 boxShadow: '0 4px 20px rgba(37,99,235,0.35)',
@@ -234,9 +234,9 @@ export default function Register() {
           </form>
         </div>
 
-        <p className="text-center text-sm text-slate-400 mt-6">
+        <p className="text-center text-sm text-gray-500 mt mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-400 font-semibold hover:text-blue-300 transition-colors">
+          <Link to="/login" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
             Sign in
           </Link>
         </p>

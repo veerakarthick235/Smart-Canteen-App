@@ -35,11 +35,11 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#0F172A]">
+    <div className="min-h-screen flex bg-[#F8FAFF]">
       {/* Left panel — Branding */}
       <motion.div
         className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-12 relative overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #0F172A 0%, #1E293B 100%)' }}
+        style={{ background: 'linear-gradient(160deg, #EFF6FF 0%, #F0F9FF 100%)' }}
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
@@ -52,13 +52,13 @@ export default function Login() {
 
         <div className="relative z-10 text-center max-w-sm">
           {/* Logo icon */}
-          <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-md border border-white/10" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.3), rgba(6,182,212,0.2))', boxShadow: '0 8px 32px rgba(37,99,235,0.2)' }}>
+          <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-md border border-gray-200" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.3), rgba(6,182,212,0.2))', boxShadow: '0 8px 32px rgba(37,99,235,0.2)' }}>
             <span className="text-6xl">🍽️</span>
           </div>
-          <h1 className="text-5xl font-extrabold text-white mb-5 leading-tight font-display tracking-tight">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-5 leading-tight font-display tracking-tight">
             Smart Canteen
           </h1>
-          <p className="text-slate-400 text-lg leading-relaxed mb-10">
+          <p className="text-gray-500 text-lg leading-relaxed mb-10">
             Order food & stationery from your college canteen — skip the queue, pay online, collect with QR.
           </p>
 
@@ -70,11 +70,11 @@ export default function Login() {
               { emoji: '📱', text: 'QR code collection', desc: 'Scan and collect instantly' },
               { emoji: '📋', text: 'Track your orders', desc: 'Real-time order status' },
             ].map(({ emoji, text, desc }) => (
-              <div key={text} className="flex items-center gap-4 rounded-2xl px-5 py-3.5 backdrop-blur-sm border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                <span className="text-2xl w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.06)' }}>{emoji}</span>
+              <div key={text} className="flex items-center gap-4 rounded-2xl px-5 py-3.5 backdrop-blur-sm border border-gray-200" style={{ background: '#F8FAFC' }}>
+                <span className="text-2xl w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border border-gray-200" style={{ background: 'rgba(0,0,0,0.06)' }}>{emoji}</span>
                 <div>
-                  <p className="text-white font-semibold text-sm">{text}</p>
-                  <p className="text-slate-500 text-xs">{desc}</p>
+                  <p className="text-gray-900 font-semibold text-sm">{text}</p>
+                  <p className="text-gray-400 text-xs text-xs">{desc}</p>
                 </div>
               </div>
             ))}
@@ -83,7 +83,7 @@ export default function Login() {
       </motion.div>
 
       {/* Right panel — Login form */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-12 bg-[#0F172A]">
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-12 bg-[#F8FAFF]">
         <motion.div
           className="w-full max-w-md"
           initial={{ opacity: 0, y: 20 }}
@@ -95,7 +95,7 @@ export default function Login() {
             <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)' }}>
               <span className="text-2xl">🍽️</span>
             </div>
-            <span className="font-extrabold font-display text-white text-xl tracking-tight">Smart Canteen</span>
+            <span className="font-extrabold font-display text-gray-900 text-xl tracking-tight">Smart Canteen</span>
           </div>
 
           <div className="glass-strong rounded-3xl p-8 sm:p-10 relative overflow-hidden">
@@ -104,15 +104,15 @@ export default function Login() {
 
             <div className="relative z-10">
               <div className="mb-8">
-                <h2 className="text-3xl font-extrabold font-display text-white tracking-tight">Welcome back</h2>
-                <p className="text-slate-400 mt-2">Sign in to your account to continue</p>
+                <h2 className="text-3xl font-extrabold font-display text-gray-900 tracking-tight">Welcome back</h2>
+                <p className="text-gray-500 mt mt-2">Sign in to your account to continue</p>
               </div>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <div>
                   <label htmlFor="email" className="form-label font-semibold">Email address</label>
                   <div className="relative">
-                    <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={17} />
+                    <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={17} />
                     <input
                       id="email"
                       type="email"
@@ -132,7 +132,7 @@ export default function Login() {
                     <label htmlFor="password" className="form-label mb-0 font-semibold">Password</label>
                   </div>
                   <div className="relative">
-                    <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={17} />
+                    <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={17} />
                     <input
                       id="password"
                       type={showPassword ? 'text' : 'password'}
@@ -143,7 +143,7 @@ export default function Login() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     >
                       {showPassword ? <FiEyeOff size={17} /> : <FiEye size={17} />}
                     </button>
@@ -154,7 +154,7 @@ export default function Login() {
                 <motion.button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 text-base font-bold text-white rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 relative overflow-hidden"
+                  className="w-full py-3.5 text-base font-bold text-gray-900 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 relative overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
                     boxShadow: '0 4px 20px rgba(37,99,235,0.35)',
@@ -179,9 +179,9 @@ export default function Login() {
                 </motion.button>
               </form>
 
-              <p className="text-center text-sm text-slate-400 mt-6">
+              <p className="text-center text-sm text-gray-500 mt mt-6">
                 Don't have an account?{' '}
-                <Link to="/register" className="text-blue-400 font-bold hover:text-blue-300 transition-colors">
+                <Link to="/register" className="text-blue-600 font-bold hover:text-blue-700 transition-colors">
                   Create account
                 </Link>
               </p>

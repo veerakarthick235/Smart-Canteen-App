@@ -19,13 +19,13 @@ const CustomTooltip = ({ active, payload, label, prefix = '₹' }) => {
     return (
       <div className="rounded-xl px-4 py-3 text-sm"
         style={{
-          background: 'rgba(17,24,39,0.95)',
+          background: 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(12px)',
           border: '1px solid rgba(255,255,255,0.1)',
           boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
         }}
       >
-        <p className="font-semibold text-white mb-1">{label}</p>
+        <p className="font-semibold text-gray-800 mb-1">{label}</p>
         {payload.map((entry, i) => (
           <p key={i} style={{ color: entry.color }} className="font-medium">
             {entry.name}: {prefix === '₹' && entry.name === 'Revenue' ? formatCurrency(entry.value) : entry.value}
@@ -113,8 +113,8 @@ export default function AdminAnalytics() {
           transition={{ duration: 0.4 }}
         >
           <div>
-            <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">Analytics</h1>
-            <p className="text-slate-400 mt-1">Revenue trends, top products, and sales distribution</p>
+            <h1 className="text-2xl font-extrabold font-display text-gray-900 tracking-tight">Analytics</h1>
+            <p className="text-gray-500 mt mt-1">Revenue trends, top products, and sales distribution</p>
           </div>
           <motion.button
             onClick={fetchAll}
@@ -150,9 +150,9 @@ export default function AdminAnalytics() {
           ].map((stat) => (
             <motion.div key={stat.label} variants={itemVariants}>
               <div className="card p-5">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">{stat.label}</p>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">{stat.label}</p>
                 <p className="text-2xl font-bold font-display" style={{ color: stat.color }}>{stat.value}</p>
-                <p className="text-xs text-slate-500 mt-1">{stat.sub}</p>
+                <p className="text-xs text-gray-400 mt mt-1">{stat.sub}</p>
               </div>
             </motion.div>
           ))}
@@ -167,8 +167,8 @@ export default function AdminAnalytics() {
         >
           <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
             <div className="flex items-center gap-2">
-              <FiTrendingUp size={18} className="text-blue-400" />
-              <h2 className="font-bold text-white font-display">Daily Revenue</h2>
+              <FiTrendingUp size={18} className="text-blue-600" />
+              <h2 className="font-bold text-gray-900 font-display">Daily Revenue</h2>
             </div>
             <div className="flex gap-2">
               {[7, 14, 30, 60].map(d => (
@@ -177,12 +177,12 @@ export default function AdminAnalytics() {
                   onClick={() => setRevenueDays(d)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                     revenueDays === d
-                      ? 'text-white'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                      ? 'text-gray-900'
+                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                   }`}
                   style={revenueDays === d ? {
                     background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)',
-                    boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
+                    boxShadow: '0 2px 10px rgba(37,99,235,0.2)',
                   } : {
                     background: 'rgba(255,255,255,0.05)',
                   }}
@@ -194,7 +194,7 @@ export default function AdminAnalytics() {
           </div>
 
           {revenueData.length === 0 ? (
-            <div className="h-64 flex items-center justify-center text-slate-500">
+            <div className="h-64 flex items-center justify-center text-gray-400">
               <div className="text-center">
                 <FiCalendar size={40} className="mx-auto mb-3 opacity-30" />
                 <p>No revenue data for this period</p>
@@ -222,22 +222,22 @@ export default function AdminAnalytics() {
                     const d = new Date(v)
                     return `${d.getDate()}/${d.getMonth() + 1}`
                   }}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
-                  tickLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+                  axisLine={{ stroke: 'rgba(0,0,0,0.06)' }}
+                  tickLine={{ stroke: 'rgba(0,0,0,0.06)' }}
                 />
                 <YAxis
                   yAxisId="revenue"
                   tick={{ fontSize: 11, fill: '#94A3B8' }}
                   tickFormatter={v => `₹${v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v}`}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
-                  tickLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+                  axisLine={{ stroke: 'rgba(0,0,0,0.06)' }}
+                  tickLine={{ stroke: 'rgba(0,0,0,0.06)' }}
                 />
                 <YAxis
                   yAxisId="orders"
                   orientation="right"
                   tick={{ fontSize: 11, fill: '#94A3B8' }}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
-                  tickLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+                  axisLine={{ stroke: 'rgba(0,0,0,0.06)' }}
+                  tickLine={{ stroke: 'rgba(0,0,0,0.06)' }}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 13, fontWeight: 500, color: '#94A3B8' }} />
@@ -278,12 +278,12 @@ export default function AdminAnalytics() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <div className="flex items-center gap-2 mb-5">
-              <FiPackage size={18} className="text-blue-400" />
-              <h2 className="font-bold text-white font-display">Top Products</h2>
+              <FiPackage size={18} className="text-blue-600" />
+              <h2 className="font-bold text-gray-900 font-display">Top Products</h2>
             </div>
 
             {productsData.length === 0 ? (
-              <div className="h-48 flex items-center justify-center text-slate-500 text-sm">
+              <div className="h-48 flex items-center justify-center text-gray-400 text-sm">
                 No product data available
               </div>
             ) : (
@@ -297,16 +297,16 @@ export default function AdminAnalytics() {
                   <XAxis
                     type="number"
                     tick={{ fontSize: 11, fill: '#94A3B8' }}
-                    axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
-                    tickLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+                    axisLine={{ stroke: 'rgba(0,0,0,0.06)' }}
+                    tickLine={{ stroke: 'rgba(0,0,0,0.06)' }}
                   />
                   <YAxis
                     dataKey="name"
                     type="category"
                     width={120}
                     tick={{ fontSize: 11, fill: '#94A3B8' }}
-                    axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
-                    tickLine={{ stroke: 'rgba(255,255,255,0.06)' }}
+                    axisLine={{ stroke: 'rgba(0,0,0,0.06)' }}
+                    tickLine={{ stroke: 'rgba(0,0,0,0.06)' }}
                   />
                   <Tooltip
                     formatter={(val, name) => [
@@ -316,7 +316,7 @@ export default function AdminAnalytics() {
                     contentStyle={{
                       borderRadius: 12,
                       fontSize: 13,
-                      background: 'rgba(17,24,39,0.95)',
+                      background: 'rgba(255,255,255,0.95)',
                       border: '1px solid rgba(255,255,255,0.1)',
                       color: '#F8FAFC',
                     }}
@@ -338,11 +338,11 @@ export default function AdminAnalytics() {
           >
             <div className="flex items-center gap-2 mb-5">
               <FiPieChart size={18} className="text-cyan-400" />
-              <h2 className="font-bold text-white font-display">Sales by Category</h2>
+              <h2 className="font-bold text-gray-900 font-display">Sales by Category</h2>
             </div>
 
             {categoryData.length === 0 ? (
-              <div className="h-48 flex items-center justify-center text-slate-500 text-sm">
+              <div className="h-48 flex items-center justify-center text-gray-400 text-sm">
                 No category data available
               </div>
             ) : (
@@ -370,7 +370,7 @@ export default function AdminAnalytics() {
                       contentStyle={{
                         borderRadius: 12,
                         fontSize: 13,
-                        background: 'rgba(17,24,39,0.95)',
+                        background: 'rgba(255,255,255,0.95)',
                         border: '1px solid rgba(255,255,255,0.1)',
                         color: '#F8FAFC',
                       }}
@@ -386,11 +386,11 @@ export default function AdminAnalytics() {
                     <div key={cat.category} className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full shrink-0" style={{ background: CHART_COLORS[i % CHART_COLORS.length], boxShadow: `0 0 6px ${CHART_COLORS[i % CHART_COLORS.length]}50` }} />
-                        <span className="text-white font-medium">{cat.category}</span>
+                        <span className="text-gray-900 font-medium">{cat.category}</span>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold text-white">{formatCurrency(cat.revenue)}</span>
-                        <span className="text-slate-500 ml-2 text-xs">({cat.quantity} items)</span>
+                        <span className="font-bold text-gray-900">{formatCurrency(cat.revenue)}</span>
+                        <span className="text-gray-400 ml-2 text-xs">({cat.quantity} items)</span>
                       </div>
                     </div>
                   ))}
@@ -408,7 +408,7 @@ export default function AdminAnalytics() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >
-            <h2 className="font-bold text-white mb-5 font-display">Order Status Breakdown</h2>
+            <h2 className="font-bold text-gray-900 mb-5 font-display">Order Status Breakdown</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
                 { label: 'Total Orders', value: dashboardStats.totalOrders, color: '#F8FAFC' },
@@ -422,13 +422,13 @@ export default function AdminAnalytics() {
                   key={label}
                   className="text-center p-4 rounded-xl"
                   style={{
-                    background: 'rgba(15,23,42,0.5)',
+                    background: 'rgba(248,250,255,0.8)',
                     border: '1px solid rgba(255,255,255,0.04)',
                   }}
                   whileHover={{ borderColor: 'rgba(37,99,235,0.2)', y: -2 }}
                 >
                   <p className="text-3xl font-bold font-display" style={{ color }}>{value}</p>
-                  <p className="text-xs text-slate-500 mt-1 font-medium">{label}</p>
+                  <p className="text-xs text-gray-400 mt mt-1 font-medium">{label}</p>
                 </motion.div>
               ))}
             </div>

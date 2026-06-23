@@ -31,9 +31,9 @@ export default function Navbar() {
 
   return (
     <nav
-      className="sticky top-0 z-40 glass-strong border-b border-white/5"
+      className="sticky top-0 z-40 glass-strong border-b border-gray-100"
       style={{
-        boxShadow: '0 4px 30px rgba(0,0,0,0.2)',
+        boxShadow: '0 4px 30px rgba(0,0,0,0.06)',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,24 +47,24 @@ export default function Navbar() {
                 boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
               }}
             >
-              <span className="text-white font-bold text-lg">🍽</span>
+              <span className="text-gray-900 font-bold text-lg">🍽</span>
             </div>
             <div className="hidden sm:block">
-              <span className="font-bold text-white text-lg leading-tight font-display tracking-tight">Smart Canteen</span>
+              <span className="font-bold text-gray-900 text-lg leading-tight font-display tracking-tight">Smart Canteen</span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1 bg-white/5 rounded-2xl p-1">
+          <div className="hidden md:flex items-center gap-1 bg-gray-50 rounded-2xl p-1">
             <Link
               to="/student/home"
-              className="px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-200 flex items-center gap-2"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
             >
               <FiHome size={15} /> Home
             </Link>
             <Link
               to="/student/orders"
-              className="px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-200 flex items-center gap-2"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
             >
               <FiList size={15} /> My Orders
             </Link>
@@ -75,7 +75,7 @@ export default function Navbar() {
             {/* Cart */}
             <Link
               to="/student/cart"
-              className="relative p-2.5 rounded-xl text-slate-400 hover:text-blue-400 hover:bg-white/5 transition-all duration-200"
+              className="relative p-2.5 rounded-xl text-gray-500 hover:text-blue-600 hover:bg-gray-50 transition-all duration-200"
             >
               <FiShoppingCart size={20} />
               {cartCount > 0 && (
@@ -95,10 +95,10 @@ export default function Navbar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 p-1.5 pr-3 rounded-xl hover:bg-white/5 transition-all duration-200"
+                className="flex items-center gap-2 p-1.5 pr-3 rounded-xl hover:bg-gray-50 transition-all duration-200"
               >
                 <div
-                  className="w-8 h-8 rounded-xl overflow-hidden shrink-0 flex items-center justify-center text-white text-sm font-bold shadow-sm"
+                  className="w-8 h-8 rounded-xl overflow-hidden shrink-0 flex items-center justify-center text-gray-900 text-sm font-bold shadow-sm"
                   style={{
                     background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
                   }}
@@ -109,10 +109,10 @@ export default function Navbar() {
                     getInitials(user?.fullName)
                   )}
                 </div>
-                <span className="hidden sm:block text-sm font-medium text-slate-200 max-w-[120px] truncate">
+                <span className="hidden sm:block text-sm font-medium text-gray-700 max-w-[120px] truncate">
                   {user?.fullName?.split(' ')[0]}
                 </span>
-                <FiChevronDown size={14} className={`text-slate-400 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                <FiChevronDown size={14} className={`text-gray-500 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
               <AnimatePresence>
@@ -120,7 +120,7 @@ export default function Navbar() {
                   <motion.div
                     className="absolute right-0 top-full mt-2 w-60 glass-strong rounded-2xl overflow-hidden"
                     style={{
-                      boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 60px rgba(37,99,235,0.06)',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)',
                       border: '1px solid rgba(255,255,255,0.06)',
                     }}
                     initial={{ opacity: 0, y: -8, scale: 0.96 }}
@@ -129,24 +129,24 @@ export default function Navbar() {
                     transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
                   >
                     <div
-                      className="px-4 py-3 border-b border-white/[0.06]"
-                      style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.1), rgba(6,182,212,0.05))' }}
+                      className="px-4 py-3 border-b border-gray-200"
+                      style={{ background: 'linear-gradient(135deg, #EFF6FF, #F0F9FF)' }}
                     >
-                      <p className="font-semibold text-white text-sm">{user?.fullName}</p>
-                      <p className="text-xs text-slate-400 mt-0.5">{user?.email}</p>
-                      <p className="text-xs text-slate-500">{user?.studentId} · {user?.department}</p>
+                      <p className="font-semibold text-gray-900 text-sm">{user?.fullName}</p>
+                      <p className="text-xs text-gray-500 mt mt-0.5">{user?.email}</p>
+                      <p className="text-xs text-gray-400">{user?.studentId} · {user?.department}</p>
                     </div>
                     <div className="p-2">
                       <Link
                         to="/student/profile"
                         onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors w-full"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors w-full"
                       >
                         <FiUser size={16} /> Profile
                       </Link>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors w-full"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors w-full"
                       >
                         <FiLogOut size={16} /> Sign Out
                       </button>
@@ -158,7 +158,7 @@ export default function Navbar() {
 
             {/* Mobile menu button */}
             <button
-              className="md:hidden p-2 rounded-xl hover:bg-white/5 text-slate-400 hover:text-white transition-colors"
+              className="md:hidden p-2 rounded-xl hover:bg-gray-50 text-gray-500 hover:text-gray-900 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
@@ -170,7 +170,7 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              className="md:hidden border-t border-white/[0.06] py-3 overflow-hidden"
+              className="md:hidden border-t border-gray-200 py-3 overflow-hidden"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -179,14 +179,14 @@ export default function Navbar() {
               <Link
                 to="/student/home"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
               >
                 <FiHome size={16} /> Home
               </Link>
               <Link
                 to="/student/orders"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
               >
                 <FiList size={16} /> My Orders
               </Link>

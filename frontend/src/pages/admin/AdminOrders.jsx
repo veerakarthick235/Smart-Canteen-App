@@ -135,8 +135,8 @@ const AdminOrders = () => {
           transition={{ duration: 0.4 }}
         >
           <div>
-            <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">Orders</h1>
-            <p className="text-slate-400 text-sm mt-1">
+            <h1 className="text-2xl font-extrabold font-display text-gray-900 tracking-tight">Orders</h1>
+            <p className="text-gray-500 text-sm text-sm mt-1">
               {totalOrders} total order{totalOrders !== 1 ? 's' : ''}
             </p>
           </div>
@@ -158,7 +158,7 @@ const AdminOrders = () => {
         >
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+              <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search by student name or order ID..."
@@ -177,11 +177,11 @@ const AdminOrders = () => {
                 className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   statusFilter === value
                     ? 'text-white shadow-lg'
-                    : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-200'
+                    : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
                 }`}
                 style={statusFilter === value ? {
                   background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)',
-                  boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
+                  boxShadow: '0 2px 10px rgba(37,99,235,0.2)',
                 } : {}}
               >
                 {label}
@@ -201,7 +201,7 @@ const AdminOrders = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <p className="text-slate-500 font-medium">No orders found</p>
+            <p className="text-gray-400 font-medium">No orders found</p>
           </motion.div>
         ) : (
           <>
@@ -230,35 +230,35 @@ const AdminOrders = () => {
                       return (
                         <tr key={order._id}>
                           <td>
-                            <span className="text-sm font-semibold text-white">
+                            <span className="text-sm font-semibold text-gray-800">
                               {formatOrderId(order._id)}
                             </span>
                             {order.paymentId && (
-                              <p className="text-xs text-slate-500 truncate max-w-[100px] mt-0.5 font-mono">
+                              <p className="text-xs text-gray-400 truncate truncate max-w-[100px] mt-0.5 font-mono">
                                 {order.paymentId}
                               </p>
                             )}
                           </td>
                           <td>
-                            <p className="text-sm font-medium text-slate-200">
+                            <p className="text-sm font-medium text-gray-700">
                               {order.student?.fullName || '—'}
                             </p>
-                            <p className="text-xs text-slate-500">{order.student?.studentId}</p>
+                            <p className="text-xs text-gray-400">{order.student?.studentId}</p>
                           </td>
                           <td>
                             <div>
                               {(order.items || []).slice(0, 2).map((item, i) => (
-                                <p key={i} className="text-xs text-slate-300">
+                                <p key={i} className="text-xs text-gray-600">
                                   {truncateText(item.product?.name || item.name || 'Item', 20)} ×{item.quantity}
                                 </p>
                               ))}
                               {order.items?.length > 2 && (
-                                <p className="text-xs text-slate-500">+{order.items.length - 2} more</p>
+                                <p className="text-xs text-gray-400">+{order.items.length - 2} more</p>
                               )}
                             </div>
                           </td>
                           <td>
-                            <span className="text-sm font-bold text-white">
+                            <span className="text-sm font-bold text-gray-900">
                               {formatCurrency(order.totalAmount)}
                             </span>
                           </td>
@@ -275,14 +275,14 @@ const AdminOrders = () => {
                             </span>
                           </td>
                           <td>
-                            <p className="text-xs text-slate-300">{formatDate(order.createdAt, 'short')}</p>
-                            <p className="text-xs text-slate-500">{formatDate(order.createdAt, 'time')}</p>
+                            <p className="text-xs text-gray-600">{formatDate(order.createdAt, 'short')}</p>
+                            <p className="text-xs text-gray-400">{formatDate(order.createdAt, 'time')}</p>
                           </td>
                           <td>
                             <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => setSelectedOrder(order)}
-                                className="p-2 rounded-xl text-blue-400 hover:bg-white/5 transition-colors"
+                                className="p-2 rounded-xl text-blue-600 hover:bg-gray-50 transition-colors"
                                 title="View Order"
                               >
                                 <HiEye className="h-4 w-4" />
@@ -305,12 +305,12 @@ const AdminOrders = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <p className="text-sm text-slate-400">Page {currentPage} of {totalPages}</p>
+                <p className="text-sm text-gray-500">Page {currentPage} of {totalPages}</p>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 disabled:opacity-40 transition-all"
+                    className="p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-50 disabled:opacity-40 transition-all"
                     style={{ border: '1px solid rgba(255,255,255,0.08)' }}
                   >
                     <HiChevronLeft className="h-4 w-4" />
@@ -320,11 +320,11 @@ const AdminOrders = () => {
                       key={p}
                       onClick={() => setCurrentPage(p)}
                       className={`h-9 w-9 rounded-xl text-sm font-medium transition-all ${
-                        p === currentPage ? 'text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        p === currentPage ? 'text-white shadow-lg' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                       }`}
                       style={p === currentPage ? {
                         background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)',
-                        boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
+                        boxShadow: '0 2px 10px rgba(37,99,235,0.2)',
                       } : {
                         border: '1px solid rgba(255,255,255,0.08)',
                       }}
@@ -335,7 +335,7 @@ const AdminOrders = () => {
                   <button
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 disabled:opacity-40 transition-all"
+                    className="p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-50 disabled:opacity-40 transition-all"
                     style={{ border: '1px solid rgba(255,255,255,0.08)' }}
                   >
                     <HiChevronRight className="h-4 w-4" />
@@ -357,68 +357,68 @@ const AdminOrders = () => {
         {selectedOrder && (
           <div className="space-y-5">
             {/* Student Info */}
-            <div className="rounded-xl p-4" style={{ background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
-              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">Student Information</h3>
+            <div className="rounded-xl p-4" style={{ background: 'rgba(248,250,255,0.8)', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <h3 className="text-sm font-semibold text-gray-600 mb-3 uppercase tracking-wider">Student Information</h3>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-xs text-slate-500">Name</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.student?.fullName}</p>
+                  <p className="text-xs text-gray-400">Name</p>
+                  <p className="text-sm font-medium text-gray-700">{selectedOrder.student?.fullName}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500">Student ID</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.student?.studentId}</p>
+                  <p className="text-xs text-gray-400">Student ID</p>
+                  <p className="text-sm font-medium text-gray-700">{selectedOrder.student?.studentId}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500">Email</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.student?.email}</p>
+                  <p className="text-xs text-gray-400">Email</p>
+                  <p className="text-sm font-medium text-gray-700">{selectedOrder.student?.email}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500">Department</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.student?.department}</p>
+                  <p className="text-xs text-gray-400">Department</p>
+                  <p className="text-sm font-medium text-gray-700">{selectedOrder.student?.department}</p>
                 </div>
               </div>
             </div>
 
             {/* Order Items */}
             <div>
-              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">Items</h3>
+              <h3 className="text-sm font-semibold text-gray-600 mb-3 uppercase tracking-wider">Items</h3>
               <div className="space-y-2">
                 {(selectedOrder.items || []).map((item, i) => (
                   <div key={i} className="flex items-center justify-between py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl overflow-hidden" style={{ background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                      <div className="h-9 w-9 rounded-xl overflow-hidden" style={{ background: 'rgba(248,250,255,0.9)', border: '1px solid rgba(255,255,255,0.06)' }}>
                         {item.product?.image ? (
                           <img src={item.product.image} alt="" className="h-full w-full object-cover" />
                         ) : (
-                          <div className="h-full w-full flex items-center justify-center text-slate-600 text-xs">📦</div>
+                          <div className="h-full w-full flex items-center justify-center text-gray-500 text-xs">📦</div>
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white">{item.product?.name || item.name}</p>
-                        <p className="text-xs text-slate-500">{formatCurrency(item.price)} × {item.quantity}</p>
+                        <p className="text-sm font-medium text-gray-700">{item.product?.name || item.name}</p>
+                        <p className="text-xs text-gray-400">{formatCurrency(item.price)} × {item.quantity}</p>
                       </div>
                     </div>
-                    <p className="text-sm font-bold text-white">{formatCurrency(item.price * item.quantity)}</p>
+                    <p className="text-sm font-bold text-gray-900">{formatCurrency(item.price * item.quantity)}</p>
                   </div>
                 ))}
               </div>
               <div className="flex items-center justify-between pt-4 mt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                <span className="text-sm font-bold text-white">Total</span>
+                <span className="text-sm font-bold text-gray-900">Total</span>
                 <span className="text-lg font-bold text-gradient-blue">{formatCurrency(selectedOrder.totalAmount)}</span>
               </div>
             </div>
 
             {/* Payment & Dates */}
-            <div className="rounded-xl p-4" style={{ background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
-              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">Payment</h3>
+            <div className="rounded-xl p-4" style={{ background: 'rgba(248,250,255,0.8)', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <h3 className="text-sm font-semibold text-gray-600 mb-3 uppercase tracking-wider">Payment</h3>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-xs text-slate-500">Payment ID</p>
-                  <p className="text-xs font-medium text-white break-all font-mono">{selectedOrder.paymentId || '—'}</p>
+                  <p className="text-xs text-gray-400">Payment ID</p>
+                  <p className="text-xs font-medium text-gray-700 break-all font-mono">{selectedOrder.paymentId || '—'}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500">Order Date</p>
-                  <p className="text-sm font-medium text-white">{formatDate(selectedOrder.createdAt, 'datetime')}</p>
+                  <p className="text-xs text-gray-400">Order Date</p>
+                  <p className="text-sm font-medium text-gray-700">{formatDate(selectedOrder.createdAt, 'datetime')}</p>
                 </div>
               </div>
             </div>
@@ -426,7 +426,7 @@ const AdminOrders = () => {
             {/* Status & Actions */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-slate-500 mb-1">Current Status</p>
+                <p className="text-xs text-gray-400 mb-1">Current Status</p>
                 <span
                   className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold"
                   style={{

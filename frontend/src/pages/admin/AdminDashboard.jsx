@@ -108,8 +108,8 @@ const AdminDashboard = () => {
           transition={{ duration: 0.4 }}
         >
           <div>
-            <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">Dashboard</h1>
-            <p className="text-slate-400 text-sm mt-1">Overview of canteen operations</p>
+            <h1 className="text-2xl font-extrabold font-display text-gray-900 tracking-tight">Dashboard</h1>
+            <p className="text-gray-500 text-sm text-sm mt-1">Overview of canteen operations</p>
           </div>
           <button
             onClick={fetchDashboard}
@@ -162,11 +162,11 @@ const AdminDashboard = () => {
                       className="card flex flex-col items-center justify-center gap-3 p-5 rounded-2xl hover:border-blue-500/20 transition-all duration-300 group"
                     >
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}
-                        style={{ boxShadow: '0 4px 14px rgba(0,0,0,0.3)' }}
+                        style={{ boxShadow: '0 4px 14px rgba(0,0,0,0.08)' }}
                       >
                         <span className="text-xl">{icon}</span>
                       </div>
-                      <span className="text-xs font-semibold text-slate-300 text-center group-hover:text-white transition-colors">{label}</span>
+                      <span className="text-xs font-semibold text-gray-600 text-center group-hover:text-gray-900 transition-colors">{label}</span>
                     </Link>
                   </motion.div>
                 ))}
@@ -184,7 +184,7 @@ const AdminDashboard = () => {
                 <h2 className="text-base font-semibold font-display text-white">Recent Orders</h2>
                 <Link
                   to="/admin/orders"
-                  className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                  className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
                 >
                   View all →
                 </Link>
@@ -193,8 +193,8 @@ const AdminDashboard = () => {
               {recentOrders.length === 0 ? (
                 <div className="flex items-center justify-center py-12 text-center">
                   <div>
-                    <HiShoppingBag className="h-10 w-10 text-slate-600 mx-auto mb-2" />
-                    <p className="text-slate-500 text-sm">No orders yet</p>
+                    <HiShoppingBag className="h-10 w-10 text-gray-500 mx-auto mb-2" />
+                    <p className="text-gray-400 text-sm">No orders yet</p>
                   </div>
                 </div>
               ) : (
@@ -217,23 +217,23 @@ const AdminDashboard = () => {
                         return (
                           <tr key={order._id}>
                             <td>
-                              <span className="text-sm font-semibold text-white">
+                              <span className="text-sm font-semibold text-gray-800">
                                 {formatOrderId(order._id)}
                               </span>
                             </td>
                             <td>
-                              <p className="text-sm font-medium text-slate-200">
+                              <p className="text-sm font-medium text-gray-700">
                                 {order.student?.fullName || '—'}
                               </p>
-                              <p className="text-xs text-slate-500">{order.student?.studentId}</p>
+                              <p className="text-xs text-gray-400">{order.student?.studentId}</p>
                             </td>
                             <td>
-                              <span className="text-sm text-slate-300">
+                              <span className="text-sm text-gray-600">
                                 {order.items?.length || 0} item{order.items?.length !== 1 ? 's' : ''}
                               </span>
                             </td>
                             <td>
-                              <span className="text-sm font-bold text-white">
+                              <span className="text-sm font-bold text-gray-900">
                                 {formatCurrency(order.totalAmount)}
                               </span>
                             </td>
@@ -250,13 +250,13 @@ const AdminDashboard = () => {
                               </span>
                             </td>
                             <td>
-                              <p className="text-sm text-slate-300">{formatDate(order.createdAt, 'short')}</p>
-                              <p className="text-xs text-slate-500">{formatDate(order.createdAt, 'time')}</p>
+                              <p className="text-sm text-gray-600">{formatDate(order.createdAt, 'short')}</p>
+                              <p className="text-xs text-gray-400">{formatDate(order.createdAt, 'time')}</p>
                             </td>
                             <td className="text-right">
                               <Link
                                 to="/admin/orders"
-                                className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                                className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
                               >
                                 <HiEye className="h-4 w-4" />
                                 View

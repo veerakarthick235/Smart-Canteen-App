@@ -3,7 +3,7 @@ import AnimatedBackground from './AnimatedBackground.jsx'
 
 export default function AdminLayout({ children }) {
   return (
-    <div className="flex h-screen bg-[#0F172A] overflow-hidden">
+    <div className="flex h-screen bg-[#F8FAFF] overflow-hidden">
       <AnimatedBackground />
       <div className="relative z-10">
         <AdminSidebar />
