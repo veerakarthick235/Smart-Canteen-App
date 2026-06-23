@@ -101,20 +101,25 @@ const AdminDashboard = () => {
     <AdminLayout>
       <div className="p-6 lg:p-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <motion.div
+          className="flex items-center justify-between mb-8"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
           <div>
-            <h1 className="text-2xl font-bold font-display text-gray-900">Dashboard</h1>
-            <p className="text-gray-500 text-sm mt-1">Overview of canteen operations</p>
+            <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">Dashboard</h1>
+            <p className="text-slate-400 text-sm mt-1">Overview of canteen operations</p>
           </div>
           <button
             onClick={fetchDashboard}
             disabled={loading}
-            className="flex items-center gap-2 btn-secondary text-sm"
+            className="btn-secondary text-sm"
           >
             <HiRefresh className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
           </button>
-        </div>
+        </motion.div>
 
         {loading ? (
           <div className="flex items-center justify-center min-h-[300px]">
@@ -137,34 +142,49 @@ const AdminDashboard = () => {
             </motion.div>
 
             {/* Quick Actions */}
-            <div className="mb-8">
-              <h2 className="text-base font-semibold font-display text-gray-900 mb-3">Quick Actions</h2>
+            <motion.div
+              className="mb-8"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              <h2 className="text-base font-semibold font-display text-white mb-3">Quick Actions</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { to: '/admin/scanner', label: 'Scan QR Code', icon: '📷', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-100' },
-                  { to: '/admin/orders', label: 'Manage Orders', icon: '📋', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-100' },
-                  { to: '/admin/products', label: 'Add Product', icon: '➕', bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-100' },
-                  { to: '/admin/analytics', label: 'View Analytics', icon: '📊', bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-100' },
-                ].map(({ to, label, icon, bg, text, border }) => (
-                  <Link
-                    key={to}
-                    to={to}
-                    className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border ${border} ${bg} hover:shadow-sm transition-all`}
-                  >
-                    <span className="text-2xl">{icon}</span>
-                    <span className={`text-xs font-semibold ${text} text-center`}>{label}</span>
-                  </Link>
+                  { to: '/admin/scanner', label: 'Scan QR Code', icon: '📷', gradient: 'from-blue-600 to-cyan-500' },
+                  { to: '/admin/orders', label: 'Manage Orders', icon: '📋', gradient: 'from-purple-600 to-violet-500' },
+                  { to: '/admin/products', label: 'Add Product', icon: '➕', gradient: 'from-emerald-600 to-green-500' },
+                  { to: '/admin/analytics', label: 'View Analytics', icon: '📊', gradient: 'from-orange-600 to-amber-500' },
+                ].map(({ to, label, icon, gradient }) => (
+                  <motion.div key={to} whileHover={{ y: -4, borderColor: 'rgba(37,99,235,0.2)' }}>
+                    <Link
+                      to={to}
+                      className="card flex flex-col items-center justify-center gap-3 p-5 rounded-2xl hover:border-blue-500/20 transition-all duration-300 group"
+                    >
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}
+                        style={{ boxShadow: '0 4px 14px rgba(0,0,0,0.3)' }}
+                      >
+                        <span className="text-xl">{icon}</span>
+                      </div>
+                      <span className="text-xs font-semibold text-slate-300 text-center group-hover:text-white transition-colors">{label}</span>
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Recent Orders */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-soft">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                <h2 className="text-base font-semibold font-display text-gray-900">Recent Orders</h2>
+            <motion.div
+              className="card overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <h2 className="text-base font-semibold font-display text-white">Recent Orders</h2>
                 <Link
                   to="/admin/orders"
-                  className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                  className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
                 >
                   View all →
                 </Link>
@@ -173,51 +193,51 @@ const AdminDashboard = () => {
               {recentOrders.length === 0 ? (
                 <div className="flex items-center justify-center py-12 text-center">
                   <div>
-                    <HiShoppingBag className="h-10 w-10 text-gray-200 mx-auto mb-2" />
-                    <p className="text-gray-400 text-sm">No orders yet</p>
+                    <HiShoppingBag className="h-10 w-10 text-slate-600 mx-auto mb-2" />
+                    <p className="text-slate-500 text-sm">No orders yet</p>
                   </div>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full">
+                  <table className="data-table">
                     <thead>
-                      <tr className="bg-slate-50">
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Order ID</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Student</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Items</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Total</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Status</th>
-                        <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Date</th>
-                        <th className="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Action</th>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Student</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th className="text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody>
                       {recentOrders.map((order) => {
                         const statusStyle = getStatusStyle(order.status)
                         return (
-                          <tr key={order._id} className="hover:bg-slate-50 transition-colors">
-                            <td className="px-6 py-3.5">
-                              <span className="text-sm font-semibold text-gray-900">
+                          <tr key={order._id}>
+                            <td>
+                              <span className="text-sm font-semibold text-white">
                                 {formatOrderId(order._id)}
                               </span>
                             </td>
-                            <td className="px-6 py-3.5">
-                              <p className="text-sm font-medium text-gray-900">
+                            <td>
+                              <p className="text-sm font-medium text-slate-200">
                                 {order.student?.fullName || '—'}
                               </p>
-                              <p className="text-xs text-gray-500">{order.student?.studentId}</p>
+                              <p className="text-xs text-slate-500">{order.student?.studentId}</p>
                             </td>
-                            <td className="px-6 py-3.5">
-                              <span className="text-sm text-gray-700">
+                            <td>
+                              <span className="text-sm text-slate-300">
                                 {order.items?.length || 0} item{order.items?.length !== 1 ? 's' : ''}
                               </span>
                             </td>
-                            <td className="px-6 py-3.5">
-                              <span className="text-sm font-bold text-gray-900">
+                            <td>
+                              <span className="text-sm font-bold text-white">
                                 {formatCurrency(order.totalAmount)}
                               </span>
                             </td>
-                            <td className="px-6 py-3.5">
+                            <td>
                               <span
                                 className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold"
                                 style={{
@@ -229,14 +249,14 @@ const AdminDashboard = () => {
                                 {getStatusLabel(order.status)}
                               </span>
                             </td>
-                            <td className="px-6 py-3.5">
-                              <p className="text-sm text-gray-600">{formatDate(order.createdAt, 'short')}</p>
-                              <p className="text-xs text-gray-400">{formatDate(order.createdAt, 'time')}</p>
+                            <td>
+                              <p className="text-sm text-slate-300">{formatDate(order.createdAt, 'short')}</p>
+                              <p className="text-xs text-slate-500">{formatDate(order.createdAt, 'time')}</p>
                             </td>
-                            <td className="px-6 py-3.5 text-right">
+                            <td className="text-right">
                               <Link
                                 to="/admin/orders"
-                                className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 font-medium"
+                                className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
                               >
                                 <HiEye className="h-4 w-4" />
                                 View
@@ -249,7 +269,7 @@ const AdminDashboard = () => {
                   </table>
                 </div>
               )}
-            </div>
+            </motion.div>
           </>
         )}
       </div>

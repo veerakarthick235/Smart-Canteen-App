@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Html5Qrcode } from 'html5-qrcode'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FiCamera, FiSearch, FiCheckCircle, FiXCircle, FiAlertTriangle, FiClock, FiUser, FiPackage, FiRefreshCw } from 'react-icons/fi'
 import AdminLayout from '../../components/AdminLayout.jsx'
 import api from '../../api/axios.js'
@@ -21,26 +22,35 @@ function ResultCard({ result, onReset }) {
   if (success && data) {
     const { student, items, totalAmount, paymentId, collectedAt, order } = data
     return (
-      <div className="card border-2 border-success animate-slide-up overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+        className="card overflow-hidden"
+        style={{
+          border: '1px solid rgba(34,197,94,0.3)',
+          boxShadow: '0 0 30px rgba(34,197,94,0.1), 0 4px 16px rgba(0,0,0,0.2)',
+        }}
+      >
         {/* Success banner */}
-        <div className="bg-green-50 px-6 py-4 flex items-center gap-3 border-b border-green-100">
-          <div className="w-10 h-10 bg-success rounded-xl flex items-center justify-center shrink-0">
+        <div className="px-6 py-4 flex items-center gap-3" style={{ background: 'rgba(34,197,94,0.08)', borderBottom: '1px solid rgba(34,197,94,0.15)' }}>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #22C55E, #16A34A)' }}>
             <FiCheckCircle size={22} className="text-white" />
           </div>
           <div>
-            <p className="font-bold text-green-800 text-lg">✅ Collection Successful</p>
-            <p className="text-green-600 text-sm">Order marked as collected</p>
+            <p className="font-bold text-green-400 text-lg font-display">✅ Collection Successful</p>
+            <p className="text-green-400/70 text-sm">Order marked as collected</p>
           </div>
           <div className="ml-auto text-right">
-            <p className="text-xs text-green-600">Order</p>
-            <p className="font-bold text-green-800 text-sm font-mono">{shortenOrderId(order?._id)}</p>
+            <p className="text-xs text-green-400/60">Order</p>
+            <p className="font-bold text-green-400 text-sm font-mono">{shortenOrderId(order?._id)}</p>
           </div>
         </div>
 
         <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Student Info */}
           <div>
-            <p className="text-xs font-semibold text-textSecondary uppercase tracking-wide mb-3 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
               <FiUser size={13} /> Student Details
             </p>
             <div className="space-y-2">
@@ -53,7 +63,7 @@ function ResultCard({ result, onReset }) {
 
           {/* Payment Info */}
           <div>
-            <p className="text-xs font-semibold text-textSecondary uppercase tracking-wide mb-3">Payment Details</p>
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Payment Details</p>
             <div className="space-y-2">
               <InfoRow label="Total Amount" value={formatCurrency(totalAmount)} highlight />
               <InfoRow label="Payment ID" value={paymentId ? `${paymentId.slice(0, 20)}…` : '—'} mono />
@@ -63,26 +73,28 @@ function ResultCard({ result, onReset }) {
 
           {/* Items */}
           <div className="sm:col-span-2">
-            <p className="text-xs font-semibold text-textSecondary uppercase tracking-wide mb-3 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
               <FiPackage size={13} /> Ordered Items
             </p>
-            <div className="bg-bgLight rounded-xl overflow-hidden">
-              <table className="w-full text-sm">
+            <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <table className="data-table">
                 <thead>
-                  <tr className="border-b border-border">
-                    <th className="px-4 py-2 text-left text-xs font-semibold text-textSecondary">Item</th>
-                    <th className="px-4 py-2 text-left text-xs font-semibold text-textSecondary">Category</th>
-                    <th className="px-4 py-2 text-right text-xs font-semibold text-textSecondary">Qty</th>
-                    <th className="px-4 py-2 text-right text-xs font-semibold text-textSecondary">Price</th>
-                    <th className="px-4 py-2 text-right text-xs font-semibold text-textSecondary">Subtotal</th>
+                  <tr>
+                    <th>Item</th>
+                    <th>Category</th>
+                    <th className="text-right">Qty</th>
+                    <th className="text-right">Price</th>
+                    <th className="text-right">Subtotal</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(items || []).map((item, i) => (
-                    <tr key={i} className="border-b border-border last:border-0">
-                      <td className="px-4 py-2.5">
+                    <tr key={i}>
+                      <td>
                         <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-lg bg-bgLight overflow-hidden flex-shrink-0 flex items-center justify-center border border-border">
+                          <div className="h-10 w-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center"
+                            style={{ background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}
+                          >
                             {item.image ? (
                               <img 
                                 src={item.image.startsWith('http') || item.image.startsWith('data:') ? item.image : `data:image/jpeg;base64,${item.image}`} 
@@ -90,23 +102,23 @@ function ResultCard({ result, onReset }) {
                                 className="h-full w-full object-cover" 
                               />
                             ) : (
-                              <span className="text-gray-400">🍽</span>
+                              <span className="text-slate-500">🍽</span>
                             )}
                           </div>
-                          <span className="font-medium text-textPrimary">{item.name}</span>
+                          <span className="font-medium text-white">{item.name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-2.5 text-textSecondary">{item.category}</td>
-                      <td className="px-4 py-2.5 text-right text-textPrimary">×{item.quantity}</td>
-                      <td className="px-4 py-2.5 text-right text-textSecondary">{formatCurrency(item.price)}</td>
-                      <td className="px-4 py-2.5 text-right font-semibold text-textPrimary">{formatCurrency(item.subtotal)}</td>
+                      <td className="text-slate-400">{item.category}</td>
+                      <td className="text-right text-white">×{item.quantity}</td>
+                      <td className="text-right text-slate-400">{formatCurrency(item.price)}</td>
+                      <td className="text-right font-semibold text-white">{formatCurrency(item.subtotal)}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="bg-green-50">
-                    <td colSpan={4} className="px-4 py-2.5 font-bold text-textPrimary">Total</td>
-                    <td className="px-4 py-2.5 text-right font-bold text-success text-base">{formatCurrency(totalAmount)}</td>
+                  <tr>
+                    <td colSpan={4} className="font-bold text-white" style={{ background: 'rgba(34,197,94,0.08)' }}>Total</td>
+                    <td className="text-right font-bold text-green-400 text-base" style={{ background: 'rgba(34,197,94,0.08)' }}>{formatCurrency(totalAmount)}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -115,11 +127,16 @@ function ResultCard({ result, onReset }) {
         </div>
 
         <div className="px-6 pb-6">
-          <button onClick={onReset} className="btn-primary w-full gap-2">
+          <motion.button
+            onClick={onReset}
+            className="btn-primary w-full gap-2"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <FiRefreshCw size={16} /> Scan Next QR
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     )
   }
 
@@ -127,32 +144,32 @@ function ResultCard({ result, onReset }) {
   const errorConfig = {
     ALREADY_COLLECTED: {
       icon: FiAlertTriangle,
-      bg: 'bg-amber-50',
-      border: 'border-amber-300',
-      iconBg: 'bg-amber-500',
+      borderColor: 'rgba(245,158,11,0.3)',
+      glowColor: 'rgba(245,158,11,0.1)',
+      iconGradient: 'linear-gradient(135deg, #F59E0B, #D97706)',
       title: 'Already Collected',
-      titleColor: 'text-amber-800',
-      msgColor: 'text-amber-600',
+      titleColor: '#FBBF24',
+      msgColor: 'rgba(251,191,36,0.7)',
       emoji: '⚠️',
     },
     PAYMENT_NOT_COMPLETED: {
       icon: FiXCircle,
-      bg: 'bg-yellow-50',
-      border: 'border-yellow-300',
-      iconBg: 'bg-yellow-500',
+      borderColor: 'rgba(234,179,8,0.3)',
+      glowColor: 'rgba(234,179,8,0.1)',
+      iconGradient: 'linear-gradient(135deg, #EAB308, #CA8A04)',
       title: 'Payment Not Completed',
-      titleColor: 'text-yellow-800',
-      msgColor: 'text-yellow-600',
+      titleColor: '#FBBF24',
+      msgColor: 'rgba(251,191,36,0.7)',
       emoji: '💳',
     },
     INVALID_QR_CODE: {
       icon: FiXCircle,
-      bg: 'bg-red-50',
-      border: 'border-red-300',
-      iconBg: 'bg-danger',
+      borderColor: 'rgba(239,68,68,0.3)',
+      glowColor: 'rgba(239,68,68,0.1)',
+      iconGradient: 'linear-gradient(135deg, #EF4444, #DC2626)',
       title: 'Invalid QR Code',
-      titleColor: 'text-red-800',
-      msgColor: 'text-red-600',
+      titleColor: '#F87171',
+      msgColor: 'rgba(248,113,113,0.7)',
       emoji: '❌',
     },
   }
@@ -161,30 +178,44 @@ function ResultCard({ result, onReset }) {
   const Icon = cfg.icon
 
   return (
-    <div className={`card border-2 ${cfg.border} animate-slide-up overflow-hidden`}>
-      <div className={`${cfg.bg} px-6 py-5 flex items-center gap-3`}>
-        <div className={`w-10 h-10 ${cfg.iconBg} rounded-xl flex items-center justify-center shrink-0`}>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+      className="card overflow-hidden"
+      style={{
+        border: `1px solid ${cfg.borderColor}`,
+        boxShadow: `0 0 30px ${cfg.glowColor}, 0 4px 16px rgba(0,0,0,0.2)`,
+      }}
+    >
+      <div className="px-6 py-5 flex items-center gap-3" style={{ background: cfg.glowColor }}>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: cfg.iconGradient }}>
           <Icon size={22} className="text-white" />
         </div>
         <div>
-          <p className={`font-bold ${cfg.titleColor} text-lg`}>{cfg.emoji} {cfg.title}</p>
-          <p className={`${cfg.msgColor} text-sm mt-0.5`}>{message}</p>
+          <p className="font-bold text-lg font-display" style={{ color: cfg.titleColor }}>{cfg.emoji} {cfg.title}</p>
+          <p className="text-sm mt-0.5" style={{ color: cfg.msgColor }}>{message}</p>
         </div>
       </div>
       <div className="px-6 pb-6 pt-4">
-        <button onClick={onReset} className="btn-secondary w-full gap-2">
+        <motion.button
+          onClick={onReset}
+          className="btn-secondary w-full gap-2"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
           <FiRefreshCw size={16} /> Try Again
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
 function InfoRow({ label, value, highlight, mono }) {
   return (
     <div className="flex justify-between gap-2 text-sm">
-      <span className="text-textSecondary shrink-0">{label}</span>
-      <span className={`font-medium text-right ${highlight ? 'text-success font-bold' : 'text-textPrimary'} ${mono ? 'font-mono text-xs' : ''}`}>
+      <span className="text-slate-500 shrink-0">{label}</span>
+      <span className={`font-medium text-right ${highlight ? 'text-green-400 font-bold' : 'text-white'} ${mono ? 'font-mono text-xs' : ''}`}>
         {value}
       </span>
     </div>
@@ -284,12 +315,17 @@ export default function AdminScanner() {
 
   return (
     <AdminLayout>
-      <div className="p-6 lg:p-8 max-w-4xl mx-auto">
+      <div className="p-6 lg:p-8 max-w-5xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-textPrimary">QR Scanner</h1>
-          <p className="text-textSecondary mt-1">Scan student QR codes to confirm item collection</p>
-        </div>
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">QR Scanner</h1>
+          <p className="text-slate-400 mt-1">Scan student QR codes to confirm item collection</p>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Scanner Panel */}
@@ -298,46 +334,99 @@ export default function AdminScanner() {
             {!scanResult ? (
               <>
                 {/* Camera Scanner */}
-                <div className="card overflow-hidden">
-                  <div className="p-5 border-b border-border flex items-center justify-between">
+                <motion.div
+                  className="card gradient-border rounded-3xl overflow-hidden"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="p-5 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                     <div className="flex items-center gap-2">
-                      <FiCamera size={18} className="text-primary-600" />
-                      <span className="font-semibold text-textPrimary">Camera Scanner</span>
+                      <FiCamera size={18} className="text-blue-400" />
+                      <span className="font-semibold text-white font-display">Camera Scanner</span>
                     </div>
                     {scanning
-                      ? <button onClick={stopScanner} className="btn-danger text-sm py-1.5 px-4">Stop</button>
-                      : <button onClick={startScanner} className="btn-primary text-sm py-1.5 px-4 gap-2"><FiCamera size={15} />Start Camera</button>
+                      ? <motion.button onClick={stopScanner} className="btn-danger text-sm py-1.5 px-4" whileTap={{ scale: 0.95 }}>Stop</motion.button>
+                      : <motion.button onClick={startScanner} className="btn-primary text-sm py-1.5 px-4 gap-2" whileTap={{ scale: 0.95 }}><FiCamera size={15} />Start Camera</motion.button>
                     }
                   </div>
 
                   {scanning ? (
                     <div className="p-4">
-                      {/* html5-qrcode renders into this div */}
-                      <div id="qr-reader" className="w-full" />
-                      <p className="text-center text-sm text-textSecondary mt-3 animate-pulse-soft">
-                        📷 Point camera at the QR code…
+                      {/* Scanner viewport with blue border glow */}
+                      <div className="relative rounded-xl overflow-hidden"
+                        style={{
+                          boxShadow: '0 0 20px rgba(37,99,235,0.2), 0 0 40px rgba(37,99,235,0.1)',
+                          border: '2px solid rgba(37,99,235,0.4)',
+                        }}
+                      >
+                        {/* html5-qrcode renders into this div */}
+                        <div id="qr-reader" className="w-full" />
+
+                        {/* Scanning line animation */}
+                        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                          <motion.div
+                            className="absolute left-0 right-0 h-0.5"
+                            style={{
+                              background: 'linear-gradient(90deg, transparent, #2563EB, #06B6D4, #2563EB, transparent)',
+                              boxShadow: '0 0 15px rgba(37,99,235,0.5)',
+                            }}
+                            animate={{ top: ['0%', '100%', '0%'] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                          />
+                        </div>
+
+                        {/* Corner markers */}
+                        <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-blue-400 rounded-tl-lg pointer-events-none" />
+                        <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-blue-400 rounded-tr-lg pointer-events-none" />
+                        <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-cyan-400 rounded-bl-lg pointer-events-none" />
+                        <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-cyan-400 rounded-br-lg pointer-events-none" />
+                      </div>
+
+                      <p className="text-center text-sm text-slate-400 mt-3">
+                        <motion.span
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          📷 Point camera at the QR code…
+                        </motion.span>
                       </p>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center py-16 px-6 text-center bg-bgLight">
-                      <div className="w-20 h-20 border-4 border-dashed border-border rounded-2xl flex items-center justify-center mb-4">
-                        <FiCamera size={32} className="text-textSecondary" />
+                    <div className="flex flex-col items-center justify-center py-16 px-6 text-center" style={{ background: 'rgba(15,23,42,0.3)' }}>
+                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4"
+                        style={{
+                          border: '4px dashed rgba(255,255,255,0.08)',
+                          background: 'rgba(255,255,255,0.02)',
+                        }}
+                      >
+                        <FiCamera size={32} className="text-slate-500" />
                       </div>
-                      <p className="text-textSecondary font-medium">Camera is stopped</p>
-                      <p className="text-textSecondary text-sm mt-1">Click "Start Camera" to begin scanning</p>
-                      <button onClick={startScanner} className="btn-primary mt-4 gap-2">
+                      <p className="text-slate-400 font-medium">Camera is stopped</p>
+                      <p className="text-slate-500 text-sm mt-1">Click "Start Camera" to begin scanning</p>
+                      <motion.button
+                        onClick={startScanner}
+                        className="btn-primary mt-4 gap-2"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
                         <FiCamera size={16} /> Start Scanner
-                      </button>
+                      </motion.button>
                     </div>
                   )}
-                </div>
+                </motion.div>
 
                 {/* Manual Entry */}
-                <div className="card p-5">
-                  <p className="font-semibold text-textPrimary mb-1 flex items-center gap-2">
-                    <FiSearch size={16} className="text-primary-600" /> Manual Token Entry
+                <motion.div
+                  className="card p-5"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  <p className="font-semibold text-white mb-1 flex items-center gap-2 font-display">
+                    <FiSearch size={16} className="text-blue-400" /> Manual Token Entry
                   </p>
-                  <p className="text-xs text-textSecondary mb-3">Enter the QR token manually if camera is unavailable</p>
+                  <p className="text-xs text-slate-500 mb-3">Enter the QR token manually if camera is unavailable</p>
                   <form onSubmit={handleManualSubmit} className="flex gap-2">
                     <input
                       type="text"
@@ -346,18 +435,20 @@ export default function AdminScanner() {
                       placeholder="Paste QR token UUID here…"
                       className="form-input font-mono text-sm flex-1"
                     />
-                    <button
+                    <motion.button
                       type="submit"
                       disabled={!manualToken.trim() || manualLoading}
-                      className="btn-primary px-4 shrink-0"
+                      className="btn-primary px-5 shrink-0"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       {manualLoading
                         ? <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         : 'Verify'
                       }
-                    </button>
+                    </motion.button>
                   </form>
-                </div>
+                </motion.div>
               </>
             ) : (
               <ResultCard result={scanResult} onReset={handleReset} />
@@ -367,8 +458,13 @@ export default function AdminScanner() {
           {/* Right Panel — Scan History */}
           <div className="space-y-4">
             {/* Instructions */}
-            <div className="card p-5">
-              <p className="font-semibold text-textPrimary mb-3 text-sm">How to collect orders</p>
+            <motion.div
+              className="card p-5"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <p className="font-semibold text-white mb-3 text-sm font-display">How to collect orders</p>
               <ol className="space-y-3">
                 {[
                   'Ask the student to open their order QR code',
@@ -378,60 +474,82 @@ export default function AdminScanner() {
                   'Hand over the items if status shows SUCCESS',
                 ].map((step, i) => (
                   <li key={i} className="flex items-start gap-2.5">
-                    <span className="w-5 h-5 bg-primary-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 text-white"
+                      style={{ background: 'linear-gradient(135deg, #2563EB, #0EA5E9)', boxShadow: '0 2px 6px rgba(37,99,235,0.3)' }}
+                    >
                       {i + 1}
                     </span>
-                    <span className="text-sm text-textSecondary">{step}</span>
+                    <span className="text-sm text-slate-400">{step}</span>
                   </li>
                 ))}
               </ol>
-            </div>
+            </motion.div>
 
             {/* Scan History */}
-            <div className="card p-5">
-              <p className="font-semibold text-textPrimary mb-3 text-sm flex items-center gap-2">
-                <FiClock size={15} /> Recent Scans
+            <motion.div
+              className="card p-5"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <p className="font-semibold text-white mb-3 text-sm flex items-center gap-2 font-display">
+                <FiClock size={15} className="text-slate-400" /> Recent Scans
               </p>
               {scanHistory.length === 0 ? (
-                <p className="text-textSecondary text-xs text-center py-4">No scans yet this session</p>
+                <p className="text-slate-500 text-xs text-center py-4">No scans yet this session</p>
               ) : (
                 <div className="space-y-2">
                   {scanHistory.map((scan, i) => (
-                    <div key={i} className={`flex items-center gap-3 p-2.5 rounded-xl text-sm ${scan.success ? 'bg-green-50' : 'bg-red-50'}`}>
-                      <div className={`w-2 h-2 rounded-full shrink-0 ${scan.success ? 'bg-success' : 'bg-danger'}`} />
+                    <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl text-sm"
+                      style={{
+                        background: scan.success ? 'rgba(34,197,94,0.06)' : 'rgba(239,68,68,0.06)',
+                        border: `1px solid ${scan.success ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)'}`,
+                      }}
+                    >
+                      <div className={`w-2 h-2 rounded-full shrink-0`}
+                        style={{
+                          background: scan.success ? '#4ADE80' : '#F87171',
+                          boxShadow: `0 0 6px ${scan.success ? 'rgba(74,222,128,0.5)' : 'rgba(248,113,113,0.5)'}`,
+                        }}
+                      />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-textPrimary truncate">{scan.label}</p>
-                        <p className="text-xs text-textSecondary">{scan.time}</p>
+                        <p className="font-medium text-white truncate">{scan.label}</p>
+                        <p className="text-xs text-slate-500">{scan.time}</p>
                       </div>
-                      <span className={`text-xs font-semibold ${scan.success ? 'text-success' : 'text-danger'}`}>
+                      <span className={`text-xs font-semibold ${scan.success ? 'text-green-400' : 'text-red-400'}`}>
                         {scan.success ? 'OK' : 'FAIL'}
                       </span>
                     </div>
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
 
             {/* Status Guide */}
-            <div className="card p-5">
-              <p className="font-semibold text-textPrimary mb-3 text-sm">Status Guide</p>
+            <motion.div
+              className="card p-5"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <p className="font-semibold text-white mb-3 text-sm font-display">Status Guide</p>
               <div className="space-y-2.5">
                 {[
-                  { color: 'bg-success', label: 'SUCCESS', desc: 'Give items to student' },
-                  { color: 'bg-amber-500', label: 'ALREADY COLLECTED', desc: 'Items already given — reject' },
-                  { color: 'bg-yellow-400', label: 'PAYMENT PENDING', desc: 'Payment not done — reject' },
-                  { color: 'bg-danger', label: 'INVALID QR', desc: 'Fake or expired — reject' },
-                ].map(({ color, label, desc }) => (
+                  { color: '#4ADE80', glow: 'rgba(74,222,128,0.5)', label: 'SUCCESS', desc: 'Give items to student' },
+                  { color: '#FBBF24', glow: 'rgba(251,191,36,0.5)', label: 'ALREADY COLLECTED', desc: 'Items already given — reject' },
+                  { color: '#FDE047', glow: 'rgba(253,224,71,0.5)', label: 'PAYMENT PENDING', desc: 'Payment not done — reject' },
+                  { color: '#F87171', glow: 'rgba(248,113,113,0.5)', label: 'INVALID QR', desc: 'Fake or expired — reject' },
+                ].map(({ color, glow, label, desc }) => (
                   <div key={label} className="flex items-start gap-2.5">
-                    <div className={`w-3 h-3 ${color} rounded-full shrink-0 mt-0.5`} />
+                    <div className="w-3 h-3 rounded-full shrink-0 mt-0.5" style={{ background: color, boxShadow: `0 0 6px ${glow}` }} />
                     <div>
-                      <p className="text-xs font-bold text-textPrimary">{label}</p>
-                      <p className="text-xs text-textSecondary">{desc}</p>
+                      <p className="text-xs font-bold text-white">{label}</p>
+                      <p className="text-xs text-slate-500">{desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

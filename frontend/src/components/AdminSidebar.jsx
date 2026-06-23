@@ -28,24 +28,34 @@ export default function AdminSidebar() {
   }
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white">
+    <div
+      className="flex flex-col h-full"
+      style={{
+        background: 'rgba(17,24,39,0.95)',
+        borderRight: '1px solid rgba(255,255,255,0.05)',
+      }}
+    >
       {/* Logo */}
       <div className={`flex items-center gap-3 px-5 py-5 ${collapsed ? 'justify-center px-3' : ''}`}>
-        <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-md" style={{
-          background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)',
-        }}>
+        <div
+          className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0"
+          style={{
+            background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+            boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
+          }}
+        >
           <span className="text-white font-bold text-lg">🍽</span>
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="font-bold text-textPrimary text-base leading-tight font-display tracking-tight">Smart Canteen</p>
-            <p className="text-[11px] text-textSecondary font-medium">Admin Panel</p>
+            <p className="font-bold text-white text-base leading-tight font-display tracking-tight">Smart Canteen</p>
+            <p className="text-[11px] text-slate-500 font-medium">Admin Panel</p>
           </div>
         )}
       </div>
 
       {/* Divider */}
-      <div className="mx-4 h-px bg-gray-100" />
+      <div className="mx-4 h-px bg-white/[0.06]" />
 
       {/* Nav Links */}
       <nav className="flex-1 p-3 space-y-1 mt-2">
@@ -57,14 +67,14 @@ export default function AdminSidebar() {
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                ${isActive
-                 ? 'text-white font-bold shadow-lg'
-                 : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                 ? 'text-white font-bold'
+                 : 'text-slate-400 hover:bg-white/5 hover:text-white'
                }
                ${collapsed ? 'justify-center px-3' : ''}`
             }
             style={({ isActive }) => isActive ? {
-              background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)',
-              boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
+              background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+              boxShadow: '0 4px 14px rgba(37,99,235,0.3), 0 0 20px rgba(6,182,212,0.1)',
             } : undefined}
           >
             <Icon size={19} className="shrink-0" />
@@ -74,23 +84,34 @@ export default function AdminSidebar() {
       </nav>
 
       {/* User + Logout */}
-      <div className="p-3 border-t border-gray-100">
+      <div className="p-3 border-t border-white/[0.06]">
         {!collapsed && (
-          <div className="flex items-center gap-3 px-3 py-3 mb-2 rounded-xl" style={{ background: 'linear-gradient(135deg, #EFF6FF, #F0F9FF)' }}>
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm" style={{
-              background: 'linear-gradient(135deg, #2563EB, #3B82F6)',
-            }}>
+          <div
+            className="flex items-center gap-3 px-3 py-3 mb-2 rounded-xl"
+            style={{
+              background: 'rgba(30,41,59,0.5)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.06)',
+            }}
+          >
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0"
+              style={{
+                background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
+                boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
+              }}
+            >
               {getInitials(user?.fullName)}
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-textPrimary truncate">{user?.fullName}</p>
-              <p className="text-[11px] text-textSecondary truncate">Administrator</p>
+              <p className="text-xs font-bold text-white truncate">{user?.fullName}</p>
+              <p className="text-[11px] text-slate-500 truncate">Administrator</p>
             </div>
           </div>
         )}
         <button
           onClick={handleLogout}
-          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 hover:text-red-600 transition-all w-full ${collapsed ? 'justify-center px-3' : ''}`}
+          className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all w-full ${collapsed ? 'justify-center px-3' : ''}`}
         >
           <FiLogOut size={18} className="shrink-0" />
           {!collapsed && <span>Sign Out</span>}
@@ -111,9 +132,10 @@ export default function AdminSidebar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
             <motion.div
-              className="absolute left-0 top-0 h-full w-72 bg-white shadow-2xl"
+              className="absolute left-0 top-0 h-full w-72"
+              style={{ boxShadow: '4px 0 30px rgba(0,0,0,0.5)' }}
               onClick={e => e.stopPropagation()}
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
@@ -128,23 +150,33 @@ export default function AdminSidebar() {
 
       {/* Mobile toggle button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 bg-white rounded-xl shadow-lg border border-gray-100"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl glass-strong"
+        style={{
+          boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+          border: '1px solid rgba(255,255,255,0.06)',
+        }}
         onClick={() => setMobileOpen(!mobileOpen)}
       >
-        {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+        {mobileOpen ? <FiX size={20} className="text-white" /> : <FiMenu size={20} className="text-slate-300" />}
       </button>
 
       {/* Desktop sidebar */}
-      <div className={`hidden lg:flex flex-col border-r border-gray-100 transition-all duration-300 ${collapsed ? 'w-[72px]' : 'w-[260px]'}`}
-        style={{ boxShadow: '1px 0 8px rgba(0,0,0,0.02)' }}
+      <div
+        className={`hidden lg:flex flex-col transition-all duration-300 ${collapsed ? 'w-[72px]' : 'w-[260px]'}`}
+        style={{ borderRight: '1px solid rgba(255,255,255,0.05)' }}
       >
         <SidebarContent />
         {/* Collapse toggle */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute bottom-20 -right-3 w-6 h-6 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
+          className="absolute bottom-20 -right-3 w-6 h-6 rounded-full flex items-center justify-center transition-colors"
+          style={{
+            background: 'rgba(30,41,59,0.9)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          }}
         >
-          <span className={`text-gray-500 text-xs transition-transform ${collapsed ? '' : 'rotate-180'}`}>›</span>
+          <span className={`text-slate-400 text-xs transition-transform ${collapsed ? '' : 'rotate-180'}`}>›</span>
         </button>
       </div>
     </>

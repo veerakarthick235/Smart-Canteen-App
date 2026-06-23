@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Navbar from '../../components/Navbar'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import api from '../../api/axios'
 import toast from 'react-hot-toast'
 import { formatCurrency, formatDate, getStatusStyle, getStatusLabel, formatOrderId } from '../../utils/helpers'
 import { HiArrowLeft, HiDownload, HiCheckCircle, HiClock, HiCurrencyRupee } from 'react-icons/hi'
+
+const STATUS_BADGE_MAP = {
+  pending: 'badge-pending',
+  paid: 'badge-paid',
+  completed: 'badge-completed',
+  cancelled: 'badge-cancelled',
+}
 
 const OrderDetail = () => {
   const { id } = useParams()
@@ -36,9 +44,13 @@ const OrderDetail = () => {
     link.click()
   }
 
+  const getBadgeClass = (status) => {
+    return STATUS_BADGE_MAP[status?.toLowerCase()] || 'badge-pending'
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen bg-[#0F172A]">
         <Navbar />
         <div className="flex items-center justify-center min-h-[400px]">
           <LoadingSpinner size="lg" />
@@ -49,41 +61,46 @@ const OrderDetail = () => {
 
   if (!order) return null
 
-  const statusStyle = getStatusStyle(order.status)
-
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#0F172A]">
       <Navbar />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <Link to="/student/orders" className="p-2 rounded-lg text-gray-500 hover:bg-white hover:text-gray-700 transition-colors">
+        <motion.div
+          className="flex items-center gap-3 mb-6"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Link to="/student/orders" className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors border border-white/[0.08]">
             <HiArrowLeft className="h-5 w-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Order Details</h1>
-            <p className="text-gray-500 text-sm">{formatOrderId(order._id)}</p>
+            <h1 className="text-2xl font-bold text-white font-display tracking-tight">Order Details</h1>
+            <p className="text-slate-400 text-sm">{formatOrderId(order._id)}</p>
           </div>
-        </div>
+        </motion.div>
 
         <div className="space-y-4">
           {/* Status Card */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-card p-6">
+          <motion.div
+            className="glass rounded-2xl p-6"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+          >
             <div className="flex items-center justify-between flex-wrap gap-3">
               <div>
-                <p className="text-sm text-gray-500">Order Status</p>
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Order Status</p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold"
-                    style={{ backgroundColor: statusStyle.bg, color: statusStyle.text, border: `1px solid ${statusStyle.border}` }}
-                  >
+                  <span className={`badge ${getBadgeClass(order.status)}`}>
                     {getStatusLabel(order.status)}
                   </span>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-sm text-gray-500">Order Date</p>
-                <p className="text-sm font-medium text-gray-900 mt-1">
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Order Date</p>
+                <p className="text-sm font-medium text-white mt-1">
                   {formatDate(order.createdAt, 'datetime')}
                 </p>
               </div>
@@ -104,55 +121,61 @@ const OrderDetail = () => {
                       <div
                         className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${
                           isCompleted
-                            ? 'bg-primary-600 border-primary-600'
-                            : 'bg-white border-gray-200'
+                            ? 'border-blue-500'
+                            : 'border-white/[0.12]'
                         }`}
+                        style={isCompleted ? { background: 'linear-gradient(135deg, #2563EB, #06B6D4)' } : { background: 'rgba(255,255,255,0.04)' }}
                       >
                         {isCompleted ? (
                           <HiCheckCircle className="h-5 w-5 text-white" />
                         ) : (
-                          <div className={`h-3 w-3 rounded-full ${isActive ? 'bg-primary-400' : 'bg-gray-200'}`} />
+                          <div className={`h-3 w-3 rounded-full ${isActive ? 'bg-blue-400' : 'bg-white/10'}`} />
                         )}
                       </div>
-                      <p className={`text-xs mt-1 font-medium capitalize ${isCompleted ? 'text-primary-600' : 'text-gray-400'}`}>
+                      <p className={`text-xs mt-1 font-medium capitalize ${isCompleted ? 'text-blue-400' : 'text-slate-500'}`}>
                         {step}
                       </p>
                     </div>
                     {idx < 2 && (
-                      <div className={`flex-1 h-0.5 mx-1 ${currentIdx > stepIdx && order.status !== 'cancelled' ? 'bg-primary-600' : 'bg-gray-200'}`} />
+                      <div className={`flex-1 h-0.5 mx-1 rounded-full ${currentIdx > stepIdx && order.status !== 'cancelled' ? 'bg-gradient-to-r from-blue-500 to-cyan-500' : 'bg-white/[0.08]'}`} />
                     )}
                   </div>
                 )
               })}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Items Table */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-card p-6">
-            <h2 className="text-base font-semibold text-gray-900 mb-4">Order Items</h2>
+          {/* Items */}
+          <motion.div
+            className="glass rounded-2xl p-6"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <h2 className="text-base font-semibold text-white mb-4 font-display">Order Items</h2>
             <div className="space-y-3">
               {(order.items || []).map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
-                  <div className="h-10 w-10 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
+                <div key={idx} className="flex items-center gap-3 py-2 border-b border-white/[0.06] last:border-0">
+                  <div className="h-10 w-10 rounded-lg overflow-hidden flex-shrink-0 border border-white/[0.08]" style={{ background: 'rgba(255,255,255,0.04)' }}>
                     {item.product?.image || item.image ? (
-                      <img 
-                        src={(item.product?.image || item.image).startsWith('http') || (item.product?.image || item.image).startsWith('data:') ? (item.product?.image || item.image) : `data:image/jpeg;base64,${item.product?.image || item.image}`} 
-                        alt={item.product?.name || item.name} 
-                        className="h-full w-full object-cover" 
+                      <img
+                        src={(item.product?.image || item.image).startsWith('http') || (item.product?.image || item.image).startsWith('data:') ? (item.product?.image || item.image) : `data:image/jpeg;base64,${item.product?.image || item.image}`}
+                        alt={item.product?.name || item.name}
+                        className="h-full w-full object-cover"
                       />
                     ) : (
-                      <div className="h-full w-full flex items-center justify-center text-gray-300 text-lg">🍽</div>
+                      <div className="h-full w-full flex items-center justify-center text-slate-500 text-lg">🍽</div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900">{item.product?.name || item.name || 'Item'}</p>
-                    <p className="text-xs text-gray-500">{item.product?.category}</p>
+                    <p className="text-sm font-medium text-white">{item.product?.name || item.name || 'Item'}</p>
+                    <p className="text-xs text-slate-500">{item.product?.category}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-slate-300">
                       {formatCurrency(item.price)} × {item.quantity}
                     </p>
-                    <p className="text-sm font-bold text-primary-600">
+                    <p className="text-sm font-bold text-blue-400">
                       {formatCurrency(item.price * item.quantity)}
                     </p>
                   </div>
@@ -161,105 +184,119 @@ const OrderDetail = () => {
             </div>
 
             {/* Total */}
-            <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-2">
-              <span className="text-base font-bold text-gray-900">Total Amount</span>
-              <span className="text-xl font-bold text-primary-600">
+            <div className="flex items-center justify-between pt-4 border-t border-white/[0.08] mt-2">
+              <span className="text-base font-bold text-white font-display">Total Amount</span>
+              <span className="text-2xl font-bold text-gradient-blue">
                 {formatCurrency(order.totalAmount)}
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Payment Info */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-card p-6">
-            <h2 className="text-base font-semibold text-gray-900 mb-4">Payment Details</h2>
+          <motion.div
+            className="glass rounded-2xl p-6"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+          >
+            <h2 className="text-base font-semibold text-white mb-4 font-display">Payment Details</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs text-gray-500">Payment ID</p>
-                <p className="text-sm font-medium text-gray-900 mt-0.5 break-all">
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Payment ID</p>
+                <p className="text-sm font-medium text-slate-200 mt-0.5 break-all">
                   {order.paymentId || '—'}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500">Payment Method</p>
-                <p className="text-sm font-medium text-gray-900 mt-0.5">Razorpay</p>
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Payment Method</p>
+                <p className="text-sm font-medium text-slate-200 mt-0.5">Razorpay</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500">Order Number</p>
-                <p className="text-sm font-medium text-gray-900 mt-0.5">{formatOrderId(order._id)}</p>
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Order Number</p>
+                <p className="text-sm font-medium text-slate-200 mt-0.5">{formatOrderId(order._id)}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500">Amount Paid</p>
-                <p className="text-sm font-bold text-green-600 mt-0.5">
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Amount Paid</p>
+                <p className="text-sm font-bold text-emerald-400 mt-0.5">
                   {formatCurrency(order.totalAmount)}
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* QR Code Section */}
           {order.qrCode && (
-            <div className="bg-white rounded-xl border border-gray-100 shadow-card p-6">
-              <h2 className="text-base font-semibold text-gray-900 mb-2">Collection QR Code</h2>
-              <p className="text-sm text-gray-500 mb-5">
-                Show this QR code at the canteen counter to collect your order
-              </p>
+            <motion.div
+              className="glass-strong rounded-2xl p-6 relative overflow-hidden"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
+              <div className="gradient-border" />
 
-              <div className="flex flex-col sm:flex-row items-center gap-6">
-                {/* QR Code */}
-                <div className="flex flex-col items-center">
-                  <div className="border-4 border-primary-100 rounded-2xl p-3 bg-white shadow-inner">
-                    <img
-                      src={`data:image/png;base64,${order.qrCode}`}
-                      alt="Order QR Code"
-                      className="h-48 w-48 object-contain"
-                    />
-                  </div>
-                  <button
-                    onClick={handleDownloadQR}
-                    className="mt-3 flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 font-medium"
-                  >
-                    <HiDownload className="h-4 w-4" />
-                    Download QR
-                  </button>
-                </div>
+              <div className="relative z-10">
+                <h2 className="text-base font-semibold text-white mb-2 font-display">Collection QR Code</h2>
+                <p className="text-sm text-slate-400 mb-5">
+                  Show this QR code at the canteen counter to collect your order
+                </p>
 
-                {/* Instructions */}
-                <div className="flex-1">
-                  <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
-                    <h3 className="text-sm font-semibold text-blue-800 mb-3">How to collect</h3>
-                    <ol className="space-y-2">
-                      {[
-                        'Go to the canteen counter',
-                        'Show this QR code to the staff',
-                        'Staff will scan the QR to verify',
-                        'Collect your items',
-                      ].map((step, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-blue-700">
-                          <span className="h-5 w-5 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                            {i + 1}
-                          </span>
-                          {step}
-                        </li>
-                      ))}
-                    </ol>
+                <div className="flex flex-col sm:flex-row items-center gap-6">
+                  {/* QR Code */}
+                  <div className="flex flex-col items-center">
+                    <div className="rounded-2xl p-3 bg-white shadow-lg" style={{ boxShadow: '0 0 40px rgba(37,99,235,0.15)' }}>
+                      <img
+                        src={`data:image/png;base64,${order.qrCode}`}
+                        alt="Order QR Code"
+                        className="h-48 w-48 object-contain"
+                      />
+                    </div>
+                    <button
+                      onClick={handleDownloadQR}
+                      className="mt-3 flex items-center gap-1.5 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                    >
+                      <HiDownload className="h-4 w-4" />
+                      Download QR
+                    </button>
                   </div>
 
-                  {order.status === 'completed' && order.collectedAt && (
-                    <div className="mt-3 bg-green-50 rounded-xl p-4 border border-green-100">
-                      <div className="flex items-center gap-2">
-                        <HiCheckCircle className="h-5 w-5 text-green-600" />
-                        <div>
-                          <p className="text-sm font-semibold text-green-800">Order Collected</p>
-                          <p className="text-xs text-green-600 mt-0.5">
-                            {formatDate(order.collectedAt, 'datetime')}
-                          </p>
+                  {/* Instructions */}
+                  <div className="flex-1">
+                    <div className="rounded-xl p-4 border border-blue-500/20" style={{ background: 'rgba(37,99,235,0.08)' }}>
+                      <h3 className="text-sm font-semibold text-blue-300 mb-3">How to collect</h3>
+                      <ol className="space-y-2">
+                        {[
+                          'Go to the canteen counter',
+                          'Show this QR code to the staff',
+                          'Staff will scan the QR to verify',
+                          'Collect your items',
+                        ].map((step, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm text-blue-200/80">
+                            <span className="h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5 border border-blue-500/30" style={{ background: 'rgba(37,99,235,0.2)', color: '#93C5FD' }}>
+                              {i + 1}
+                            </span>
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    {order.status === 'completed' && order.collectedAt && (
+                      <div className="mt-3 rounded-xl p-4 border border-emerald-500/20" style={{ background: 'rgba(34,197,94,0.08)' }}>
+                        <div className="flex items-center gap-2">
+                          <HiCheckCircle className="h-5 w-5 text-emerald-400" />
+                          <div>
+                            <p className="text-sm font-semibold text-emerald-300">Order Collected</p>
+                            <p className="text-xs text-emerald-400/70 mt-0.5">
+                              {formatDate(order.collectedAt, 'datetime')}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

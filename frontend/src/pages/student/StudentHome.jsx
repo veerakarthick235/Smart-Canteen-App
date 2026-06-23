@@ -85,17 +85,15 @@ export default function StudentHome() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
+    <div className="min-h-screen bg-[#0F172A]">
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden" style={{
-        background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 30%, #0EA5E9 100%)',
-      }}>
-        {/* Decorative shapes */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4" />
-        <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-white/3 rounded-full -translate-x-1/2 -translate-y-1/2" />
+      <div className="relative overflow-hidden">
+        {/* Dark gradient bg with decorative orbs */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(6,182,212,0.08) 50%, rgba(139,92,246,0.06) 100%)' }} />
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)' }} />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
           <motion.div
@@ -103,13 +101,13 @@ export default function StudentHome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-blue-100 text-sm font-medium mb-1">
+            <p className="text-slate-400 text-sm font-medium mb-1">
               {getGreeting()}, {user?.fullName?.split(' ')[0] || 'there'} 👋
             </p>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight">
               Order Now
             </h1>
-            <p className="text-blue-100 mt-1.5 text-base">
+            <p className="text-slate-400 mt-1.5 text-base">
               {CATEGORY_CONFIG[category].desc}
             </p>
           </motion.div>
@@ -123,19 +121,19 @@ export default function StudentHome() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <div className="relative">
-              <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
               <input
                 type="text"
                 placeholder="Search for food, beverages, stationery…"
                 value={searchInput}
                 onChange={e => setSearchInput(e.target.value)}
-                className="w-full pl-14 pr-28 py-4 text-base rounded-2xl border-0 text-textPrimary placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-white/20 transition-shadow"
-                style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}
+                className="w-full pl-14 pr-28 py-4 text-base rounded-2xl border border-white/[0.08] text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/40 transition-all"
+                style={{ background: 'rgba(30,41,59,0.6)', backdropFilter: 'blur(16px)' }}
               />
               <button
                 type="submit"
                 className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 hover:opacity-90"
-                style={{ background: 'linear-gradient(135deg, #2563EB, #0EA5E9)' }}
+                style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)', boxShadow: '0 2px 10px rgba(37,99,235,0.3)' }}
               >
                 Search
               </button>
@@ -161,13 +159,13 @@ export default function StudentHome() {
                 onClick={() => handleCategoryChange(cat)}
                 className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold whitespace-nowrap transition-all duration-200 ${
                   isActive
-                    ? 'text-white shadow-lg scale-[1.02]'
-                    : 'bg-white text-textSecondary border border-gray-200 hover:border-gray-300 hover:shadow-md hover:text-textPrimary'
+                    ? 'text-white scale-[1.02]'
+                    : 'text-slate-400 border border-white/[0.08] hover:border-white/[0.15] hover:text-slate-200'
                 }`}
                 style={isActive ? {
-                  background: `linear-gradient(135deg, ${cat === 'All' ? '#2563EB, #0EA5E9' : cat === 'Food' ? '#F97316, #F59E0B' : cat === 'Beverages' ? '#06B6D4, #3B82F6' : '#8B5CF6, #A855F7'})`,
+                  background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
                   boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
-                } : undefined}
+                } : { background: 'rgba(255,255,255,0.04)' }}
               >
                 <span className="text-base">{config.emoji}</span>
                 {cat}
@@ -179,12 +177,12 @@ export default function StudentHome() {
         {/* Search results label */}
         {search && (
           <div className="flex items-center gap-2 mb-4 px-1">
-            <p className="text-sm text-textSecondary">
-              Showing results for "<strong className="text-textPrimary">{search}</strong>"
+            <p className="text-sm text-slate-400">
+              Showing results for "<strong className="text-white">{search}</strong>"
             </p>
             <button
               onClick={() => { setSearch(''); setSearchInput('') }}
-              className="text-xs text-danger hover:underline font-medium"
+              className="text-xs text-red-400 hover:underline font-medium"
             >
               Clear
             </button>
@@ -196,14 +194,13 @@ export default function StudentHome() {
           <LoadingSpinner />
         ) : products.length === 0 ? (
           <motion.div
-            className="bg-white rounded-3xl p-16 text-center border border-gray-100"
-            style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}
+            className="glass rounded-3xl p-16 text-center"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
           >
             <span className="text-7xl block mb-4">🔍</span>
-            <h3 className="text-xl font-bold text-textPrimary font-display">No products found</h3>
-            <p className="text-textSecondary mt-2">Try a different search or category</p>
+            <h3 className="text-xl font-bold text-white font-display">No products found</h3>
+            <p className="text-slate-400 mt-2">Try a different search or category</p>
             <button onClick={() => handleCategoryChange('All')} className="btn-secondary mt-5">
               Show All Products
             </button>
@@ -233,13 +230,13 @@ export default function StudentHome() {
                     onClick={() => setPage(p)}
                     className={`w-11 h-11 rounded-xl text-sm font-bold transition-all duration-200 ${
                       page === p
-                        ? 'text-white shadow-lg'
-                        : 'bg-white border border-gray-200 text-textSecondary hover:border-primary-300 hover:text-primary-600 hover:shadow-md'
+                        ? 'text-white'
+                        : 'border border-white/[0.08] text-slate-400 hover:border-blue-500/30 hover:text-blue-400'
                     }`}
                     style={page === p ? {
-                      background: 'linear-gradient(135deg, #2563EB, #0EA5E9)',
+                      background: 'linear-gradient(135deg, #2563EB, #06B6D4)',
                       boxShadow: '0 4px 12px rgba(37,99,235,0.3)',
-                    } : undefined}
+                    } : { background: 'rgba(255,255,255,0.04)' }}
                   >
                     {p}
                   </button>
@@ -262,8 +259,8 @@ export default function StudentHome() {
             to="/student/cart"
             className="flex items-center gap-4 text-white px-7 py-4 rounded-2xl transition-all duration-200 hover:scale-[1.02]"
             style={{
-              background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #0EA5E9 100%)',
-              boxShadow: '0 8px 32px rgba(37,99,235,0.4), 0 4px 12px rgba(0,0,0,0.1)',
+              background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+              boxShadow: '0 8px 32px rgba(37,99,235,0.4), 0 0 60px rgba(6,182,212,0.15)',
             }}
           >
             <div className="flex items-center gap-2.5">

@@ -23,14 +23,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   fontFamily: 'Inter, sans-serif',
                   fontSize: '14px',
                   borderRadius: '14px',
-                  boxShadow: '0 4px 16px -4px rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.04)',
-                  border: '1px solid rgba(226,232,240,0.8)',
+                  background: 'rgba(30,41,59,0.9)',
+                  backdropFilter: 'blur(16px)',
+                  color: '#F8FAFC',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
                 },
                 success: {
-                  iconTheme: { primary: '#16A34A', secondary: 'white' },
+                  iconTheme: { primary: '#22C55E', secondary: '#0F172A' },
                 },
                 error: {
-                  iconTheme: { primary: '#DC2626', secondary: 'white' },
+                  iconTheme: { primary: '#EF4444', secondary: '#0F172A' },
                 },
               }}
             />

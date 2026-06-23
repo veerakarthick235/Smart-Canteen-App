@@ -25,7 +25,7 @@ export default function Modal({ isOpen, onClose, title, children, footer, size =
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -33,21 +33,27 @@ export default function Modal({ isOpen, onClose, title, children, footer, size =
             transition={{ duration: 0.2 }}
           />
 
-          {/* Modal */}
+          {/* Modal Panel */}
           <motion.div
-            className={`relative bg-white rounded-2xl shadow-elevated w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col`}
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            className={`relative glass-strong rounded-2xl w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col overflow-hidden`}
+            style={{
+              boxShadow: '0 8px 32px rgba(0,0,0,0.4), 0 0 60px rgba(37,99,235,0.08)',
+            }}
+            initial={{ opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
           >
+            {/* Gradient border overlay */}
+            <div className="gradient-border" />
+
             {/* Header */}
             {title && (
-              <div className="flex items-center justify-between p-6 border-b border-border shrink-0">
-                <h2 className="text-lg font-bold text-textPrimary font-display">{title}</h2>
+              <div className="flex items-center justify-between p-6 border-b border-white/[0.06] shrink-0">
+                <h2 className="text-lg font-bold text-white font-display tracking-tight">{title}</h2>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-xl hover:bg-bgLight text-textSecondary hover:text-textPrimary transition-colors"
+                  className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
                 >
                   <FiX size={20} />
                 </button>
@@ -55,13 +61,13 @@ export default function Modal({ isOpen, onClose, title, children, footer, size =
             )}
 
             {/* Content */}
-            <div className="p-6 overflow-y-auto flex-1">
+            <div className="p-6 overflow-y-auto flex-1 text-slate-300">
               {children}
             </div>
 
             {/* Footer */}
             {footer && (
-              <div className="p-6 border-t border-border shrink-0 bg-slate-50/50 rounded-b-2xl">
+              <div className="p-6 border-t border-white/[0.06] shrink-0" style={{ background: 'rgba(15,23,42,0.5)' }}>
                 {footer}
               </div>
             )}

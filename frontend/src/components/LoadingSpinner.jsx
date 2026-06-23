@@ -1,22 +1,32 @@
 export default function LoadingSpinner({ fullScreen = false, size = 'md', className = '' }) {
   const sizeClasses = {
-    sm: 'w-6 h-6 border-[3px]',
-    md: 'w-10 h-10 border-4',
-    lg: 'w-14 h-14 border-[5px]',
+    sm: 'w-6 h-6 border-2',
+    md: 'w-10 h-10 border-2',
+    lg: 'w-14 h-14 border-[3px]',
   }
 
   const content = (
-    <div className="flex flex-col items-center justify-center gap-3">
+    <div className="flex flex-col items-center justify-center gap-4">
       <div
-        className={`${sizeClasses[size] || sizeClasses.md} border-primary-100 border-t-primary-600 rounded-full animate-spin shadow-[0_0_15px_rgba(37,99,235,0.15)] ${className}`}
+        className={`${sizeClasses[size] || sizeClasses.md} border-slate-700 border-t-blue-500 rounded-full animate-spin ${className}`}
+        style={{
+          boxShadow: '0 0 20px rgba(37,99,235,0.3), 0 0 40px rgba(37,99,235,0.1)',
+        }}
       />
-      <p className="text-sm text-textSecondary font-medium tracking-wide">Loading…</p>
+      <p className="text-sm text-slate-400 font-medium tracking-wide">Loading…</p>
     </div>
   )
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-50">
+      <div
+        className="fixed inset-0 flex items-center justify-center z-50"
+        style={{
+          background: 'rgba(17,24,39,0.80)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+        }}
+      >
         {content}
       </div>
     )

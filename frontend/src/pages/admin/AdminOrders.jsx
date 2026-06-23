@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import AdminLayout from '../../components/AdminLayout'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import Modal from '../../components/Modal'
@@ -89,7 +90,14 @@ const AdminOrders = () => {
           <button
             onClick={() => handleStatusUpdate(order._id, 'completed')}
             disabled={isLoading}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-green-50 text-green-700 border border-green-200 rounded-lg hover:bg-green-100 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-xl transition-all disabled:opacity-50"
+            style={{
+              background: 'rgba(34,197,94,0.1)',
+              color: '#4ADE80',
+              border: '1px solid rgba(34,197,94,0.2)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(34,197,94,0.2)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(34,197,94,0.1)' }}
           >
             {isLoading ? <LoadingSpinner size="sm" /> : <HiCheck className="h-3.5 w-3.5" />}
             Complete
@@ -99,7 +107,14 @@ const AdminOrders = () => {
           <button
             onClick={() => handleStatusUpdate(order._id, 'cancelled')}
             disabled={isLoading}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-red-50 text-red-700 border border-red-200 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-xl transition-all disabled:opacity-50"
+            style={{
+              background: 'rgba(239,68,68,0.1)',
+              color: '#F87171',
+              border: '1px solid rgba(239,68,68,0.2)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(239,68,68,0.2)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(239,68,68,0.1)' }}
           >
             <HiBan className="h-3.5 w-3.5" />
             Cancel
@@ -113,33 +128,43 @@ const AdminOrders = () => {
     <AdminLayout>
       <div className="p-6 lg:p-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <motion.div
+          className="flex items-center justify-between mb-6"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
-            <p className="text-gray-500 text-sm mt-1">
+            <h1 className="text-2xl font-extrabold font-display text-white tracking-tight">Orders</h1>
+            <p className="text-slate-400 text-sm mt-1">
               {totalOrders} total order{totalOrders !== 1 ? 's' : ''}
             </p>
           </div>
           <button
             onClick={() => fetchOrders(currentPage)}
-            className="flex items-center gap-2 btn-secondary text-sm"
+            className="btn-secondary text-sm"
           >
             <HiRefresh className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
           </button>
-        </div>
+        </motion.div>
 
         {/* Filters */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-card p-4 mb-5">
+        <motion.div
+          className="card p-4 mb-5"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
               <input
                 type="text"
                 placeholder="Search by student name or order ID..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="input-field pl-9"
+                className="form-input pl-9"
               />
             </div>
           </div>
@@ -151,15 +176,19 @@ const AdminOrders = () => {
                 onClick={() => setStatusFilter(value)}
                 className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   statusFilter === value
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'text-white shadow-lg'
+                    : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-200'
                 }`}
+                style={statusFilter === value ? {
+                  background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)',
+                  boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
+                } : {}}
               >
                 {label}
               </button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Orders Table */}
         {loading ? (
@@ -167,64 +196,73 @@ const AdminOrders = () => {
             <LoadingSpinner size="lg" />
           </div>
         ) : orders.length === 0 ? (
-          <div className="flex flex-col items-center justify-center min-h-[250px] bg-white rounded-xl border border-gray-100 shadow-card">
-            <p className="text-gray-400 font-medium">No orders found</p>
-          </div>
+          <motion.div
+            className="card flex flex-col items-center justify-center min-h-[250px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <p className="text-slate-500 font-medium">No orders found</p>
+          </motion.div>
         ) : (
           <>
-            <div className="bg-white rounded-xl border border-gray-100 shadow-card overflow-hidden">
+            <motion.div
+              className="card overflow-hidden"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="data-table">
                   <thead>
-                    <tr className="bg-slate-50 border-b border-gray-100">
-                      <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3.5">Order</th>
-                      <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3.5">Student</th>
-                      <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3.5">Items</th>
-                      <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3.5">Total</th>
-                      <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3.5">Status</th>
-                      <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3.5">Date</th>
-                      <th className="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3.5">Actions</th>
+                    <tr>
+                      <th>Order</th>
+                      <th>Student</th>
+                      <th>Items</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                      <th className="text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
+                  <tbody>
                     {orders.map((order) => {
                       const statusStyle = getStatusStyle(order.status)
                       return (
-                        <tr key={order._id} className="hover:bg-slate-50 transition-colors">
-                          <td className="px-5 py-3.5">
-                            <span className="text-sm font-semibold text-gray-900">
+                        <tr key={order._id}>
+                          <td>
+                            <span className="text-sm font-semibold text-white">
                               {formatOrderId(order._id)}
                             </span>
                             {order.paymentId && (
-                              <p className="text-xs text-gray-400 truncate max-w-[100px] mt-0.5">
+                              <p className="text-xs text-slate-500 truncate max-w-[100px] mt-0.5 font-mono">
                                 {order.paymentId}
                               </p>
                             )}
                           </td>
-                          <td className="px-5 py-3.5">
-                            <p className="text-sm font-medium text-gray-900">
+                          <td>
+                            <p className="text-sm font-medium text-slate-200">
                               {order.student?.fullName || '—'}
                             </p>
-                            <p className="text-xs text-gray-500">{order.student?.studentId}</p>
+                            <p className="text-xs text-slate-500">{order.student?.studentId}</p>
                           </td>
-                          <td className="px-5 py-3.5">
+                          <td>
                             <div>
                               {(order.items || []).slice(0, 2).map((item, i) => (
-                                <p key={i} className="text-xs text-gray-600">
+                                <p key={i} className="text-xs text-slate-300">
                                   {truncateText(item.product?.name || item.name || 'Item', 20)} ×{item.quantity}
                                 </p>
                               ))}
                               {order.items?.length > 2 && (
-                                <p className="text-xs text-gray-400">+{order.items.length - 2} more</p>
+                                <p className="text-xs text-slate-500">+{order.items.length - 2} more</p>
                               )}
                             </div>
                           </td>
-                          <td className="px-5 py-3.5">
-                            <span className="text-sm font-bold text-gray-900">
+                          <td>
+                            <span className="text-sm font-bold text-white">
                               {formatCurrency(order.totalAmount)}
                             </span>
                           </td>
-                          <td className="px-5 py-3.5">
+                          <td>
                             <span
                               className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold"
                               style={{
@@ -236,15 +274,15 @@ const AdminOrders = () => {
                               {getStatusLabel(order.status)}
                             </span>
                           </td>
-                          <td className="px-5 py-3.5">
-                            <p className="text-xs text-gray-600">{formatDate(order.createdAt, 'short')}</p>
-                            <p className="text-xs text-gray-400">{formatDate(order.createdAt, 'time')}</p>
+                          <td>
+                            <p className="text-xs text-slate-300">{formatDate(order.createdAt, 'short')}</p>
+                            <p className="text-xs text-slate-500">{formatDate(order.createdAt, 'time')}</p>
                           </td>
-                          <td className="px-5 py-3.5">
+                          <td>
                             <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => setSelectedOrder(order)}
-                                className="p-1.5 rounded-lg text-primary-600 hover:bg-primary-50 transition-colors"
+                                className="p-2 rounded-xl text-blue-400 hover:bg-white/5 transition-colors"
                                 title="View Order"
                               >
                                 <HiEye className="h-4 w-4" />
@@ -257,17 +295,23 @@ const AdminOrders = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </motion.div>
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between mt-5">
-                <p className="text-sm text-gray-500">Page {currentPage} of {totalPages}</p>
+              <motion.div
+                className="flex items-center justify-between mt-5"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <p className="text-sm text-slate-400">Page {currentPage} of {totalPages}</p>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className="p-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40"
+                    className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 disabled:opacity-40 transition-all"
+                    style={{ border: '1px solid rgba(255,255,255,0.08)' }}
                   >
                     <HiChevronLeft className="h-4 w-4" />
                   </button>
@@ -275,9 +319,15 @@ const AdminOrders = () => {
                     <button
                       key={p}
                       onClick={() => setCurrentPage(p)}
-                      className={`h-8 w-8 rounded-lg text-sm font-medium ${
-                        p === currentPage ? 'bg-primary-600 text-white' : 'border border-gray-200 text-gray-600 hover:bg-gray-50'
+                      className={`h-9 w-9 rounded-xl text-sm font-medium transition-all ${
+                        p === currentPage ? 'text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-white/5'
                       }`}
+                      style={p === currentPage ? {
+                        background: 'linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)',
+                        boxShadow: '0 2px 10px rgba(37,99,235,0.3)',
+                      } : {
+                        border: '1px solid rgba(255,255,255,0.08)',
+                      }}
                     >
                       {p}
                     </button>
@@ -285,12 +335,13 @@ const AdminOrders = () => {
                   <button
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className="p-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40"
+                    className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 disabled:opacity-40 transition-all"
+                    style={{ border: '1px solid rgba(255,255,255,0.08)' }}
                   >
                     <HiChevronRight className="h-4 w-4" />
                   </button>
                 </div>
-              </div>
+              </motion.div>
             )}
           </>
         )}
@@ -304,70 +355,70 @@ const AdminOrders = () => {
         size="xl"
       >
         {selectedOrder && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             {/* Student Info */}
-            <div className="bg-slate-50 rounded-xl p-4">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Student Information</h3>
+            <div className="rounded-xl p-4" style={{ background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">Student Information</h3>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-xs text-gray-500">Name</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedOrder.student?.fullName}</p>
+                  <p className="text-xs text-slate-500">Name</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.student?.fullName}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Student ID</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedOrder.student?.studentId}</p>
+                  <p className="text-xs text-slate-500">Student ID</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.student?.studentId}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Email</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedOrder.student?.email}</p>
+                  <p className="text-xs text-slate-500">Email</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.student?.email}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Department</p>
-                  <p className="text-sm font-medium text-gray-900">{selectedOrder.student?.department}</p>
+                  <p className="text-xs text-slate-500">Department</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.student?.department}</p>
                 </div>
               </div>
             </div>
 
             {/* Order Items */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Items</h3>
+              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">Items</h3>
               <div className="space-y-2">
                 {(selectedOrder.items || []).map((item, i) => (
-                  <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                  <div key={i} className="flex items-center justify-between py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                     <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-lg bg-slate-100 overflow-hidden">
+                      <div className="h-9 w-9 rounded-xl overflow-hidden" style={{ background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(255,255,255,0.06)' }}>
                         {item.product?.image ? (
                           <img src={item.product.image} alt="" className="h-full w-full object-cover" />
                         ) : (
-                          <div className="h-full w-full flex items-center justify-center text-gray-300 text-xs">📦</div>
+                          <div className="h-full w-full flex items-center justify-center text-slate-600 text-xs">📦</div>
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{item.product?.name || item.name}</p>
-                        <p className="text-xs text-gray-500">{formatCurrency(item.price)} × {item.quantity}</p>
+                        <p className="text-sm font-medium text-white">{item.product?.name || item.name}</p>
+                        <p className="text-xs text-slate-500">{formatCurrency(item.price)} × {item.quantity}</p>
                       </div>
                     </div>
-                    <p className="text-sm font-bold text-gray-900">{formatCurrency(item.price * item.quantity)}</p>
+                    <p className="text-sm font-bold text-white">{formatCurrency(item.price * item.quantity)}</p>
                   </div>
                 ))}
               </div>
-              <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-1">
-                <span className="text-sm font-bold text-gray-900">Total</span>
-                <span className="text-lg font-bold text-primary-600">{formatCurrency(selectedOrder.totalAmount)}</span>
+              <div className="flex items-center justify-between pt-4 mt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                <span className="text-sm font-bold text-white">Total</span>
+                <span className="text-lg font-bold text-gradient-blue">{formatCurrency(selectedOrder.totalAmount)}</span>
               </div>
             </div>
 
             {/* Payment & Dates */}
-            <div className="bg-slate-50 rounded-xl p-4">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Payment</h3>
+            <div className="rounded-xl p-4" style={{ background: 'rgba(15,23,42,0.5)', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <h3 className="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">Payment</h3>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-xs text-gray-500">Payment ID</p>
-                  <p className="text-xs font-medium text-gray-900 break-all">{selectedOrder.paymentId || '—'}</p>
+                  <p className="text-xs text-slate-500">Payment ID</p>
+                  <p className="text-xs font-medium text-white break-all font-mono">{selectedOrder.paymentId || '—'}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Order Date</p>
-                  <p className="text-sm font-medium text-gray-900">{formatDate(selectedOrder.createdAt, 'datetime')}</p>
+                  <p className="text-xs text-slate-500">Order Date</p>
+                  <p className="text-sm font-medium text-white">{formatDate(selectedOrder.createdAt, 'datetime')}</p>
                 </div>
               </div>
             </div>
@@ -375,7 +426,7 @@ const AdminOrders = () => {
             {/* Status & Actions */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-gray-500 mb-1">Current Status</p>
+                <p className="text-xs text-slate-500 mb-1">Current Status</p>
                 <span
                   className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold"
                   style={{

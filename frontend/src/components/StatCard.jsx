@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion'
 
 const GRADIENT_MAP = {
-  green: 'from-emerald-500 to-green-600',
-  blue: 'from-blue-500 to-blue-600',
-  purple: 'from-purple-500 to-violet-600',
-  emerald: 'from-emerald-500 to-teal-600',
-  teal: 'from-teal-500 to-cyan-600',
-  yellow: 'from-amber-400 to-orange-500',
-  orange: 'from-orange-500 to-red-500',
-  red: 'from-red-500 to-rose-600',
-  cyan: 'from-cyan-500 to-blue-500',
+  green: { from: '#22C55E', to: '#10B981', shadow: 'rgba(34,197,94,0.3)' },
+  blue: { from: '#2563EB', to: '#06B6D4', shadow: 'rgba(37,99,235,0.3)' },
+  purple: { from: '#8B5CF6', to: '#7C3AED', shadow: 'rgba(139,92,246,0.3)' },
+  emerald: { from: '#10B981', to: '#14B8A6', shadow: 'rgba(16,185,129,0.3)' },
+  teal: { from: '#14B8A6', to: '#06B6D4', shadow: 'rgba(20,184,166,0.3)' },
+  yellow: { from: '#F59E0B', to: '#EF4444', shadow: 'rgba(245,158,11,0.3)' },
+  orange: { from: '#F97316', to: '#EF4444', shadow: 'rgba(249,115,22,0.3)' },
+  red: { from: '#EF4444', to: '#F43F5E', shadow: 'rgba(239,68,68,0.3)' },
+  cyan: { from: '#06B6D4', to: '#2563EB', shadow: 'rgba(6,182,212,0.3)' },
 }
 
 export default function StatCard({ icon: Icon, label, value, subValue, prefix, iconBg, iconColor, trend }) {
@@ -25,34 +25,60 @@ export default function StatCard({ icon: Icon, label, value, subValue, prefix, i
 
   return (
     <motion.div
-      className="relative bg-white rounded-2xl p-6 overflow-hidden group"
+      className="relative rounded-2xl p-6 overflow-hidden group"
       style={{
-        border: '1px solid rgba(226,232,240,0.8)',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)',
+        background: 'rgba(30,41,59,0.5)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255,255,255,0.06)',
+        boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
       }}
-      whileHover={{ y: -3, boxShadow: '0 12px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04)' }}
+      whileHover={{
+        y: -3,
+        boxShadow: '0 12px 32px rgba(0,0,0,0.3), 0 0 20px ' + gradient.shadow.replace('0.3', '0.1'),
+        borderColor: 'rgba(255,255,255,0.1)',
+      }}
       transition={{ duration: 0.25 }}
     >
-      {/* Decorative gradient accent */}
-      <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} opacity-[0.04] rounded-full -translate-y-1/2 translate-x-1/3 group-hover:opacity-[0.08] transition-opacity duration-300`} />
+      {/* Decorative radial gradient accent */}
+      <div
+        className="absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-1/2 translate-x-1/3 opacity-[0.08] group-hover:opacity-[0.15] transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle, ${gradient.from}, transparent 70%)`,
+        }}
+      />
 
       <div className="flex items-start justify-between relative">
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-textSecondary tracking-wide">{label}</p>
-          <p className="text-3xl font-extrabold text-textPrimary mt-2 tabular-nums font-display tracking-tight">
+          <p className="text-sm font-medium text-slate-400 tracking-wide">{label}</p>
+          <p className="text-3xl font-extrabold text-white mt-2 tabular-nums font-display tracking-tight">
             {displayValue}
           </p>
           {subValue && (
-            <p className="text-xs text-textSecondary mt-1.5">{subValue}</p>
+            <p className="text-xs text-slate-500 mt-1.5">{subValue}</p>
           )}
           {trend !== undefined && (
-            <div className={`inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-lg text-xs font-bold ${trend >= 0 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+            <div
+              className={`inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-lg text-xs font-bold ${
+                trend >= 0
+                  ? 'text-green-400'
+                  : 'text-red-400'
+              }`}
+              style={{
+                background: trend >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
+                border: `1px solid ${trend >= 0 ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`,
+              }}
+            >
               {trend >= 0 ? '↑' : '↓'} {Math.abs(trend)}%
             </div>
           )}
         </div>
-        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center shrink-0 ml-3 shadow-lg`}
-          style={{ boxShadow: `0 4px 14px rgba(0,0,0,0.15)` }}
+        <div
+          className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ml-3"
+          style={{
+            background: `linear-gradient(135deg, ${gradient.from}, ${gradient.to})`,
+            boxShadow: `0 4px 14px ${gradient.shadow}`,
+          }}
         >
           <Icon size={24} className="text-white" />
         </div>

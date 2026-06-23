@@ -40,11 +40,15 @@ export default function Register() {
   }
 
   const inputClass = (error) =>
-    `form-input ${error ? 'border-danger ring-1 ring-danger' : ''}`
+    `form-input ${error ? 'border-red-500 ring-1 ring-red-500' : ''}`
 
   return (
-    <div className="min-h-screen bg-bgLight flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0F172A] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
       <AnimatedBackground particleCount={12} />
+
+      {/* Decorative orbs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full -translate-y-1/3 translate-x-1/3 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%)' }} />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full translate-y-1/3 -translate-x-1/4 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)' }} />
 
       <motion.div
         className="w-full max-w-xl relative z-10"
@@ -55,23 +59,25 @@ export default function Register() {
         {/* Header */}
         <div className="text-center mb-8">
           <Link to="/login" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #2563EB, #06B6D4)' }}>
               <span className="text-2xl">🍽️</span>
             </div>
-            <span className="font-bold font-display text-textPrimary text-xl">Smart Canteen</span>
+            <span className="font-bold font-display text-white text-xl">Smart Canteen</span>
           </Link>
-          <h1 className="text-3xl font-bold font-display text-textPrimary">Create your account</h1>
-          <p className="text-textSecondary mt-1.5">Join Smart Canteen and skip the queue</p>
+          <h1 className="text-3xl font-bold font-display text-white tracking-tight">Create your account</h1>
+          <p className="text-slate-400 mt-1.5">Join Smart Canteen and skip the queue</p>
         </div>
 
         {/* Form Card */}
-        <div className="card p-8 shadow-elevated">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <div className="glass-strong rounded-3xl p-8 relative overflow-hidden">
+          <div className="gradient-border" />
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 relative z-10">
             {/* Full Name */}
             <div>
               <label htmlFor="fullName" className="form-label">Full Name</label>
               <div className="relative">
-                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-textSecondary" size={16} />
+                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                 <input
                   id="fullName"
                   type="text"
@@ -90,7 +96,7 @@ export default function Register() {
             <div>
               <label htmlFor="email" className="form-label">College Email</label>
               <div className="relative">
-                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-textSecondary" size={16} />
+                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                 <input
                   id="email"
                   type="email"
@@ -109,7 +115,7 @@ export default function Register() {
             <div>
               <label htmlFor="studentId" className="form-label">Student ID / Roll Number</label>
               <div className="relative">
-                <FiHash className="absolute left-3.5 top-1/2 -translate-y-1/2 text-textSecondary" size={16} />
+                <FiHash className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                 <input
                   id="studentId"
                   type="text"
@@ -129,7 +135,7 @@ export default function Register() {
               <div>
                 <label htmlFor="department" className="form-label">Department</label>
                 <div className="relative">
-                  <FiBook className="absolute left-3.5 top-1/2 -translate-y-1/2 text-textSecondary pointer-events-none" size={16} />
+                  <FiBook className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={16} />
                   <select
                     id="department"
                     className={`${inputClass(errors.department)} pl-10 appearance-none`}
@@ -160,7 +166,7 @@ export default function Register() {
             <div>
               <label htmlFor="password" className="form-label">Password</label>
               <div className="relative">
-                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-textSecondary" size={16} />
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -172,7 +178,7 @@ export default function Register() {
                   })}
                 />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-textSecondary hover:text-textPrimary">
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
                   {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </button>
               </div>
@@ -183,7 +189,7 @@ export default function Register() {
             <div>
               <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
               <div className="relative">
-                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-textSecondary" size={16} />
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                 <input
                   id="confirmPassword"
                   type={showConfirm ? 'text' : 'password'}
@@ -195,31 +201,42 @@ export default function Register() {
                   })}
                 />
                 <button type="button" onClick={() => setShowConfirm(!showConfirm)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-textSecondary hover:text-textPrimary">
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
                   {showConfirm ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </button>
               </div>
               {errors.confirmPassword && <p className="form-error">{errors.confirmPassword.message}</p>}
             </div>
 
-            <button
+            <motion.button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full py-3 text-base mt-2"
+              className="w-full py-3 text-base font-bold text-white rounded-xl mt-2 flex items-center justify-center gap-2 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                background: 'linear-gradient(135deg, #2563EB 0%, #06B6D4 100%)',
+                boxShadow: '0 4px 20px rgba(37,99,235,0.35)',
+              }}
+              whileHover={{ scale: 1.02, boxShadow: '0 6px 28px rgba(37,99,235,0.5)' }}
+              whileTap={{ scale: 0.98 }}
             >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Creating account…
-                </span>
-              ) : 'Create Account'}
-            </button>
+              <span className="absolute inset-0 overflow-hidden rounded-xl">
+                <span className="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-25deg] animate-[shine_3s_ease-in-out_infinite]" />
+              </span>
+              <span className="relative z-10">
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Creating account…
+                  </span>
+                ) : 'Create Account'}
+              </span>
+            </motion.button>
           </form>
         </div>
 
-        <p className="text-center text-sm text-textSecondary mt-6">
+        <p className="text-center text-sm text-slate-400 mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-primary-600 font-semibold hover:text-primary-700">
+          <Link to="/login" className="text-blue-400 font-semibold hover:text-blue-300 transition-colors">
             Sign in
           </Link>
         </p>
