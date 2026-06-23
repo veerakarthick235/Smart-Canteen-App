@@ -30,9 +30,19 @@ class Config:
     CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET", "")
 
     # CORS — supports comma-separated list of origins
-    # e.g. CORS_ORIGIN=http://localhost:5173,http://localhost:5174
-    _cors_raw = os.environ.get("CORS_ORIGIN", "http://localhost:5173")
+    _cors_raw = os.environ.get("CORS_ORIGIN", "")
     CORS_ORIGINS = [o.strip() for o in _cors_raw.split(",") if o.strip()]
+    
+    # Always allow these known frontend domains to prevent CORS errors after deployments
+    _known_domains = [
+        "http://localhost:5173", 
+        "http://localhost:5174", 
+        "https://ai-smart-canteen.vercel.app",
+        "https://smart-canteen-nine.vercel.app"
+    ]
+    for domain in _known_domains:
+        if domain not in CORS_ORIGINS:
+            CORS_ORIGINS.append(domain)
 
 
 config = Config()
