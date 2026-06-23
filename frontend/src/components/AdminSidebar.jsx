@@ -6,6 +6,7 @@ import {
 } from 'react-icons/fi'
 import { useAuth } from '../context/AuthContext.jsx'
 import { getInitials } from '../utils/helpers.js'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
   { path: '/admin/dashboard', icon: FiGrid, label: 'Dashboard' },
@@ -35,7 +36,7 @@ export default function AdminSidebar() {
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="font-bold text-textPrimary text-base leading-tight">Smart Canteen</p>
+            <p className="font-bold text-textPrimary text-base leading-tight font-display">Smart Canteen</p>
             <p className="text-xs text-textSecondary">Admin Panel</p>
           </div>
         )}
@@ -49,12 +50,11 @@ export default function AdminSidebar() {
             to={path}
             onClick={() => setMobileOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150
+              `flex items-center gap-3 py-2.5 rounded-xl text-sm transition-all duration-150
                ${isActive
-                 ? 'bg-primary-600 text-white shadow-sm'
-                 : 'text-textSecondary hover:bg-bgLight hover:text-textPrimary'
-               }
-               ${collapsed ? 'justify-center' : ''}`
+                 ? `bg-primary-50 text-primary-700 border-l-[3px] border-l-primary-600 font-semibold ${collapsed ? 'justify-center px-3' : 'pl-[calc(0.75rem-3px)] pr-3'}`
+                 : `text-textSecondary hover:bg-gray-50 hover:text-textPrimary border-l-[3px] border-l-transparent font-medium ${collapsed ? 'justify-center px-3' : 'pl-[calc(0.75rem-3px)] pr-3'}`
+               }`
             }
           >
             <Icon size={18} className="shrink-0" />
@@ -90,18 +90,33 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile overlay */}
-      {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-40" onClick={() => setMobileOpen(false)}>
-          <div className="absolute inset-0 bg-black/40" />
-          <div className="absolute left-0 top-0 h-full w-64 bg-white shadow-card-lg" onClick={e => e.stopPropagation()}>
-            <SidebarContent />
+      <AnimatePresence>
+        {mobileOpen && (
+          <div className="lg:hidden fixed inset-0 z-40" onClick={() => setMobileOpen(false)}>
+            <motion.div
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+            <motion.div
+              className="absolute left-0 top-0 h-full w-64 bg-white shadow-elevated"
+              onClick={e => e.stopPropagation()}
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <SidebarContent />
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* Mobile toggle button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-xl shadow-card border border-border"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-xl shadow-soft border border-border"
         onClick={() => setMobileOpen(!mobileOpen)}
       >
         {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}

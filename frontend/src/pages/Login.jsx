@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
+import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import api from '../api/axios.js'
 import { useAuth } from '../context/AuthContext.jsx'
+import AnimatedBackground from '../components/AnimatedBackground.jsx'
+
 export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -39,11 +42,13 @@ export default function Login() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
+        <AnimatedBackground particleCount={15} />
+
         <div className="relative z-10 text-center max-w-sm">
           <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
             <span className="text-5xl">🍽️</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-4xl font-bold font-display text-white mb-4 leading-tight">
             Smart Canteen
           </h1>
           <p className="text-blue-100 text-lg leading-relaxed mb-8">
@@ -69,17 +74,22 @@ export default function Login() {
 
       {/* Right panel — Login form */}
       <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-md">
+        <motion.div
+          className="w-full max-w-md"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
               <span className="text-2xl">🍽️</span>
             </div>
-            <span className="font-bold text-textPrimary text-xl">Smart Canteen</span>
+            <span className="font-bold font-display text-textPrimary text-xl">Smart Canteen</span>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-textPrimary">Welcome back</h2>
+            <h2 className="text-3xl font-bold font-display text-textPrimary">Welcome back</h2>
             <p className="text-textSecondary mt-1.5">Sign in to your account to continue</p>
           </div>
 
@@ -148,7 +158,7 @@ export default function Login() {
           </p>
 
 
-        </div>
+        </motion.div>
       </div>
     </div>
   )

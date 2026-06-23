@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiBook, FiHash } from 'react-icons/fi'
+import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import api from '../api/axios.js'
 import { useAuth } from '../context/AuthContext.jsx'
+import AnimatedBackground from '../components/AnimatedBackground.jsx'
 
 const DEPARTMENTS = ['CSE', 'ECE', 'EEE', 'ME', 'CE', 'IT', 'AI&DS', 'MBA', 'MCA', 'Civil', 'Architecture', 'Pharmacy', 'BCA', 'BSc']
 const YEARS = ['1st Year', '2nd Year', '3rd Year', '4th Year', 'PG']
@@ -41,22 +43,29 @@ export default function Register() {
     `form-input ${error ? 'border-danger ring-1 ring-danger' : ''}`
 
   return (
-    <div className="min-h-screen bg-bgLight flex items-center justify-center p-4 sm:p-6">
-      <div className="w-full max-w-xl">
+    <div className="min-h-screen bg-bgLight flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+      <AnimatedBackground particleCount={12} />
+
+      <motion.div
+        className="w-full max-w-xl relative z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         {/* Header */}
         <div className="text-center mb-8">
           <Link to="/login" className="inline-flex items-center gap-2 mb-6">
             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
               <span className="text-2xl">🍽️</span>
             </div>
-            <span className="font-bold text-textPrimary text-xl">Smart Canteen</span>
+            <span className="font-bold font-display text-textPrimary text-xl">Smart Canteen</span>
           </Link>
-          <h1 className="text-3xl font-bold text-textPrimary">Create your account</h1>
+          <h1 className="text-3xl font-bold font-display text-textPrimary">Create your account</h1>
           <p className="text-textSecondary mt-1.5">Join Smart Canteen and skip the queue</p>
         </div>
 
         {/* Form Card */}
-        <div className="card p-8">
+        <div className="card p-8 shadow-elevated">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Full Name */}
             <div>
@@ -214,7 +223,7 @@ export default function Register() {
             Sign in
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   )
 }

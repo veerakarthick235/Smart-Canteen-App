@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import AdminLayout from '../../components/AdminLayout'
 import StatCard from '../../components/StatCard'
 import LoadingSpinner from '../../components/LoadingSpinner'
@@ -10,6 +11,19 @@ import {
   HiCurrencyRupee, HiShoppingBag, HiClock, HiCheckCircle,
   HiRefresh, HiClipboardList, HiBan, HiEye
 } from 'react-icons/hi'
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+}
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null)
@@ -89,7 +103,7 @@ const AdminDashboard = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <h1 className="text-2xl font-bold font-display text-gray-900">Dashboard</h1>
             <p className="text-gray-500 text-sm mt-1">Overview of canteen operations</p>
           </div>
           <button
@@ -109,15 +123,22 @@ const AdminDashboard = () => {
         ) : (
           <>
             {/* Stat Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
               {statCards.map((card) => (
-                <StatCard key={card.label} {...card} />
+                <motion.div key={card.label} variants={cardVariants}>
+                  <StatCard {...card} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* Quick Actions */}
             <div className="mb-8">
-              <h2 className="text-base font-semibold text-gray-900 mb-3">Quick Actions</h2>
+              <h2 className="text-base font-semibold font-display text-gray-900 mb-3">Quick Actions</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
                   { to: '/admin/scanner', label: 'Scan QR Code', icon: '📷', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-100' },
@@ -138,9 +159,9 @@ const AdminDashboard = () => {
             </div>
 
             {/* Recent Orders */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-card">
+            <div className="bg-white rounded-xl border border-gray-100 shadow-soft">
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                <h2 className="text-base font-semibold text-gray-900">Recent Orders</h2>
+                <h2 className="text-base font-semibold font-display text-gray-900">Recent Orders</h2>
                 <Link
                   to="/admin/orders"
                   className="text-sm text-primary-600 hover:text-primary-700 font-medium"

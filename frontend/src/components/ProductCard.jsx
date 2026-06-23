@@ -3,6 +3,7 @@ import { FiPlus, FiMinus, FiShoppingCart } from 'react-icons/fi'
 import { useCart } from '../context/CartContext.jsx'
 import { formatCurrency, getCategoryBadge, truncateText } from '../utils/helpers.js'
 import toast from 'react-hot-toast'
+import { motion } from 'framer-motion'
 
 const CATEGORY_EMOJIS = {
   Food: '🍱',
@@ -36,7 +37,11 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <div className="card-hover overflow-hidden flex flex-col group">
+    <motion.div
+      className="card-hover overflow-hidden flex flex-col group"
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+    >
       {/* Product Image / Placeholder */}
       <div className={`relative h-44 flex items-center justify-center bg-gradient-to-br ${PLACEHOLDER_COLORS[product.category] || 'from-gray-50 to-gray-100'} overflow-hidden`}>
         {product.image ? (
@@ -53,20 +58,20 @@ export default function ProductCard({ product }) {
         )}
         {/* Category badge */}
         <div className="absolute top-3 left-3">
-          <span className={`badge text-xs ${getCategoryBadge(product.category)}`}>
+          <span className={`badge text-xs font-semibold shadow-sm backdrop-blur-sm ${getCategoryBadge(product.category)}`}>
             {product.category}
           </span>
         </div>
         {/* Stock indicator */}
         {!isOutOfStock && product.stock <= 5 && (
           <div className="absolute top-3 right-3">
-            <span className="badge bg-amber-50 text-amber-700 text-xs border border-amber-200">
+            <span className="badge bg-amber-50/90 text-amber-700 text-xs border border-amber-200 backdrop-blur-sm">
               Only {product.stock} left
             </span>
           </div>
         )}
         {isOutOfStock && (
-          <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
+          <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center">
             <span className="badge bg-red-50 text-red-600 text-sm border border-red-200 font-semibold">
               Out of Stock
             </span>
@@ -83,7 +88,7 @@ export default function ProductCard({ product }) {
 
         {/* Price row */}
         <div className="flex items-center justify-between mt-3">
-          <span className="text-xl font-bold text-primary-600">
+          <span className="text-xl font-bold text-primary-600 font-display">
             {formatCurrency(product.price)}
           </span>
           <span className="text-xs text-textSecondary">
@@ -130,6 +135,6 @@ export default function ProductCard({ product }) {
           </p>
         )}
       </div>
-    </div>
+    </motion.div>
   )
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { FiSearch, FiShoppingCart } from 'react-icons/fi'
+import { motion } from 'framer-motion'
 import Navbar from '../../components/Navbar.jsx'
 import ProductCard from '../../components/ProductCard.jsx'
 import LoadingSpinner from '../../components/LoadingSpinner.jsx'
@@ -16,6 +17,19 @@ const CATEGORY_DESCRIPTIONS = {
   Food: 'Fresh meals & snacks',
   Beverages: 'Hot & cold drinks',
   Stationery: 'Notebooks, pens & more',
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 }
 
 export default function StudentHome() {
@@ -70,13 +84,13 @@ export default function StudentHome() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-textPrimary">Order Now</h1>
+          <h1 className="text-2xl font-bold font-display text-textPrimary">Order Now</h1>
           <p className="text-textSecondary mt-0.5">{CATEGORY_DESCRIPTIONS[category]}</p>
         </div>
 
         {/* Search bar */}
         <form onSubmit={handleSearch} className="mb-6">
-          <div className="relative max-w-lg">
+          <div className="relative max-w-lg shadow-soft rounded-2xl">
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-textSecondary" size={18} />
             <input
               type="text"
@@ -102,9 +116,10 @@ export default function StudentHome() {
               onClick={() => handleCategoryChange(cat)}
               className={`px-5 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-150 ${
                 category === cat
-                  ? 'bg-primary-600 text-white shadow-sm'
+                  ? 'text-white shadow-glow-blue'
                   : 'bg-white text-textSecondary border border-border hover:border-primary-600 hover:text-primary-600'
               }`}
+              style={category === cat ? { background: 'linear-gradient(135deg, #2563EB, #3B82F6)' } : undefined}
             >
               {cat === 'All' && '🍽 '}
               {cat === 'Food' && '🍱 '}
@@ -144,11 +159,19 @@ export default function StudentHome() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              key={`${category}-${search}-${page}`}
+            >
               {products.map(product => (
-                <ProductCard key={product._id} product={product} />
+                <motion.div key={product._id} variants={itemVariants}>
+                  <ProductCard product={product} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* Pagination */}
             {totalPages > 1 && (
@@ -177,7 +200,7 @@ export default function StudentHome() {
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 animate-slide-up">
           <Link
             to="/student/cart"
-            className="flex items-center gap-4 bg-primary-600 text-white px-6 py-3.5 rounded-2xl shadow-card-lg hover:bg-primary-700 transition-colors"
+            className="flex items-center gap-4 bg-primary-600 text-white px-6 py-3.5 rounded-2xl shadow-elevated border-t border-primary-100 hover:bg-primary-700 transition-colors"
           >
             <div className="flex items-center gap-2">
               <FiShoppingCart size={20} />

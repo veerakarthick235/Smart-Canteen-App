@@ -1,6 +1,12 @@
 // ── Aliases for backward compatibility with subagent-generated pages ──────────
 export function getStatusStyle(status) {
-  return getStatusColor(status)
+  const styles = {
+    pending:   { bg: '#FEF3C7', text: '#B45309', border: '#FDE68A' },
+    paid:      { bg: '#DBEAFE', text: '#1D4ED8', border: '#BFDBFE' },
+    completed: { bg: '#DCFCE7', text: '#15803D', border: '#BBF7D0' },
+    cancelled: { bg: '#FEE2E2', text: '#B91C1C', border: '#FECACA' },
+  }
+  return styles[status] || { bg: '#F3F4F6', text: '#374151', border: '#E5E7EB' }
 }
 
 export function formatOrderId(id) {

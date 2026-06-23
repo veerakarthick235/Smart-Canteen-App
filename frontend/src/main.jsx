@@ -22,8 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 style: {
                   fontFamily: 'Inter, sans-serif',
                   fontSize: '14px',
-                  borderRadius: '12px',
-                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
+                  borderRadius: '14px',
+                  boxShadow: '0 4px 16px -4px rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.04)',
+                  border: '1px solid rgba(226,232,240,0.8)',
                 },
                 success: {
                   iconTheme: { primary: '#16A34A', secondary: 'white' },
